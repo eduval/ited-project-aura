@@ -12,7 +12,7 @@ Through a powerful blend of **Python automation**, **Canvas APIs**, **Firebase a
 
 ---
 
-## 🎯 Key Objectives
+## Key Objectives
 
 - **Automate Data Processing:** Retrieve grades, attendance, and assignments from Canvas LMS via its API.
 - **Responsive Web App:** Multi-user interface with admin & operator roles, secured by Firebase Auth.
@@ -23,7 +23,7 @@ Through a powerful blend of **Python automation**, **Canvas APIs**, **Firebase a
 
 ---
 
-## 💡 Why Join This Project?
+## Why Join This Project?
 
 ✅ Gain **real-world experience** on a production-grade system.  
 ✅ Work directly with **Canvas APIs, Firebase, Python, PHP**, and deploy on **Linux servers**.  
@@ -32,7 +32,7 @@ Through a powerful blend of **Python automation**, **Canvas APIs**, **Firebase a
 
 ---
 
-## 🌐 Project Details
+## Project Details
 
 | **Project Title** | Project AURA (Academic Unified Reporting & Automation) |
 |-------------------|-------------------------------------------------------|
@@ -42,7 +42,7 @@ Through a powerful blend of **Python automation**, **Canvas APIs**, **Firebase a
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 _(Setup instructions coming soon as the project reaches deployment milestones)_
 
