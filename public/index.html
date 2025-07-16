@@ -19,42 +19,41 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
 
         .login-container {
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 8px;
-            padding: 40px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            padding: 40px 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             width: 100%;
             max-width: 400px;
         }
 
         h2 {
-            text-align: center;
             margin-bottom: 20px;
             color: #333;
         }
 
         .input-field {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             font-size: 16px;
         }
 
         .btn {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
         .btn:hover {
@@ -62,17 +61,31 @@
         }
 
         .forgot-password {
-            text-align: center;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         .forgot-password a {
             color: #4CAF50;
             text-decoration: none;
+            font-size: 14px;
         }
 
         .forgot-password a:hover {
             text-decoration: underline;
+        }
+
+        .quote {
+            margin-top: 30px;
+            font-size: 14px;
+            font-style: italic;
+            color: #555;
+            min-height: 40px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
@@ -88,10 +101,11 @@
         <div class="forgot-password">
             <a href="#">Forgot Password?</a>
         </div>
+        <div class="quote" id="quote"></div>
     </div>
 
     <script>
-        // Function to generate a random background color
+        // Random background color
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
             let color = '#';
@@ -101,8 +115,23 @@
             return color;
         }
 
-        // Set random background color on page load
+        // Random motivational academic phrase
+        const quotes = [
+            "Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",
+            "Colleges are not just about degrees; they're about building dreams.",
+            "The academic system is a bridge between who you are and who you can become.",
+            "Your future begins with a single login.",
+            "Success starts here — unlock your academic journey.",
+            "Empowering learners, one course at a time.",
+            "Knowledge is the foundation. Your college is the architect.",
+            "Great minds start with great systems.",
+            "You belong here. Let's build your future together.",
+            "Learning never stops — especially when you're logged in."
+        ];
+
+        // Apply random background and phrase
         document.body.style.backgroundColor = getRandomColor();
+        document.getElementById("quote").innerText = quotes[Math.floor(Math.random() * quotes.length)];
     </script>
 </body>
 
