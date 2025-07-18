@@ -22,13 +22,15 @@ def upload_excel():
     file.save(filepath)
 
     try:
-        output_dir = process_transcripts(filepath)
+        output_dir, alerts = process_transcripts(filepath)
         return jsonify({
             "message": "File processed successfully.",
-            "output_folder": output_dir
+            "output_folder": output_dir,
+            "alerts": alerts
         }), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
+
