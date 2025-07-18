@@ -1,0 +1,14 @@
+{
+  "rules": {
+    "goals": {
+      "$userId": {
+        ".read": "auth != null && auth.uid === $userId",
+        ".write": "auth != null && auth.uid === $userId",
+        
+        "$goalId": {
+          ".write": "auth.token.admin === true || auth.uid === $userId"
+        }
+      }
+    }
+  }
+}
