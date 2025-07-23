@@ -48,19 +48,19 @@
 
   -->
 
-<body class="layout-admin aside-sticky bg-lime header-sticky"
+<body class="layout-admin layout-padded aside-sticky"
   data-s2t-class="btn-primary btn-sm bg-gradient-default rounded-circle border-0">
 
   <div id="wrapper" class="d-flex align-items-stretch flex-column">
 
 
     <!--  header -->
-    <header id="header" class="d-flex align-items-center shadow-xs">
+    <header id="header" class="d-flex align-items-center bg-transparent">
 
       <!-- Navbar -->
-      <div class="container-fluid position-relative">
+      <div class="px-3 px-lg-0 w-100 position-relative">
 
-        <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
 
           <!-- logo, navigation toggler -->
           <div class="align-items-start">
@@ -88,190 +88,6 @@
             </a>
 
           </div>
-
-          <!-- navbar : navigation -->
-          <div class="collapse navbar-collapse" id="navbarMainNav">
-
-            <!-- navbar : mobile menu -->
-            <div class="navbar-xs d-none">
-
-              <!-- close button -->
-              <button class="navbar-toggler pt-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarMainNav" aria-controls="navbarMainNav" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <svg width="20" viewBox="0 0 20 20">
-                  <path
-                    d="M 20.7895 0.977 L 19.3752 -0.4364 L 10.081 8.8522 L 0.7869 -0.4364 L -0.6274 0.977 L 8.6668 10.2656 L -0.6274 19.5542 L 0.7869 20.9676 L 10.081 11.679 L 19.3752 20.9676 L 20.7895 19.5542 L 11.4953 10.2656 L 20.7895 0.977 Z">
-                  </path>
-                </svg>
-              </button>
-
-              <!-- logo -->
-              <a class="navbar-brand" href="index.html">
-                <img src="https://ited.org.ec/img/ited.png" width="80" height="38" alt="...">
-              </a>
-
-            </div>
-            <!-- /navbar : mobile menu -->
-
-
-            <!-- Dropdowns -->
-            <ul class="navbar-nav align-items-center">
-
-              <!-- Features -->
-              <li class="nav-item dropdown">
-
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false" id="mainNavPages">
-                  Features
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-clean dropdown-fadeindown" aria-labelledby="mainNavPages">
-                  <li class="dropdown-item dropdown">
-                    <a class="dropdown-link" href="#" data-bs-toggle="dropdown">
-                      Pages
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-hover border-0 m-0">
-                      <li class="dropdown-item"><a class="dropdown-link" href="page-ecommerce-product-list.html">Product
-                          list</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link"
-                          href="page-ecommerce-product-reviews.html">Product reviews</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="page-ecommerce-order-list.html">Order
-                          list</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="page-ecommerce-order-detail.html">Order
-                          detail</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="page-ecommerce-invoice.html">Invoice</a>
-                      </li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="page-generic-forum.html">Forum</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="page-user-customer-list.html">Customer
-                          list</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="page-user-admins.html">Admin / Staff</a>
-                      </li>
-                      <li class="dropdown-item"><a class="dropdown-link"
-                          href="page-util-maintenance.html">Maintenance</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="page-util-404.html">404 Error</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="page-util-500.html">500 Error</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-item dropdown">
-                    <a class="dropdown-link" href="#" data-bs-toggle="dropdown">
-                      Apps
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-hover border-0 m-0">
-                      <li class="dropdown-item"><a class="dropdown-link" href="app-projects-list.html">Project list</a>
-                      </li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="app-file-manager.html">File manager</a>
-                      </li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="app-chat.html">Chat</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="app-kanban.html">Kanban</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-item dropdown">
-                    <a class="dropdown-link" href="#" data-bs-toggle="dropdown">
-                      Authentication
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-hover border-0 m-0">
-                      <li class="dropdown-item"><a class="dropdown-link" href="auth-signin-cover.html">Sign in</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="auth-signup-cover.html">Sign up</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="auth-passreset-cover.html">Reset
-                          password</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="auth-2step-cover.html">2-step
-                          verification</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-item dropdown">
-                    <a class="dropdown-link" href="#" data-bs-toggle="dropdown">
-                      Layouts
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-hover border-0 m-0">
-                      <li class="dropdown-item"><a class="dropdown-link" href="layout-dark-header.html">Dark Header</a>
-                      </li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="layout-dark-sidebar.html">Dark
-                          Sidebar</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="layout-dark-both.html">Dark Both</a></li>
-                      <li class="dropdown-item mt-2"><a class="dropdown-link" href="layout-sticky-header.html">Sticky
-                          Header</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="layout-sticky-sidebar.html">Sticky
-                          Sidebar</a></li>
-                      <li class="dropdown-item"><a class="dropdown-link" href="layout-sticky-both.html">Sticky Both</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-
-              </li>
-
-              <li class="nav-item dropdown dropdown-mega">
-
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false" id="mainMegaNav">
-                  Documentation
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-clean dropdown-fadeindown" aria-labelledby="mainMegaNav">
-                  <li class="dropdown-item bg-transparent">
-
-                    <div class="row col-border-md text-wrap">
-
-                      <div class="col-12 col-md-3">
-
-                        <h3 class="h6">Getting started</h3>
-                        <ul>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/index.html">Introduction</a></li>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/gulp.html">Gulp</a></li>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/migration.html">Migration</a></li>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/changelog.html">Changelog</a></li>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/credits.html">Credits</a></li>
-                        </ul>
-
-                      </div>
-
-                      <div class="col-12 col-md-3">
-
-                        <h3 class="h6">Elements</h3>
-                        <ul>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/components-alerts.html">Components</a></li>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/forms-overview.html">Forms</a></li>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/icons-bootstrap.html">Icons</a></li>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/util-misc.html">Utilities</a></li>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/plugins-sow-overview.html">SOW Plugins</a></li>
-                          <li class="dropdown-item"><a class="dropdown-link transition-hover-end"
-                              href="../../html_frontend/documentation/plugins-vendor-chartjs.html">Vendor Plugins</a>
-                          </li>
-                        </ul>
-
-                      </div>
-
-                      <div class="col-12 col-md-6 text-center p-xl-5">
-
-                        <h2 class="mb-4">High quality!</h2>
-                        <img width="586" height="219" class="img-fluid mb-0"
-                          src="../../html_frontend/documentation/assets/images/screens/smarty_lighthouse.png" alt="...">
-
-                      </div>
-
-                    </div>
-
-                  </li>
-                </ul>
-
-              </li>
-
-            </ul>
-            <!-- /Dropdowns -->
-
-          </div>
-          <!-- /navbar : navigation -->
 
           <!-- options -->
           <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
@@ -631,8 +447,8 @@
               <!-- has avatar -->
               <a href="#" id="dropdownAccountOptions"
                 class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
-                style="background-image:url(assets/images/users_img/user.jpg)" data-bs-toggle="dropdown"
-                data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
+                style="background-image:url(../../html_frontend/demo.files/images/unsplash/team/thumb_330/joseph-gonzalez-iFgRcqHznqg-unsplash.jpg)"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
                 aria-label="Account options"></a>
 
               <!-- no avatar -->
@@ -691,14 +507,6 @@
 
             </li>
 
-            <!-- navigation toggler (mobile) -->
-            <li class="list-inline-item d-inline-block d-lg-none">
-              <button class="btn p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainNav"
-                aria-controls="navbarMainNav" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fi fi-bars m-0"></i>
-              </button>
-            </li>
-
           </ul>
           <!-- /options -->
 
@@ -722,7 +530,7 @@
         <!-- sidebar : logo -->
         <div class="py-2 px-3 mb-3 mt-1">
           <a href="index.html">
-            <img src="https://ited.org.ec/img/ited.png" width="110" height="50" alt="iTED Foundation">
+            <img src="assets/images/logo/logo_dark.svg" width="110" height="60" alt="...">
           </a>
         </div>
         <!-- /sidebar : logo -->
@@ -1014,7 +822,88 @@
                 </a>
               </li>
 
+              <li class="nav-item">
+                <a class="nav-link" href="../../html_frontend/documentation/components-alerts.html">
+                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    class="bi bi-collection" viewBox="0 0 16 16">
+                    <path
+                      d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z">
+                    </path>
+                  </svg>
+                  <span>Components</span>
+                </a>
+              </li>
 
+              <li class="nav-item">
+                <a class="nav-link" href="../../html_frontend/documentation/icons-bootstrap.html">
+                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    class="bi bi-droplet-half" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10c0 0 2.5 1.5 5 .5s5-.5 5-.5c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z">
+                    </path>
+                    <path fill-rule="evenodd"
+                      d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z">
+                    </path>
+                  </svg>
+                  <span>Icons</span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../../html_frontend/documentation/forms-overview.html">
+                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    class="bi bi-check-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                    <path
+                      d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z">
+                    </path>
+                  </svg>
+                  <span>Forms</span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../../html_frontend/documentation/plugins-sow-overview.html">
+                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    class="bi bi-app" viewBox="0 0 16 16">
+                    <path
+                      d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z">
+                    </path>
+                  </svg>
+                  <span>SOW plugins</span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../../html_frontend/documentation/plugins-vendor-chartjs.html">
+                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    class="bi bi-app-indicator" viewBox="0 0 16 16">
+                    <path
+                      d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1H5.5z">
+                    </path>
+                    <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+                  </svg>
+                  <span>Vendor plugins</span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../../html_frontend/documentation/changelog.html">
+                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    class="bi bi-journal-code" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M8.646 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 8 8.646 6.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 8l1.647-1.646a.5.5 0 0 0 0-.708z">
+                    </path>
+                    <path
+                      d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z">
+                    </path>
+                    <path
+                      d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z">
+                    </path>
+                  </svg>
+                  <span>Changelog</span>
+                </a>
+              </li>
 
             </ul>
           </nav>
@@ -1058,7 +947,7 @@
 
 
         <!-- PAGE TITLE -->
-        <header>
+        <header class="mt-lg-n6">
           <h1 class="h4">Good morning, John!</h1>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb small">
@@ -1074,7 +963,7 @@
           <div class="d-flex align-items-center justify-content-between border-bottom pb-4 my-2">
 
             <div class="w-100">
-              <h2 class="h5 mb-0">Visits &amp; Orders</h2>
+              <h2 class="h5 mb-0">Monthly orders</h2>
               <small class="small text-muted">Monthly revenue of 2022</small>
             </div>
 
@@ -1089,129 +978,90 @@
 
           <div class="row g-4">
 
-            <div class="col-12 col-lg-7 col-xl-9">
+            <div class="col-12 col-lg-7 col-xl-9 order-1 order-xl-2">
 
               <div class="position-relative h-100" style="min-height:250px; max-height:500px">
                 <canvas id="visitsvsorders" class="chartjs" data-chartjs-dots="false" data-chartjs-legend="false"
                   data-chartjs-grid="true" data-chartjs-tooltip="true" data-chartjs-title="" data-chartjs-xaxes-label=""
-                  data-chartjs-yaxes-label="" data-chartjs-line-width="5" data-chartjs-type="line"
+                  data-chartjs-yaxes-label="" data-chartjs-line-width="5" data-chartjs-type="polarArea"
                   data-chartjs-labels='["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]'
-                  data-chartjs-datasets='[{                             
-                      "label": "Visits",
-                      "data": [20, 22, 24, 21, 23, 26, 24, 23, 21, 24, 23, 22],
-                      "fill": true,
-                      "backgroundColor": "rgba(255, 206, 86, 0.2)"
-                    },{
+                  data-chartjs-datasets='[{
                       "label": "Orders",
                       "data": [14, 16, 16, 14, 13, 12, 14, 14, 13, 14, 12, 10],
                       "fill": true,
-                      "backgroundColor": "rgba(255, 206, 86, 0.4)"
+                      "backgroundColor": "rgba(163, 167, 255, 0.4)"
                     }]'></canvas>
 
               </div>
 
             </div>
 
-            <div class="col-12 col-lg-5 col-xl-3">
+            <div class="col-12 col-lg-5 col-xl-3 order-2 order-xl-1">
 
-              <!-- card -->
-              <div class="bg-white shadow-lg p-4 rounded my-3 transition-hover-top transition-all-ease-150">
+              <!-- reveal on hover container -->
+              <div class="position-relative animate-reveal-up-item">
 
-                <!-- dropdown options -->
-                <div class="float-end dropdown">
-                  <button type="button" class="dropdown-toggle btn btn-sm btn-light px-2 py-1 mt-n1"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="options">
-                    <span>
-                      <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                        <path
-                          d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
-                        </path>
-                      </svg>
+                <!-- card rating -->
+                <div
+                  class="position-relative reveal-item bg-white shadow-lg-hover rounded-xl p-5 p-md-3 py-xl-5 p-4-xs z-index-2">
+
+                  <h6 class="text-muted text-center">MONTHLY REVENUE</h6>
+
+                  <div class="text-center mt-5">
+
+                    <!-- chart -->
+                    <div class="h--120 easypie d-inline-block position-relative z-index-1" data-bar-color="#574fec"
+                      data-track-color="#eaeaea" data-scale-color="#cccccc" data-scale-length="0" data-line-width="10"
+                      data-line-cap="round" data-size="120" data-percent="61">
+
+                      <div class="absolute-full d-middle pt-0 pb-2">
+                        <div class="flex-none text-center">
+                          <span class="d-block">61%</span>
+                          <small class="d-block text-muted">Conversion</small>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /chart -->
+
+
+                    <p class="text-muted mt-4 mb-2">Sales this month</p>
+                    <p class="lead fw-medium mb-0 text-primary">
+                      $<span data-toggle="count" data-count-to="2144.55" data-count-duration="2500">0</span>
+                    </p>
+
+                    <!-- 2 cols -->
+                    <div class="d-flex mt-4 fs--15">
+                      <div class="flex-fill"><!-- col 1 -->
+                        <p class="text-gray-500 m-0">last month</p>
+                        <p class="text-gray-600 m-0 fw-medium">$12978.51</p>
+                      </div>
+
+                      <div class="flex-fill"><!-- col 2 -->
+                        <p class="text-gray-500 m-0">last 3 months</p>
+                        <p class="text-gray-600 m-0 fw-medium">$4122.11</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+                <!-- /card rating -->
+
+                <!-- link under -->
+                <div class="fs--16 position-absolute left-0 right-0 bottom-0 z-index-1 pt-3 px-2">
+
+                  <div class="clearfix bg-light p-1 row-pill">
+                    <a href="#!" class="btn btn-pill btn-sm btn-success py-1 mb-0 float-start transition-hover-end"
+                      title="Detailed Revenue" aria-label="Detailed Revenue">View</a>
+                    <span class="d-block pt-1 pl-2 pr-2 text-muted text-truncate">
+                      more
                     </span>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-clean">
-                    <a href="#" class="dropdown-item">Export PDF</a>
-                    <a href="#" class="dropdown-item">Export Tasks</a>
-                    <a href="#" class="dropdown-item">Print</a>
                   </div>
-                </div>
-                <!-- /dropdown options -->
 
-                <div class="avatar-group mb-3"><!-- avatars -->
-                  <div class="avatar avatar-xs avatar-border rounded-circle"
-                    style="background-image:url(../../html_frontend/demo.files/images/avatar/jessica_barden.jpg)"></div>
-                  <div class="avatar avatar-xs avatar-border rounded-circle"
-                    style="background-image:url(../../html_frontend/demo.files/images/avatar/jadson_dantas.jpg)"></div>
-                  <div class="avatar avatar-xs avatar-border rounded-circle"
-                    style="background-image:url(../../html_frontend/demo.files/images/avatar/tasmin_egerton.jpg)"></div>
-                  <div class="avatar avatar-xs avatar-border rounded-circle bg-primary text-white">
-                    <i>2+</i>
-                  </div>
-                </div>
-
-                <a href="#" class="d-block h6 text-dark">Project Ikarus</a>
-                <p class="small">This project has a timeline, we need to finish it as soon as possible!</p>
-
-                <!-- progress -->
-                <span class="small">39%</span>
-                <div class="progress" style="height:3px">
-                  <div class="progress-bar bg-danger" role="progressbar" aria-label="progressbar" style="width: 39%"
-                    aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
               </div>
-
-              <!-- card -->
-              <div class="bg-white shadow-lg p-4 rounded my-3 transition-hover-top transition-all-ease-150">
-
-                <!-- dropdown options -->
-                <div class="float-end dropdown">
-                  <button type="button" class="dropdown-toggle btn btn-sm btn-light px-2 py-1 mt-n1"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="options">
-                    <span>
-                      <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                        <path
-                          d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
-                        </path>
-                      </svg>
-                    </span>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-clean">
-                    <a href="#" class="dropdown-item">Export PDF</a>
-                    <a href="#" class="dropdown-item">Export Tasks</a>
-                    <a href="#" class="dropdown-item">Print</a>
-                  </div>
-                </div>
-                <!-- /dropdown options -->
-
-                <div class="avatar-group mb-3"><!-- avatars -->
-                  <div class="avatar avatar-xs avatar-border rounded-circle"
-                    style="background-image:url(../../html_frontend/demo.files/images/avatar/jadson_dantas.jpg)"></div>
-                  <div class="avatar avatar-xs avatar-border rounded-circle"
-                    style="background-image:url(../../html_frontend/demo.files/images/avatar/tasmin_egerton.jpg)"></div>
-                </div>
-
-                <a href="#" class="d-block h6 text-dark">Remarketing</a>
-                <p class="small">Our client needs remarketing for his two projects!</p>
-
-                <!-- progress -->
-                <span class="small">78%</span>
-                <div class="progress" style="height:3px">
-                  <div class="progress-bar bg-warning" role="progressbar" aria-label="progressbar" style="width: 78%"
-                    aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-
-              </div>
-
-              <div class="clearfix bg-light p-1 row-pill">
-                <a href="#" class="btn btn-pill btn-sm btn-warning py-1 mb-0 float-start transition-hover-end"
-                  title="Detailed Revenue" aria-label="Detailed Revenue">View</a>
-                <span class="d-block pt-1 px-2 text-muted text-truncate">
-                  view all projects
-                </span>
-              </div>
+              <!-- /reveal on hover container -->
 
             </div>
 
@@ -1258,51 +1108,8 @@
                           "label": "Customers",
                           "data": [11, 11, 17, 11, 15, 12, 13, 12, 11, 12, 7, 8],
                           "fill": false,
-                          "backgroundColor": "rgba(255, 159, 64, 1)"
+                          "backgroundColor": "rgba(255, 99, 132, 1)"
                       }]'></canvas>
-              </div>
-
-            </div>
-            <!-- /small graph widget -->
-
-          </div>
-
-          <div class="col-12 col-md-6 col-xl-3">
-
-            <!-- small graph widget -->
-            <div class="bg-white shadow-md text-dark p-5 rounded text-center">
-
-              <!-- icon -->
-              <span
-                class="d-inline-flex align-items-center justify-content-center bg-light text-gray-900 rounded-circle"
-                style="width: 100px;height:100px">
-                <svg width="54px" height="54px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <rect x="0" y="0" width="24" height="24"></rect>
-                    <path fill="currentColor" opacity="0.3" fill-rule="nonzero"
-                      d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z">
-                    </path>
-                    <path fill="currentColor"
-                      d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z">
-                    </path>
-                  </g>
-                </svg>
-              </span>
-
-              <h3 class="fs-5 mt-4">Monthly Orders</h3>
-              <p>Last 30 days</p>
-
-              <!-- chart -->
-              <div class="position-relative" style="height:100px">
-                <canvas class="chartjs" data-chartjs-dots="false" data-chartjs-legend="false" data-chartjs-grid="false"
-                  data-chartjs-tooltip="true" data-chartjs-line-width="3" data-chartjs-type="line"
-                  data-chartjs-labels='["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]'
-                  data-chartjs-datasets='[{                                                           
-                        "label": "Orders",
-                        "data": [11, 11, 17, 11, 15, 12, 13, 16, 11, 18, 20, 21],
-                        "fill": false,
-                        "backgroundColor": "rgba(54, 162, 235, 1)"
-                    }]'></canvas>
               </div>
 
             </div>
@@ -1363,6 +1170,48 @@
 
           </div>
 
+          <div class="col-12 col-md-6 col-xl-3">
+
+            <!-- small graph widget -->
+            <div class="bg-white shadow-md text-dark p-5 rounded text-center">
+
+              <!-- icon -->
+              <span
+                class="d-inline-flex align-items-center justify-content-center bg-light text-gray-900 rounded-circle"
+                style="width: 100px;height:100px">
+                <svg width="54px" height="54px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <rect x="0" y="0" width="24" height="24"></rect>
+                    <path fill="currentColor" opacity="0.3" fill-rule="nonzero"
+                      d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z">
+                    </path>
+                    <path fill="currentColor"
+                      d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z">
+                    </path>
+                  </g>
+                </svg>
+              </span>
+
+              <h3 class="fs-5 mt-4">Monthly Orders</h3>
+              <p>Last 30 days</p>
+
+              <!-- chart -->
+              <div class="position-relative" style="height:100px">
+                <canvas class="chartjs" data-chartjs-dots="false" data-chartjs-legend="false" data-chartjs-grid="false"
+                  data-chartjs-tooltip="true" data-chartjs-line-width="3" data-chartjs-type="line"
+                  data-chartjs-labels='["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]'
+                  data-chartjs-datasets='[{                                                           
+                        "label": "Orders",
+                        "data": [11, 11, 17, 11, 15, 12, 13, 16, 11, 18, 20, 21],
+                        "fill": false,
+                        "backgroundColor": "rgba(153, 102, 255, 1)"
+                    }]'></canvas>
+              </div>
+
+            </div>
+            <!-- /small graph widget -->
+
+          </div>
 
         </div>
         <!-- /widgets -->
@@ -2216,6 +2065,22 @@
           <!-- /logs -->
 
 
+          <!-- alert : upgrade -->
+          <div class="col-12">
+            <div class="d-flex align-items-center bg-white shadow-xs rounded small p-3">
+
+              <a href="#" title="Upgrade" aria-label="Upgrade"
+                class="btn  btn-sm btn-warning py-1 mb-0 me-3 float-start transition-hover-end">
+                Upgrade
+              </a>
+              <span class="d-block pt-1 px-2 text-muted text-truncate">
+                using 89% of total storage
+              </span>
+
+            </div>
+          </div>
+          <!-- /alert : upgrade -->
+
 
           <!-- imports -->
           <div class="col-12 col-xl-8">
@@ -2517,10 +2382,10 @@
 
 
     <!-- footer -->
-    <footer id="footer" class="bg-white shadow">
-      <div class="p-3">
+    <footer id="footer">
+      <div class="p-3 bg-white shadow-sm rounded">
 
-        <span class="small fw-medium">&copy; iTED Foundation</span>
+        <span class="small fw-medium">&copy; Smarty Inc</span>
 
         <div class="d-inline-block float-end dropdown">
           <ul class="list-inline m-0">
@@ -2656,6 +2521,44 @@
   </div>
   <!-- /offcanvas : chat -->
 
+
+  <!-- offcanvas : demos -->
+  <div class="offcanvas offcanvas-lg offcanvas-end" tabindex="-1" id="offcanvasDemos"
+    aria-labelledby="offcanvasDemosLabel">
+
+    <!-- offcanvas : header -->
+    <div class="offcanvas-header border-bottom">
+      <div class="offcanvas-title lh-1" id="offcanvasDemosLabel">
+        <span class="d-block fs-4 mb-1 text-danger-gradient fw-bold">Smarty 5</span>
+        <span class="d-block small fw-medium">Frontend + Admin</span>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <!-- 
+
+        offcanvas : body 
+
+        content loaded via ajax.
+        Remove .js-ajax class and data-ajax-url for non-ajax 
+
+      -->
+    <div class="offcanvas-body p-4 p-xl-5 js-ajax" data-ajax-url="_ajax/offcanvas_demos.html">
+      <!-- data loaded via ajax -->
+    </div>
+
+  </div>
+  <!-- /offcanvas : demos -->
+
+
+  <!-- floating buttons (demos, buy now) -->
+  <div class="text-rotate position-fixed end-0 top-50 mt-n7 z-index-5">
+    <a href="#offcanvasDemos" data-bs-toggle="offcanvas" aria-controls="offcanvasDemos"
+      class="btn btn-sm link-normal bg-white shadow rounded-xl rounded-end-0 mx-0 mt-1 pe-1 px-2">Demos</a>
+    <a href="https://wrapbootstrap.com/theme/smarty-website-admin-rtl-WB02DSN1B" target="_blank" rel="noopener nofollow"
+      class="btn btn-sm link-normal bg-white shadow rounded-xl rounded-end-0 mx-0 mt-1 pe-1 px-2">Buy Now</a>
+  </div>
+  <!-- /floating buttons (demos, buy now) -->
 
 
   <!-- Core javascripts -->
