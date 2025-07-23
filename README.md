@@ -1,10 +1,10 @@
 # 📊 Project AURA – Academic Unified Reporting & Automation
 
-Welcome to **Project AURA**, a transformative initiative by the Canadian College of Technology and Business (CCTB) in collaboration with **iTED (Ideas para Educar)**.
+Welcome to **Project AURA**, a transformative initiative by **iTED (Ideas to Educate)**.
 
 ---
 
-## 🚀 Project Vision
+## Project Vision
 
 Build a secure, intelligent, and responsive platform that automates and elevates how we manage academic operations. From automating grade retrieval to generating transcripts, **AURA** streamlines processes that are currently manual, error-prone, and time-consuming.
 
@@ -12,7 +12,7 @@ Through a powerful blend of **Python automation**, **Canvas APIs**, **Firebase a
 
 ---
 
-## 🎯 Key Objectives
+## Key Objectives
 
 - **Automate Data Processing:** Retrieve grades, attendance, and assignments from Canvas LMS via its API.
 - **Responsive Web App:** Multi-user interface with admin & operator roles, secured by Firebase Auth.
@@ -23,7 +23,7 @@ Through a powerful blend of **Python automation**, **Canvas APIs**, **Firebase a
 
 ---
 
-## 💡 Why Join This Project?
+## Why Join This Project?
 
 ✅ Gain **real-world experience** on a production-grade system.  
 ✅ Work directly with **Canvas APIs, Firebase, Python, PHP**, and deploy on **Linux servers**.  
@@ -32,29 +32,17 @@ Through a powerful blend of **Python automation**, **Canvas APIs**, **Firebase a
 
 ---
 
-## 🧑‍💻 Built by a Multidisciplinary Team
-
-This project brings together students across:
-
-- **Data Engineering (DEAC):** Data pipelines, dashboards, analytics.
-- **Fullstack Web Development (FSWC):** Building the responsive web app and backend services.
-- **System Administration (BMTC):** Linux server deployment and automation scripts.
-- **Security Operations (SOAC):** Authentication, audit logging, secure access controls.
-- **Software Quality Assurance (SQAC):** Testing plans, bug tracking, ensuring reliability.
-
----
-
-## 🌐 Project Details
+## Project Details
 
 | **Project Title** | Project AURA (Academic Unified Reporting & Automation) |
 |-------------------|-------------------------------------------------------|
 | **Location**      | Canadian College of Technology and Business (CCTB)     |
 | **Platform URL**  | To be defined                                         |
-| **GitHub Repo**   | To be defined                                         |
+| **GitHub Repo**   | https://github.com/eduval/ited-project-aura                                       |
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 _(Setup instructions coming soon as the project reaches deployment milestones)_
 
