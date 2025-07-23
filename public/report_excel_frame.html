@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reports Panel</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="container">
-      <p class="title">Reports….</p>
-      <div class="card-container">
-        <div class="card">Weekly<br />Reports</div>
-        <div class="card">Reports<br />History</div>
-        <div class="card">See<br />statistics<br />%</div>
-        <div class="card upload-card">
-          <label for="excel-upload">Upload<br />excel File</label>
-          <input
-            type="file"
-            id="excel-upload"
-            accept=".xlsx, .xls"
-            hidden
-          />
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reports Panel</title>
+  <link rel="stylesheet" href="report_excel_css.css" />
+</head>
+<body>
+  <div class="container">
+    <p class="title">Reports….</p>
+    <div class="card-container">
+      <div class="card">Weekly<br />Reports</div>
+      <div class="card">Reports<br />History</div>
+      <div class="card">See<br />statistics<br />%</div>
+      <div class="card upload-card">
+        <label for="excel-upload">Upload<br />excel File</label>
+        <input
+          type="file"
+          id="excel-upload"
+          accept=".xlsx, .xls"
+          hidden
+        />
       </div>
     </div>
+  </div>
 
-    <script>
-      document.querySelector(".upload-card").addEventListener("click", () => {
-        document.getElementById("excel-upload").click();
-      });
+  <script>
+    document.querySelector(".upload-card").addEventListener("click", () => {
+      document.getElementById("excel-upload").click();
+    });
 
-      document.getElementById("excel-upload").addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          alert(`Uploaded: ${file.name}`);
-          // Aquí podrías añadir código para enviarlo al backend o procesarlo
-        }
-      });
-    </script>
-  </body>
+    document.getElementById("excel-upload").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        alert(`Uploaded: ${file.name}`);
+      }
+    });
+  </script>
+</body>
 </html>
