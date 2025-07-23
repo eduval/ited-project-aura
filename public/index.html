@@ -1,138 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body,
-        html {
-            height: 100%;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .login-container {
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            margin: 12px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #45a049;
-        }
-
-        .forgot-password {
-            margin-top: 12px;
-        }
-
-        .forgot-password a {
-            color: #4CAF50;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .forgot-password a:hover {
-            text-decoration: underline;
-        }
-
-        .quote {
-            margin-top: 30px;
-            font-size: 14px;
-            font-style: italic;
-            color: #555;
-            min-height: 40px;
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aura Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form>
-            <input type="text" class="input-field" placeholder="Username" required>
-            <input type="password" class="input-field" placeholder="Password" required>
-            <button type="submit" class="btn">Login</button>
-        </form>
-        <div class="forgot-password">
-            <a href="#">Forgot Password?</a>
+
+  <!-- Login Page -->
+  <div class="login-page">
+    <form class="login-form">
+      <h1>cctb</h1>
+      <label for="username"><b>Username</b></label>
+      <input type="text" id="username" name="username" placeholder="Enter username" />
+
+      <label for="password"><b>Password</b></label>
+      <input type="password" id="password" name="password" placeholder="Enter password" />
+
+      <a href="welcome.html" class="login-button">Login</a>
+
+      <a href="#" class="forgot-password">I forgot my password</a>
+    </form>
+  </div>
+
+  <!-- Welcome Page (hidden for now) -->
+  <div class="welcome-page" style="display: none;">
+    <div class="container">
+      <aside class="sidebar">
+        <p class="welcome-text">Welcome David</p>
+        <nav class="menu">
+          <a href="#" class="btn">Dashboard</a>
+          <a href="#" class="btn">Notifications</a>
+          <a href="#" class="btn">Students Records</a>
+          <a href="#" class="btn">Reports</a>
+          <a href="#" class="btn">Tasks</a>
+          <a href="#" class="btn">Settings</a>
+        </nav>
+        <p class="help-link"><a href="#">I need some help</a></p>
+      </aside>
+
+      <main class="main-content">
+        <div class="notification">
+          <strong>Luis P. has been registered<br />with a grade under 7</strong>
         </div>
-        <div class="quote" id="quote"></div>
+        <div class="chart-area">
+          <div class="placeholder-chart"></div>
+        </div>
+      </main>
     </div>
+  </div>
 
-    <script>
-        // Random background color
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
-        // Random motivational academic phrase
-        const quotes = [
-            "Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",
-            "Colleges are not just about degrees; they're about building dreams.",
-            "The academic system is a bridge between who you are and who you can become.",
-            "Your future begins with a single login.",
-            "Success starts here — unlock your academic journey.",
-            "Empowering learners, one course at a time.",
-            "Knowledge is the foundation. Your college is the architect.",
-            "Great minds start with great systems.",
-            "You belong here. Let's build your future together.",
-            "Learning never stops — especially when you're logged in."
-        ];
-
-        // Apply random background and phrase
-        document.body.style.backgroundColor = getRandomColor();
-        document.getElementById("quote").innerText = quotes[Math.floor(Math.random() * quotes.length)];
-    </script>
 </body>
-
 </html>
