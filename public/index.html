@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login - Aura</title>
+  <title>Aura Login</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,17 +11,45 @@
   <!-- Login Page -->
   <div class="login-page">
     <form class="login-form">
-      <h1> "cctb "</h1>
+      <h1>cctb</h1>
       <label for="username"><b>Username</b></label>
       <input type="text" id="username" name="username" placeholder="Enter username" />
 
       <label for="password"><b>Password</b></label>
       <input type="password" id="password" name="password" placeholder="Enter password" />
 
-      <button type="submit" class="login-button">Login</button>
+      <a href="welcome.html" class="login-button">Login</a>
+
 
       <a href="#" class="forgot-password">I forgot my password</a>
     </form>
+  </div>
+
+  <!-- Welcome Page (hidden for now) -->
+  <div class="welcome-page" style="display: none;">
+    <div class="container">
+      <aside class="sidebar">
+        <p class="welcome-text">Welcome David</p>
+        <nav class="menu">
+          <a href="#" class="btn">Dashboard</a>
+          <a href="#" class="btn">Notifications</a>
+          <a href="#" class="btn">Students Records</a>
+          <a href="#" class="btn">Reports</a>
+          <a href="#" class="btn">Tasks</a>
+          <a href="#" class="btn">Settings</a>
+        </nav>
+        <p class="help-link"><a href="#">I need some help</a></p>
+      </aside>
+
+      <main class="main-content">
+        <div class="notification">
+          <strong>Luis P. has been registered<br />with a grade under 7</strong>
+        </div>
+        <div class="chart-area">
+          <div class="placeholder-chart"></div>
+        </div>
+      </main>
+    </div>
   </div>
 
 </body>
