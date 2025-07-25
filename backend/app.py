@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import os
 from process_transcripts import process_transcripts
+from firebase_utils import push_alerts_to_realtime_db
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
@@ -22,13 +23,23 @@ def upload_excel():
     file.save(filepath)
 
     try:
-        output_dir = process_transcripts(filepath)
+        output_dir, alerts = process_transcripts(filepath)
+
+        # Push alerts to Firebase
+        push_alerts_to_realtime_db(file.filename, alerts)
+
         return jsonify({
             "message": "File processed successfully.",
-            "output_folder": output_dir
+            "output_folder": output_dir,
+            "alerts": alerts
         }), 200
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route('/transcripts_output/<filename>')
+def download_transcript(filename):
+    return send_from_directory("transcripts_output", filename, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True)

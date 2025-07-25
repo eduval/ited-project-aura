@@ -6,7 +6,6 @@ from copy import copy
 def process_transcripts(input_file, output_dir="transcripts_output"):
     if not input_file.endswith(".xlsx"):
         raise ValueError("Only .xlsx Excel files are supported.")
-
     if not os.path.exists(input_file):
         raise FileNotFoundError(f"File not found: {input_file}")
 
@@ -15,12 +14,10 @@ def process_transcripts(input_file, output_dir="transcripts_output"):
     wb = load_workbook(input_file)
     raw_sheet = wb["Raw"]
     headers = [str(cell.value).strip() if cell.value else "" for cell in raw_sheet[1]]
-    students = [
-        dict(zip(headers, [cell.value for cell in row]))
-        for row in raw_sheet.iter_rows(min_row=2)
-    ]
+    students = [dict(zip(headers, [cell.value for cell in row])) for row in raw_sheet.iter_rows(min_row=2)]
     form_templates = {sheet: wb[sheet] for sheet in wb.sheetnames if sheet != "Raw"}
     output_books = {}
+    alerts = []
 
     for student in students:
         intake = student.get("Intake")
@@ -57,25 +54,29 @@ def process_transcripts(input_file, output_dir="transcripts_output"):
         for row_idx, row_dim in template.row_dimensions.items():
             new_ws.row_dimensions[row_idx].height = row_dim.height
 
-        # Calculate averages
         attendance_values = []
         grade_values = []
 
         for key, value in student.items():
-            if isinstance(key, str) and (key.lower().endswith("attendance") or key.lower().endswith("grade")):
+            if isinstance(key, str) and ("grade" in key.lower() or "attendance" in key.lower()):
+                if value is None:
+                    alerts.append(f"{student_no} is missing {key}")
+                elif "grade" in key.lower() and isinstance(value, (int, float)) and value < 40:
+                    alerts.append(f"{student_no} has low grade in {key} ({value})")
+                elif "attendance" in key.lower() and isinstance(value, (int, float)) and value < 60:
+                    alerts.append(f"{student_no} has low attendance in {key} ({value})")
+
                 try:
                     parts = key.rsplit(" ", 1)
                     if len(parts) != 2:
                         continue
                     course_code, field = parts
                     field = field.lower()
-
                     if isinstance(value, (int, float)):
                         if field == "attendance":
                             attendance_values.append(float(value))
                         elif field == "grade":
                             grade_values.append(float(value))
-
                     for row in range(1, new_ws.max_row + 1):
                         if new_ws.cell(row=row, column=1).value == course_code:
                             col = 5 if field == "attendance" else 6
@@ -101,4 +102,4 @@ def process_transcripts(input_file, output_dir="transcripts_output"):
         wb.save(out_path)
 
     print(f"✅ All transcripts generated in: {output_dir}")
-    return output_dir
+    return output_dir, alerts
