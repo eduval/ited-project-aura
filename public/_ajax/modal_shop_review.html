@@ -1,0 +1,74 @@
+	<!-- 
+
+		PRODUCT REVIEW
+
+	-->
+	<form novalidate method="post" action="#" class="bs-validate">
+
+		<!-- COMMENT ID : WE ADD A REPLY TO -->
+		<input type="hidden" name="product_id" value="1">
+
+
+		<div class="modal-header border-0 pb-0">
+			<h5 class="modal-title m-0">Write a review</h5>
+			<button type="button" class="close pointer" data-bs-dismiss="modal" aria-label="Close">
+				<span class="fi fi-close " aria-hidden="true"></span>
+			</button>
+		</div>
+
+
+		<div class="modal-body p-4">
+
+
+			<!-- already logged in -->
+			<span class="d-block text-muted small mb-1">
+				Logged in as: <b>John Doe</b>. 
+				Not you? Please <a rel="nofollow" href="#">sign out</a>
+			</span>
+
+			<div class="form-floating mb-3">
+				<input required placeholder="Review Title" id="review_title" type="text" value="" class="form-control">
+				<label for="review_title">Review Title</label>
+			</div>
+
+			<div class="clearfix mb-3">
+
+				<div class="form-floating">
+					<textarea required rows="4" style="min-height:120px" id="comment_description"
+							data-output-target=".js-form-advanced-char-left" 
+							class="form-control js-form-advanced-char-count-down" 
+							maxlength="3000" placeholder="Your review"></textarea>
+					<label for="comment_description">Your review</label>
+				</div>
+
+				<span class="small text-muted text-align-end float-end mt-1">
+					characters left: <span class="js-form-advanced-char-left">3000</span>
+				</span>
+
+			</div>
+
+			<div class="d-block mb-3">
+				<select required name="product_review_star" class="form-control">
+					<option value="5" data-icon="fi fi-star-full text-warning float-start">5 stars</option>
+					<option value="4" data-icon="fi fi-star-full text-warning float-start">4 stars</option>
+					<option value="3" data-icon="fi fi-star-full text-warning float-start">3 stars</option>
+					<option value="2" data-icon="fi fi-star-full text-warning float-start">2 stars</option>
+					<option value="1" data-icon="fi fi-star-full text-warning float-start">1 star</option>
+				</select>
+			</div>
+
+		</div>
+
+		<div class="modal-footer border-0 pt-0">
+			<button type="submit" class="btn btn-primary">
+				<i class="fi fi-check"></i>
+				Submit
+			</button>
+
+			<a href="#" class="btn btn-secondary d-none d-sm-block" data-bs-dismiss="modal">
+				<i class="fi fi-close"></i>
+				Close
+			</a>
+		</div>
+
+	</form>

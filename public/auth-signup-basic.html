@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8">
+    <title>Smarty v5</title>
+    <meta name="description" content="...">
+
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+
+    <!-- up to 10% speed up for external res -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <!-- preloading icon font is helping to speed up a little bit -->
+    <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="assets/css/core.min.css">
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+  </head>
+  <body>
+
+
+    <!-- back button -->
+    <a href="index.html" class="link-muted position-absolute top-0 start-0 p-2 d-inline-grid gap-auto-2 z-index-10">
+      <svg class="rtl-flip" width="18px" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path>
+      </svg>
+      <span>back to landing</span>
+    </a>
+
+
+    <!-- -->
+    <div class="section">
+      <div class="container">
+
+        <div class="text-center mb-5">
+          <h1 class="display-5 fw-bold">Sign up</h1>
+
+          <p class="lead m-0">
+            Create your account in one easy step
+          </p>
+        </div>
+
+        <div class="col-md-9 col-lg-6 mx-auto">
+          
+          <!-- form -->
+          <form class="bs-validate p-4 p-md-5 card rounded-xl" novalidate method="post" action="#" 
+              data-error-toast-text="<i class='fi fi-circle-spin fi-spin float-start'></i> Please, complete all required fields!" 
+              data-error-toast-delay="3000" 
+              data-error-toast-position="top-right">
+
+
+            <!--
+            <p class="text-danger">
+              Ups! Please check again
+            </p>
+            -->
+
+
+            <div class="form-floating mb-3">
+              <input required placeholder="Full name" id="account_full_name" name="account_full_name" type="text" class="form-control">
+              <label for="account_full_name">Full name</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input required placeholder="Email address" id="account_email" name="account_email" type="email" class="form-control">
+              <label for="account_email">Email address</label>
+            </div>
+
+            <div class="input-group-over mb-3">
+              <div class="form-floating">
+                <input required placeholder="Password" id="account_password" type="password" class="form-control">
+                <label for="account_password">Password</label>
+              </div>
+
+              <!-- `SOW : Form Advanced` plugin used -->
+              <a href="account-simple-signin-password.html" class="btn smaller btn-password-type-toggle" data-bs-target="#account_password">
+                <span class="group-icon">
+                  <i class="fi fi-eye m-0"></i>
+                  <i class="fi fi-close m-0"></i>
+                </span>
+              </a>
+            </div>
+
+            <!-- GDPR CONSENT -->
+            <div class="mb-3 border p-3 rounded">
+
+              <p class="small mb-3 pb-3 border-bottom">
+                I consent that my personal data is stored according to <span class="fw-medium">2016/679/UE (UE GDPR)</span>. 
+              </p>
+
+              <div class="form-check">
+                <input required class="form-check-input" id="contact_gdpr" name="contact_gdpr" type="checkbox" value="1">
+                <label class="form-check-label" for="contact_gdpr">
+                  I do accept Smarty <a class="text-decoration-none" href="#" target="_blank">terms & conditions</a>.
+                </label>
+              </div>
+
+            </div>
+            <!-- /GDPR CONSENT -->
+
+            <div class="row">
+
+              <div class="col-12 col-md-6">
+                <button type="submit" class="btn btn-primary w-100 fw-medium">
+                  Sign Up
+                </button>
+              </div>
+
+              <div class="col-12 col-md-6 text-align-end text-center-xs">
+                <!-- empty -->
+              </div>
+
+            </div>
+
+          </form>
+
+
+          <!-- alternate -->
+          <div class="px-4 px-md-5 pb-4 pb-md-5 pt-4 bg-white card rounded-xl mt-3">
+
+            <div class="d-flex align-items-center justify-content-between w-100 max-w-250 mx-auto mb-3 small text-muted">
+              <hr class="w-100">
+              <span class="flex-none px-4">OR</span>
+              <hr class="w-100">
+            </div> 
+
+            <div class="row">
+
+              <div class="col-6">
+                <a href="#" class="btn btn-sm w-100 btn-facebook transition-hover-top mt-1" rel="noopener">
+                  facebook
+                </a>
+              </div>
+
+              <div class="col-6">
+                <a href="#" class="btn btn-sm w-100 bg-googleplay transition-hover-top mt-1 text-white" rel="noopener">
+                  google
+                </a>
+              </div>
+
+            </div>
+
+          </div> 
+
+        </div>
+
+      </div>
+    </div>
+    <!-- / -->
+
+
+    <!-- Core javascripts -->
+    <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/vendor_bundle.min.js"></script>
+
+    <!-- Your custom javascripts -->
+
+  </body>
+</html>

@@ -1,0 +1,58 @@
+	<!-- 
+
+		REVIEW REPLY
+
+	-->
+	<form novalidate method="post" action="#" class="bs-validate">
+
+		<!-- COMMENT ID : WE ADD A REPLY TO -->
+		<input type="hidden" name="review_id" value="1">
+
+
+		<div class="modal-header border-0 pb-0">
+			<h5 class="modal-title m-0">Write a reply</h5>
+			<button type="button" class="close pointer" data-bs-dismiss="modal" aria-label="Close">
+				<span class="fi fi-close " aria-hidden="true"></span>
+			</button>
+		</div>
+
+		<div class="modal-body p-4">
+
+			<!-- already logged in -->
+			<span class="d-block text-muted small mb-1">
+				Logged in as: <b>John Doe</b>. 
+				Not you? Please <a rel="nofollow" href="#">sign out</a>
+			</span>
+
+
+			<div class="clearfix mb-3">
+
+				<div class="form-floating">
+					<textarea required rows="4" style="min-height:120px" id="comment_description"
+							data-output-target=".js-form-advanced-char-left" 
+							class="form-control js-form-advanced-char-count-down" 
+							maxlength="1000" placeholder="Your comment"></textarea>
+					<label for="comment_description">Your comment</label>
+				</div>
+
+				<span class="small text-muted text-align-end float-end mt-1">
+					characters left: <span class="js-form-advanced-char-left">1000</span>
+				</span>
+
+			</div>
+
+		</div>
+
+		<div class="modal-footer border-0 pt-0">
+			<button type="submit" class="btn btn-primary">
+				<i class="fi fi-check"></i>
+				Submit
+			</button>
+
+			<a href="#" class="btn btn-secondary d-none d-sm-block" data-bs-dismiss="modal">
+				<i class="fi fi-close"></i>
+				Close
+			</a>
+		</div>
+
+	</form>
