@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Smarty v5</title>
+  <title>AURA</title>
   <meta name="description" content="...">
 
   <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
@@ -84,7 +84,7 @@
 
             <!-- logo : mobile only -->
             <a class="navbar-brand d-inline-block d-lg-none mx-2" href="index.html">
-              <img src="assets/images/logo/logo_sm.svg" width="38" height="38" alt="...">
+              <img src="https://ited.org.ec/img/ited.png" width="58" height="38" alt="...">
             </a>
 
           </div>
@@ -303,143 +303,9 @@
 
             </li>
 
-            <!-- chat -->
-            <li class="list-inline-item mx-1 dropdown">
 
-              <a role="button" href="#offcanvasChat" data-bs-toggle="offcanvas" aria-controls="offcanvasChat"
-                class="btn btn-sm btn-light rounded-circle text-primary-hover dropdown-toggle" aria-label="Chat">
 
-                <!-- svg icon -->
-                <span style="margin-top: -3px;">
-                  <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <rect x="0" y="0" width="24" height="24"></rect>
-                      <path fill="currentColor"
-                        d="M16,15.6315789 L16,12 C16,10.3431458 14.6568542,9 13,9 L6.16183229,9 L6.16183229,5.52631579 C6.16183229,4.13107011 7.29290239,3 8.68814808,3 L20.4776218,3 C21.8728674,3 23.0039375,4.13107011 23.0039375,5.52631579 L23.0039375,13.1052632 L23.0206157,17.786793 C23.0215995,18.0629336 22.7985408,18.2875874 22.5224001,18.2885711 C22.3891754,18.2890457 22.2612702,18.2363324 22.1670655,18.1421277 L19.6565168,15.6315789 L16,15.6315789 Z">
-                      </path>
 
-                      <!-- animate-blink -->
-                      <path class="animate-blink" fill="#6dbb30" opacity="0.8"
-                        d="M1.98505595,18 L1.98505595,13 C1.98505595,11.8954305 2.88048645,11 3.98505595,11 L11.9850559,11 C13.0896254,11 13.9850559,11.8954305 13.9850559,13 L13.9850559,18 C13.9850559,19.1045695 13.0896254,20 11.9850559,20 L4.10078614,20 L2.85693427,21.1905292 C2.65744295,21.3814685 2.34093638,21.3745358 2.14999706,21.1750444 C2.06092565,21.0819836 2.01120804,20.958136 2.01120804,20.8293182 L2.01120804,18.32426 C1.99400175,18.2187196 1.98505595,18.1104045 1.98505595,18 Z M6.5,14 C6.22385763,14 6,14.2238576 6,14.5 C6,14.7761424 6.22385763,15 6.5,15 L11.5,15 C11.7761424,15 12,14.7761424 12,14.5 C12,14.2238576 11.7761424,14 11.5,14 L6.5,14 Z M9.5,16 C9.22385763,16 9,16.2238576 9,16.5 C9,16.7761424 9.22385763,17 9.5,17 L11.5,17 C11.7761424,17 12,16.7761424 12,16.5 C12,16.2238576 11.7761424,16 11.5,16 L9.5,16 Z">
-                      </path>
-
-                      <!-- no animate -->
-                      <!-- <path fill="#000000" opacity="0.3" d="M1.98505595,18 L1.98505595,13 C1.98505595,11.8954305 2.88048645,11 3.98505595,11 L11.9850559,11 C13.0896254,11 13.9850559,11.8954305 13.9850559,13 L13.9850559,18 C13.9850559,19.1045695 13.0896254,20 11.9850559,20 L4.10078614,20 L2.85693427,21.1905292 C2.65744295,21.3814685 2.34093638,21.3745358 2.14999706,21.1750444 C2.06092565,21.0819836 2.01120804,20.958136 2.01120804,20.8293182 L2.01120804,18.32426 C1.99400175,18.2187196 1.98505595,18.1104045 1.98505595,18 Z M6.5,14 C6.22385763,14 6,14.2238576 6,14.5 C6,14.7761424 6.22385763,15 6.5,15 L11.5,15 C11.7761424,15 12,14.7761424 12,14.5 C12,14.2238576 11.7761424,14 11.5,14 L6.5,14 Z M9.5,16 C9.22385763,16 9,16.2238576 9,16.5 C9,16.7761424 9.22385763,17 9.5,17 L11.5,17 C11.7761424,17 12,16.7761424 12,16.5 C12,16.2238576 11.7761424,16 11.5,16 L9.5,16 Z"></path> -->
-                    </g>
-                  </svg>
-                </span>
-
-              </a>
-
-            </li>
-
-            <!-- messages -->
-            <li class="list-inline-item mx-1 dropdown">
-
-              <a role="button" href="#" id="dropdownMessageOptions"
-                class="btn btn-sm btn-light rounded-circle text-primary-hover dropdown-toggle" data-bs-toggle="dropdown"
-                data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true" aria-label="Messages">
-
-                <!-- svg icon -->
-                <span style="margin-top: -3px;">
-
-                  <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <rect x="0" y="0" width="24" height="24"></rect>
-                      <path fill="currentColor"
-                        d="M8,6 L20.5,6 C21.3284271,6 22,6.67157288 22,7.5 C22,8.32842712 21.3284271,9 20.5,9 L8,9 L8,19.5 C8,20.3284271 7.32842712,21 6.5,21 C5.67157288,21 5,20.3284271 5,19.5 L5,9 L3.5,9 C2.67157288,9 2,8.32842712 2,7.5 C2,6.67157288 2.67157288,6 3.5,6 L5,6 L5,4.5 C5,3.67157288 5.67157288,3 6.5,3 C7.32842712,3 8,3.67157288 8,4.5 L8,6 Z">
-                      </path>
-
-                      <!-- animate-blink -->
-                      <!-- <path class="animate-blink" fill="#6dbb30" opacity="0.8" d="M10,11 L20.5,11 C21.3284271,11 22,11.6715729 22,12.5 L22,15 C22,17.209139 20.209139,19 18,19 L11.5,19 C10.6715729,19 10,18.3284271 10,17.5 L10,11 Z M20,12 C19.4477153,12 19,12.4477153 19,13 L19,16 C19,16.5522847 19.4477153,17 20,17 C20.5522847,17 21,16.5522847 21,16 L21,13 C21,12.4477153 20.5522847,12 20,12 Z"></path> -->
-
-                      <!-- no animate -->
-                      <path fill="currentColor" opacity="0.3"
-                        d="M10,11 L20.5,11 C21.3284271,11 22,11.6715729 22,12.5 L22,15 C22,17.209139 20.209139,19 18,19 L11.5,19 C10.6715729,19 10,18.3284271 10,17.5 L10,11 Z M20,12 C19.4477153,12 19,12.4477153 19,13 L19,16 C19,16.5522847 19.4477153,17 20,17 C20.5522847,17 21,16.5522847 21,16 L21,13 C21,12.4477153 20.5522847,12 20,12 Z">
-                      </path>
-                    </g>
-                  </svg>
-                </span>
-
-              </a>
-
-              <div aria-labelledby="dropdownMessageOptions"
-                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
-                <div class="dropdown-header p-4">
-                  <a href="#" class="js-ajax-modal btn btn-sm btn-primary border-0 px-2 py-1 m-0 smaller float-end"
-                    data-href="_ajax/admin_modal_message_write.html" data-ajax-modal-size="modal-md"
-                    data-ajax-modal-centered="false" data-ajax-modal-backdrop="static">
-                    + MESSAGE
-                  </a>
-                  1 new message
-                </div>
-                <div class="dropdown-divider"></div>
-                <div class="max-vh-50 scrollable-vertical">
-
-                  <!-- <div class="py-5 text-gray-400 text-center">NO ITEMS!</div> -->
-
-                  <!-- item -->
-                  <a href="#" class="clearfix dropdown-item fw-medium p-3 border-bottom border-light overflow-hidden">
-                    <span class="float-end badge bg-success fw-normal">new</span>
-                    <span class="float-end badge bg-danger fw-normal">urgent</span>
-                    <div class="float-start avatar rounded-circle bg-gray-200">FD</div>
-                    <span class="d-block small text-truncate fw-bold">John Doe</span>
-                    <p class="small m-0 text-truncate">Spartans has no weekends, so neither you!</p>
-                    <small class="d-block smaller text-muted">Jan 22, 2019 / 02:21:46pm</small>
-                  </a>
-                  <!-- /item -->
-
-                  <!-- item -->
-                  <a href="#" class="clearfix dropdown-item fw-medium p-3 border-bottom border-light overflow-hidden">
-                    <div class="float-start avatar rounded-circle bg-gray-200"
-                      style="background-image:url(../../html_frontend/demo.files/images/avatar/jessica_barden.jpg)">
-                    </div>
-                    <span class="d-block small text-truncate fw-bold">Jessica Barden</span>
-                    <p class="small m-0 text-truncate">Go with Smarty, you can't go wrong, trust me</p>
-                    <small class="d-block smaller text-muted">Jan 22, 2019 / 02:21:46pm</small>
-                  </a>
-                  <!-- /item -->
-
-                  <!-- item -->
-                  <a href="#" class="clearfix dropdown-item fw-medium p-3 border-bottom border-light overflow-hidden">
-                    <div class="float-start avatar rounded-circle bg-gray-200"
-                      style="background-image:url(../../html_frontend/demo.files/images/avatar/peter_cole.jpg)"></div>
-                    <span class="d-block small text-truncate fw-bold">Peter Cole</span>
-                    <p class="small m-0 text-truncate">RE: No Subject</p>
-                    <small class="d-block smaller text-muted">Jan 22, 2019 / 02:21:46pm</small>
-                  </a>
-                  <!-- /item -->
-
-                  <!-- item -->
-                  <a href="#" class="clearfix dropdown-item fw-medium p-3 border-bottom border-light overflow-hidden">
-                    <div class="float-start avatar rounded-circle bg-gray-200"
-                      style="background-image:url(../../html_frontend/demo.files/images/avatar/jadson_dantas.jpg)">
-                    </div>
-                    <span class="d-block small text-truncate fw-bold">Jadson Dantas</span>
-                    <p class="small m-0 text-truncate">Indeed, this is unbeliveable</p>
-                    <small class="d-block smaller text-muted">Jan 22, 2019 / 02:21:46pm</small>
-                  </a>
-                  <!-- /item -->
-
-                  <!-- item -->
-                  <a href="#" class="clearfix dropdown-item fw-medium p-3 border-bottom border-light overflow-hidden">
-                    <div class="float-start avatar rounded-circle bg-gray-200"
-                      style="background-image:url(../../html_frontend/demo.files/images/avatar/tasmin_egerton.jpg)">
-                    </div>
-                    <span class="d-block small text-truncate fw-bold">Tasmin Egerton</span>
-                    <p class="small m-0 text-truncate">RE: No Subject</p>
-                    <small class="d-block smaller text-muted">Jan 22, 2019 / 02:21:46pm</small>
-                  </a>
-                  <!-- /item -->
-
-                </div>
-                <div class="dropdown-divider mb-0"></div>
-                <a href="#" class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore fw-medium py-3">
-                  View all
-                </a>
-              </div>
-
-            </li>
 
             <!-- account -->
             <li class="list-inline-item mx-1 dropdown">
@@ -447,8 +313,8 @@
               <!-- has avatar -->
               <a href="#" id="dropdownAccountOptions"
                 class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
-                style="background-image:url(../../html_frontend/demo.files/images/unsplash/team/thumb_330/joseph-gonzalez-iFgRcqHznqg-unsplash.jpg)"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
+                style="background-image:url(assets/images/users_img/user.jpg)" data-bs-toggle="dropdown"
+                data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
                 aria-label="Account options"></a>
 
               <!-- no avatar -->
@@ -462,57 +328,38 @@
                 class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
 
                 <!-- user detail -->
-<div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4">
-  <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
-  <span id="user-email" class="d-block smaller fw-medium text-truncate">Cargando...</span>
-  <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
-</div>
+                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4">
+                  <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
+                  <span id="user-email" class="d-block smaller fw-medium text-truncate">Cargando...</span>
+                  <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
+                </div>
 
 
                 <div class="dropdown-divider mb-3"></div>
 
-                <a href="#" class="dropdown-item text-truncate">
-                  <span class="fw-medium">My profile</span>
-                  <small class="d-block text-muted smaller">account settings and more</small>
-                </a>
+
 
                 <a href="#" class="dropdown-item text-truncate">
-                  <small class="badge bg-success-soft float-end">1 new</small>
-                  <span class="fw-medium">My Messages</span>
+                  <small class="badge bg-success-soft float-end">10 new</small>
+                  <span class="fw-medium">My Alerts</span>
                   <small class="d-block text-muted smaller">inbox, projects, tasts</small>
                 </a>
 
-                <a href="#" class="dropdown-item text-truncate">
-                  <small class="badge bg-danger-soft float-end">1 unpaid</small>
-                  <span class="fw-medium">My billing</span>
-                  <small class="d-block text-muted smaller">your monthly billing</small>
-                </a>
 
-                <a href="#" class="dropdown-item text-truncate">
-                  <span class="fw-medium">Account Settings</span>
-                  <small class="d-block text-muted smaller">profile, password and more...</small>
-                </a>
 
-                <a href="#" class="dropdown-item text-truncate">
-                  <span class="fw-medium">Upgrade</span>
-                  <small class="d-block text-muted smaller">upgrade your account</small>
-                </a>
+
+
+
 
                 <div class="dropdown-divider mb-0 mt-3"></div>
 
                 <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
-  <i class="fi fi-power float-start"></i> Log Out
-</a>
+                  <i class="fi fi-power float-start"></i> Log Out
+                </a>
 
               </div>
 
             </li>
-          <!-- 👤 Usuario logueado -->
-<li class="list-inline-item mx-2 d-flex align-items-center">
-  <span class="me-2 text-muted small">👤 <strong id="user-name">Usuario</strong></span>
-  <span class="me-3 text-muted small" id="user-email">email@example.com</span>
-  <button id="logout-btn" class="btn btn-sm btn-outline-danger">Logout</button>
-</li>
 
           </ul>
           <!-- /options -->
@@ -537,7 +384,7 @@
         <!-- sidebar : logo -->
         <div class="py-2 px-3 mb-3 mt-1">
           <a href="index.html">
-            <img src="assets/images/logo/logo_dark.svg" width="110" height="60" alt="...">
+            <img src="https://ited.org.ec/img/ited.png" width="110" height="50" alt="...">
           </a>
         </div>
         <!-- /sidebar : logo -->
@@ -673,7 +520,7 @@
                 </ul>
               </li>
 
-             
+
 
               <li class="nav-item">
                 <a class="nav-link" href="#">
@@ -738,108 +585,7 @@
               </li>
 
 
-              <li class="nav-title mt-5">
-                <h6 class="mb-0 smaller text-muted text-uppercase">DEV AREA</h6>
-              </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="upload-files.html">
-
-                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    class="bi bi-file-earmark-medical" viewBox="0 0 16 16">
-                    <path
-                      d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317V5.5zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z">
-                    </path>
-                    <path
-                      d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z">
-                    </path>
-                  </svg>
-                  <span>Documentation</span>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="../../html_frontend/documentation/components-alerts.html">
-                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    class="bi bi-collection" viewBox="0 0 16 16">
-                    <path
-                      d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z">
-                    </path>
-                  </svg>
-                  <span>Components</span>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="../../html_frontend/documentation/icons-bootstrap.html">
-                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    class="bi bi-droplet-half" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                      d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10c0 0 2.5 1.5 5 .5s5-.5 5-.5c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z">
-                    </path>
-                    <path fill-rule="evenodd"
-                      d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z">
-                    </path>
-                  </svg>
-                  <span>Icons</span>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="../../html_frontend/documentation/forms-overview.html">
-                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    class="bi bi-check-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
-                    <path
-                      d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z">
-                    </path>
-                  </svg>
-                  <span>Forms</span>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="../../html_frontend/documentation/plugins-sow-overview.html">
-                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    class="bi bi-app" viewBox="0 0 16 16">
-                    <path
-                      d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z">
-                    </path>
-                  </svg>
-                  <span>SOW plugins</span>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="../../html_frontend/documentation/plugins-vendor-chartjs.html">
-                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    class="bi bi-app-indicator" viewBox="0 0 16 16">
-                    <path
-                      d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1H5.5z">
-                    </path>
-                    <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
-                  </svg>
-                  <span>Vendor plugins</span>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="../../html_frontend/documentation/changelog.html">
-                  <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    class="bi bi-journal-code" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                      d="M8.646 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 8 8.646 6.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 8l1.647-1.646a.5.5 0 0 0 0-.708z">
-                    </path>
-                    <path
-                      d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z">
-                    </path>
-                    <path
-                      d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z">
-                    </path>
-                  </svg>
-                  <span>Changelog</span>
-                </a>
-              </li>
 
             </ul>
           </nav>
@@ -2039,13 +1785,13 @@
 
               </div>
 
-<div class="p-3">
-  <h5 class="fw-bold">Upload Files</h5>
-  <input type="file" id="fileInput" class="form-control mb-3">
-  <button id="uploadBtn" class="btn btn-primary btn-sm">Upload</button>
+              <div class="p-3">
+                <h5 class="fw-bold">Upload Files</h5>
+                <input type="file" id="fileInput" class="form-control mb-3">
+                <button id="uploadBtn" class="btn btn-primary btn-sm">Upload</button>
 
-  <div id="upload-status" class="mt-2 text-muted small"></div>
-</div>
+                <div id="upload-status" class="mt-2 text-muted small"></div>
+              </div>
 
 
               <!-- content loaded via ajax! -->
@@ -2329,7 +2075,7 @@
     <footer id="footer">
       <div class="p-3 bg-white shadow-sm rounded">
 
-        <span class="small fw-medium">&copy; Smarty Inc</span>
+        <span class="small fw-medium">&copy; AUARA</span>
 
         <div class="d-inline-block float-end dropdown">
           <ul class="list-inline m-0">
@@ -2479,108 +2225,85 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
-    <!-- 
-
-        offcanvas : body 
-
-        content loaded via ajax.
-        Remove .js-ajax class and data-ajax-url for non-ajax 
-
-      -->
-    <div class="offcanvas-body p-4 p-xl-5 js-ajax" data-ajax-url="_ajax/offcanvas_demos.html">
-      <!-- data loaded via ajax -->
-    </div>
-
-  </div>
-  <!-- /offcanvas : demos -->
 
 
-  <!-- floating buttons (demos, buy now) -->
-  <div class="text-rotate position-fixed end-0 top-50 mt-n7 z-index-5">
-    <a href="#offcanvasDemos" data-bs-toggle="offcanvas" aria-controls="offcanvasDemos"
-      class="btn btn-sm link-normal bg-white shadow rounded-xl rounded-end-0 mx-0 mt-1 pe-1 px-2">Demos</a>
-    <a href="https://wrapbootstrap.com/theme/smarty-website-admin-rtl-WB02DSN1B" target="_blank" rel="noopener nofollow"
-      class="btn btn-sm link-normal bg-white shadow rounded-xl rounded-end-0 mx-0 mt-1 pe-1 px-2">Buy Now</a>
-  </div>
-  <!-- /floating buttons (demos, buy now) -->
+
+    <!-- Core javascripts -->
+    <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/vendor_bundle.min.js"></script>
 
 
-  <!-- Core javascripts -->
-  <script src="assets/js/core.min.js"></script>
-  <script src="assets/js/vendor_bundle.min.js"></script>
+    <!-- Firebase Compat para que funcione en el navegador -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
 
-  
-<!-- Firebase Compat para que funcione en el navegador -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <!-- Tu configuración personalizada -->
+    <script src="js/FirebaseAuth.js"></script>
+    <!-- Aquí ya puedes usar firebase.auth() -->
+    <script>
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (!user) {
+          // No logueado → redirigir al login
+          window.location.href = "index.html";
+        } else {
+          // Mostrar datos del usuario en el menú
+          document.getElementById("user-email").textContent = user.email;
+          document.getElementById("user-name").textContent = user.displayName || "Usuario";
+        }
+      });
 
-<!-- Tu configuración personalizada -->
-<script src="js/FirebaseAuth.js"></script>
-<!-- Aquí ya puedes usar firebase.auth() -->
-<script>
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (!user) {
-      // No logueado → redirigir al login
-      window.location.href = "index.html";
-    } else {
-      // Mostrar datos del usuario en el menú
-      document.getElementById("user-email").textContent = user.email;
-      document.getElementById("user-name").textContent = user.displayName || "Usuario";
-    }
-  });
-
-  // Logout
-  document.getElementById("logout-btn").addEventListener("click", (e) => {
-    e.preventDefault();
-    firebase.auth().signOut().then(() => {
-      window.location.href = "index.html";
-    });
-  });
-</script>
-<!-- Firebase Storage SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
-
-<script>
-  const storage = firebase.storage(); // Inicializamos Storage
-
-  // Elementos HTML
-  const fileInput = document.getElementById('fileInput');
-  const uploadBtn = document.getElementById('uploadBtn');
-  const statusDiv = document.getElementById('upload-status');
-
-  // Evento click del botón
-  uploadBtn.addEventListener('click', () => {
-    const file = fileInput.files[0];
-    if (!file) {
-      statusDiv.textContent = 'Please select a file first!';
-      return;
-    }
-
-    statusDiv.textContent = 'Uploading... ⏳';
-
-    // Ruta en Storage
-    const storageRef = storage.ref('uploads/' + file.name);
-    const uploadTask = storageRef.put(file);
-
-    // Progreso y resultado
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        statusDiv.textContent = `Uploading... ${progress.toFixed(0)}%`;
-      },
-      (error) => {
-        statusDiv.textContent = 'Error: ' + error.message;
-      },
-      () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          statusDiv.innerHTML = `✅ Upload complete! <a href="${downloadURL}" target="_blank">View File</a>`;
+      // Logout
+      document.getElementById("logout-btn").addEventListener("click", (e) => {
+        e.preventDefault();
+        firebase.auth().signOut().then(() => {
+          window.location.href = "index.html";
         });
-      }
-    );
-  });
-</script>
+      });
+    </script>
+    <!-- Firebase Storage SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+
+    <script>
+      const storage = firebase.storage(); // Inicializamos Storage
+
+      // Elementos HTML
+      const fileInput = document.getElementById('fileInput');
+      const uploadBtn = document.getElementById('uploadBtn');
+      const statusDiv = document.getElementById('upload-status');
+
+      // Evento click del botón
+      uploadBtn.addEventListener('click', () => {
+        const file = fileInput.files[0];
+        if (!file) {
+          statusDiv.textContent = 'Please select a file first!';
+          return;
+        }
+
+        statusDiv.textContent = 'Uploading... ⏳';
+
+        // Ruta en Storage
+        const storageRef = storage.ref('uploads/' + file.name);
+        const uploadTask = storageRef.put(file);
+
+        // Progreso y resultado
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            statusDiv.textContent = `Uploading... ${progress.toFixed(0)}%`;
+          },
+          (error) => {
+            statusDiv.textContent = 'Error: ' + error.message;
+          },
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              statusDiv.innerHTML = `✅ Upload complete! <a href="${downloadURL}" target="_blank">View File</a>`;
+            });
+          }
+        );
+      });
+    </script>
 
 </body>
 
