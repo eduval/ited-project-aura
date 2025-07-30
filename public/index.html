@@ -6,6 +6,11 @@
   <title>Login</title>
   <link rel="stylesheet" href="assets/css/core.min.css">
   <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+   <style>
+    .angled-image {
+      clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+  </style>
 </head>
 <body>
 
@@ -40,26 +45,25 @@
       </div>
     </div>
 
-    <div class="d-none d-lg-block min-vh-100 col-lg-6 bg-cover py-8 overlay-dark overlay-opacity-25"
-      style="background-image:url(assets/images/bg/bg1.jpg)">
-    </div>
-  </div>
+<div class="d-none d-lg-block min-vh-100 col-lg-6 bg-cover py-8 overlay-dark overlay-opacity-25 angled-image"
+  style="background-image:url(assets/images/bg/bg1.jpg)">
+</div>
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
 
+
+
+
+  <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/vendor_bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script> 
+
+    <script src="js/FirebaseAuth.js"></script>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCL7UWbm_1-1PtjYPRJq8tAW46O8Nyple0",
-      authDomain: "aura-cctb-testing.firebaseapp.com",
-      projectId: "aura-cctb-testing",
-      storageBucket: "aura-cctb-testing.firebasestorage.app",
-      messagingSenderId: "97157656782",
-      appId: "1:97157656782:web:ea9972a9d4dc0190cae09f"
-    };
+    
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    
 
     const loginForm = document.getElementById("login-form");
     const errorMsg = document.getElementById("login-error");
@@ -70,10 +74,11 @@
       const email = document.getElementById("account_email").value.trim();
       const password = document.getElementById("account_passwd").value.trim();
 
-      auth.signInWithEmailAndPassword(email, password)
+      firebase.auth().signInWithEmailAndPassword(email, password)
+
         .then(() => {
           console.log("✅ Login correcto");
-          window.location.href = "dashboard.html"; // Ajusta si tu archivo está en otra carpeta
+          window.location.href = "dashboard.html";
         })
         .catch((error) => {
           console.error(error.message);

@@ -500,13 +500,19 @@
 
                 <div class="dropdown-divider mb-0 mt-3"></div>
 
-                <a href="#" class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore fw-medium py-3 px-4">
-                  <i class="fi fi-power float-start"></i>
-                  Log Out
-                </a>
+                <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
+  <i class="fi fi-power float-start"></i> Log Out
+</a>
+
               </div>
 
             </li>
+          <!-- 👤 Usuario logueado -->
+<li class="list-inline-item mx-2 d-flex align-items-center">
+  <span class="me-2 text-muted small">👤 <strong id="user-name">Usuario</strong></span>
+  <span class="me-3 text-muted small" id="user-email">email@example.com</span>
+  <button id="logout-btn" class="btn btn-sm btn-outline-danger">Logout</button>
+</li>
 
           </ul>
           <!-- /options -->
@@ -2031,7 +2037,7 @@
                 </span>
 
               </div>
-              
+
 <div class="p-3">
   <h5 class="fw-bold">Upload Files</h5>
   <input type="file" id="fileInput" class="form-control mb-3">
@@ -2502,28 +2508,18 @@
   <script src="assets/js/core.min.js"></script>
   <script src="assets/js/vendor_bundle.min.js"></script>
 
-  <!-- Your custom javascripts -->
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  
+<!-- Firebase Compat para que funcione en el navegador -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
 
+<!-- Tu configuración personalizada -->
+<script src="js/FirebaseAuth.js"></script>
+<!-- Aquí ya puedes usar firebase.auth() -->
 <script>
-  // Configuración de Firebase (usa la misma que en tu login)
-  const firebaseConfig = {
-    apiKey: "AIzaSyCL7UWbm_1-1PtjYPRJq8tAW46O8Nyple0",
-    authDomain: "aura-cctb-testing.firebaseapp.com",
-    projectId: "aura-cctb-testing",
-    storageBucket: "aura-cctb-testing.firebasestorage.app",
-    messagingSenderId: "97157656782",
-    appId: "1:97157656782:web:ea9972a9d4dc0190cae09f"
-  };
-
-  // Inicializar Firebase
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-
-  // Verificar si el usuario está autenticado
-  auth.onAuthStateChanged((user) => {
+  firebase.auth().onAuthStateChanged(function(user) {
     if (!user) {
       // No logueado → redirigir al login
       window.location.href = "index.html";
@@ -2537,7 +2533,7 @@
   // Logout
   document.getElementById("logout-btn").addEventListener("click", (e) => {
     e.preventDefault();
-    auth.signOut().then(() => {
+    firebase.auth().signOut().then(() => {
       window.location.href = "index.html";
     });
   });
