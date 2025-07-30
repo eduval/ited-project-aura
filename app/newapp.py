@@ -128,6 +128,17 @@ def validate_excel(file_path):
         if empty_columns:
             problems.append(f"Empty columns with no values: {empty_columns}")
 
+        # 5. Empty cells
+        empty_cells = []
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            for col_idx, cell in enumerate(row):
+                if cell is None or str(cell).strip() == "":
+                    col_letter = ws.cell(row=1, column=col_idx+1).value or f"Col{col_idx+1}"
+                    empty_cells.append(f"{col_letter} (row {row[0] if row else '?'} row index unknown)")
+
+        if empty_cells:
+            problems.append(f"Empty cells found in sheet (up to 10 shown): {empty_cells[:10]}")
+
         if problems:
             issues[sheet_name] = problems
 
