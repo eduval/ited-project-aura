@@ -462,11 +462,12 @@
                 class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
 
                 <!-- user detail -->
-                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4">
-                  <span class="d-block fw-medium text-truncate">John Doe</span>
-                  <span class="d-block smaller fw-medium text-truncate">john.doe@gmail.com</span>
-                  <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
-                </div>
+<div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4">
+  <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
+  <span id="user-email" class="d-block smaller fw-medium text-truncate">Cargando...</span>
+  <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
+</div>
+
 
                 <div class="dropdown-divider mb-3"></div>
 
@@ -499,13 +500,19 @@
 
                 <div class="dropdown-divider mb-0 mt-3"></div>
 
-                <a href="#" class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore fw-medium py-3 px-4">
-                  <i class="fi fi-power float-start"></i>
-                  Log Out
-                </a>
+                <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
+  <i class="fi fi-power float-start"></i> Log Out
+</a>
+
               </div>
 
             </li>
+          <!-- 👤 Usuario logueado -->
+<li class="list-inline-item mx-2 d-flex align-items-center">
+  <span class="me-2 text-muted small">👤 <strong id="user-name">Usuario</strong></span>
+  <span class="me-3 text-muted small" id="user-email">email@example.com</span>
+  <button id="logout-btn" class="btn btn-sm btn-outline-danger">Logout</button>
+</li>
 
           </ul>
           <!-- /options -->
@@ -666,79 +673,7 @@
                 </ul>
               </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <svg width="18px" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor">
-                    <path fill-rule="evenodd"
-                      d="M5.443 1.991a60.17 60.17 0 0 0-2.725.802.454.454 0 0 0-.315.366C1.87 7.056 3.1 9.9 4.567 11.773c.736.94 1.533 1.636 2.197 2.093.333.228.626.394.857.5.116.053.21.089.282.11A.73.73 0 0 0 8 14.5c.007-.001.038-.005.097-.023.072-.022.166-.058.282-.111.23-.106.525-.272.857-.5a10.197 10.197 0 0 0 2.197-2.093C12.9 9.9 14.13 7.056 13.597 3.159a.454.454 0 0 0-.315-.366c-.626-.2-1.682-.526-2.725-.802C9.491 1.71 8.51 1.5 8 1.5c-.51 0-1.49.21-2.557.491zm-.256-.966C6.23.749 7.337.5 8 .5c.662 0 1.77.249 2.813.525a61.09 61.09 0 0 1 2.772.815c.528.168.926.623 1.003 1.184.573 4.197-.756 7.307-2.367 9.365a11.191 11.191 0 0 1-2.418 2.3 6.942 6.942 0 0 1-1.007.586c-.27.124-.558.225-.796.225s-.526-.101-.796-.225a6.908 6.908 0 0 1-1.007-.586 11.192 11.192 0 0 1-2.417-2.3C2.167 10.331.839 7.221 1.412 3.024A1.454 1.454 0 0 1 2.415 1.84a61.11 61.11 0 0 1 2.772-.815z">
-                    </path>
-                    <path
-                      d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99a1.5 1.5 0 1 1 2-1.415z">
-                    </path>
-                  </svg>
-                  <span>Authentication</span>
-                  <span class="group-icon float-end">
-                    <i class="fi fi-arrow-end"></i>
-                    <i class="fi fi-arrow-down"></i>
-                  </span>
-                </a>
-
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span>Sign in</span>
-                      <span class="group-icon float-end">
-                        <i class="fi fi-arrow-end"></i>
-                        <i class="fi fi-arrow-down"></i>
-                      </span>
-                    </a>
-                    <ul class="nav flex-column">
-                      <li class="nav-item"><a class="nav-link" href="auth-signin-basic.html">Basic</a></li>
-                      <li class="nav-item"><a class="nav-link" href="auth-signin-cover.html">Cover</a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span>Sign up</span>
-                      <span class="group-icon float-end">
-                        <i class="fi fi-arrow-end"></i>
-                        <i class="fi fi-arrow-down"></i>
-                      </span>
-                    </a>
-                    <ul class="nav flex-column">
-                      <li class="nav-item"><a class="nav-link" href="auth-signup-basic.html">Basic</a></li>
-                      <li class="nav-item"><a class="nav-link" href="auth-signup-cover.html">Cover</a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span>Reset password</span>
-                      <span class="group-icon float-end">
-                        <i class="fi fi-arrow-end"></i>
-                        <i class="fi fi-arrow-down"></i>
-                      </span>
-                    </a>
-                    <ul class="nav flex-column">
-                      <li class="nav-item"><a class="nav-link" href="auth-passreset-basic.html">Basic</a></li>
-                      <li class="nav-item"><a class="nav-link" href="auth-passreset-cover.html">Cover</a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span>2-step verification</span>
-                      <span class="group-icon float-end">
-                        <i class="fi fi-arrow-end"></i>
-                        <i class="fi fi-arrow-down"></i>
-                      </span>
-                    </a>
-                    <ul class="nav flex-column">
-                      <li class="nav-item"><a class="nav-link" href="auth-2step-basic.html">Basic</a></li>
-                      <li class="nav-item"><a class="nav-link" href="auth-2step-cover.html">Cover</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
+             
 
               <li class="nav-item">
                 <a class="nav-link" href="#">
@@ -2103,6 +2038,14 @@
 
               </div>
 
+<div class="p-3">
+  <h5 class="fw-bold">Upload Files</h5>
+  <input type="file" id="fileInput" class="form-control mb-3">
+  <button id="uploadBtn" class="btn btn-primary btn-sm">Upload</button>
+
+  <div id="upload-status" class="mt-2 text-muted small"></div>
+</div>
+
 
               <!-- content loaded via ajax! -->
               <div class="portlet-body max-h-500 scrollable-vertical scrollable-styled-dark">
@@ -2565,7 +2508,78 @@
   <script src="assets/js/core.min.js"></script>
   <script src="assets/js/vendor_bundle.min.js"></script>
 
-  <!-- Your custom javascripts -->
+  
+<!-- Firebase Compat para que funcione en el navegador -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+
+<!-- Tu configuración personalizada -->
+<script src="js/FirebaseAuth.js"></script>
+<!-- Aquí ya puedes usar firebase.auth() -->
+<script>
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (!user) {
+      // No logueado → redirigir al login
+      window.location.href = "index.html";
+    } else {
+      // Mostrar datos del usuario en el menú
+      document.getElementById("user-email").textContent = user.email;
+      document.getElementById("user-name").textContent = user.displayName || "Usuario";
+    }
+  });
+
+  // Logout
+  document.getElementById("logout-btn").addEventListener("click", (e) => {
+    e.preventDefault();
+    firebase.auth().signOut().then(() => {
+      window.location.href = "index.html";
+    });
+  });
+</script>
+<!-- Firebase Storage SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+
+<script>
+  const storage = firebase.storage(); // Inicializamos Storage
+
+  // Elementos HTML
+  const fileInput = document.getElementById('fileInput');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const statusDiv = document.getElementById('upload-status');
+
+  // Evento click del botón
+  uploadBtn.addEventListener('click', () => {
+    const file = fileInput.files[0];
+    if (!file) {
+      statusDiv.textContent = 'Please select a file first!';
+      return;
+    }
+
+    statusDiv.textContent = 'Uploading... ⏳';
+
+    // Ruta en Storage
+    const storageRef = storage.ref('uploads/' + file.name);
+    const uploadTask = storageRef.put(file);
+
+    // Progreso y resultado
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        statusDiv.textContent = `Uploading... ${progress.toFixed(0)}%`;
+      },
+      (error) => {
+        statusDiv.textContent = 'Error: ' + error.message;
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          statusDiv.innerHTML = `✅ Upload complete! <a href="${downloadURL}" target="_blank">View File</a>`;
+        });
+      }
+    );
+  });
+</script>
 
 </body>
 
