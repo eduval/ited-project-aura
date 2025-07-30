@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Documentation Upload</title>
+  <link rel="stylesheet" href="assets/css/core.min.css">
+  <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+</head>
+<body>
+
+  <!-- Contenedor principal -->
+  <div class="container py-5">
+    <h2 class="mb-4">Upload Excel File</h2>
+
+    <!-- Formulario para subir archivo -->
+    <form id="upload-form">
+      <div class="mb-3">
+        <input type="file" id="excel-file" accept=".xlsx" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+
+    <p id="upload-status" class="mt-3 text-success" style="display:none;"></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+  <script src="js/FirebaseAuth.js"></script>
+
+  <!-- Script de subida -->
+  <script>
+    const form = document.getElementById('upload-form');
+    const fileInput = document.getElementById('excel-file');
+    const statusText = document.getElementById('upload-status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const storageRef = firebase.storage().ref('excel_files/' + file.name);
+      try {
+        await storageRef.put(file);
+        statusText.textContent = '✅ Archivo subido correctamente: ' + file.name;
+        statusText.style.display = 'block';
+      } catch (err) {
+        statusText.textContent = '❌ Error al subir el archivo.';
+        statusText.style.color = 'red';
+        statusText.style.display = 'block';
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
