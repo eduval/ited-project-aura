@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="assets/css/core.min.css">
   <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
-   <style>
+  <style>
     .angled-image {
       clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
     }
   </style>
 </head>
+
 <body>
 
   <div class="row g-0 bg-white min-vh-100 align-items-center">
@@ -45,47 +47,58 @@
       </div>
     </div>
 
-<div class="d-none d-lg-block min-vh-100 col-lg-6 bg-cover py-8 overlay-dark overlay-opacity-25 angled-image"
-  style="background-image:url(assets/images/bg/bg1.jpg)">
-</div>
+    <div class="d-none d-lg-block min-vh-100 col-lg-6 bg-cover py-8 overlay-dark overlay-opacity-25 angled-image"
+      style="background-image:url(assets/images/bg/bg1.jpg)">
+    </div>
 
 
 
 
 
-  <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/core.min.js"></script>
     <script src="assets/js/vendor_bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
     <script src="js/FirebaseAuth.js"></script>
-  <script>
-    
 
-    
+    <script>
 
-    const loginForm = document.getElementById("login-form");
-    const errorMsg = document.getElementById("login-error");
+      // Redirect logic based on Firebase auth
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          window.location.href = 'dashboard.html';
+        } else {
+          //
+        }
+      });
 
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
 
-      const email = document.getElementById("account_email").value.trim();
-      const password = document.getElementById("account_passwd").value.trim();
 
-      firebase.auth().signInWithEmailAndPassword(email, password)
 
-        .then(() => {
-          console.log("✅ Login correcto");
-          window.location.href = "dashboard.html";
-        })
-        .catch((error) => {
-          console.error(error.message);
-          errorMsg.style.display = "block";
-          errorMsg.textContent = error.message;
-        });
-    });
-  </script>
+      const loginForm = document.getElementById("login-form");
+      const errorMsg = document.getElementById("login-error");
+
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("account_email").value.trim();
+        const password = document.getElementById("account_passwd").value.trim();
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+
+          .then(() => {
+            console.log("✅ Login correcto");
+            window.location.href = "dashboard.html";
+          })
+          .catch((error) => {
+            console.error(error.message);
+            errorMsg.style.display = "block";
+            errorMsg.textContent = error.message;
+          });
+      });
+    </script>
 </body>
+
 </html>
