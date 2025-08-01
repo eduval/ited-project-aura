@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transcript Uploader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f8f9fa;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .result {
+      margin-top: 1rem;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>📤 Upload Transcript (.xlsx)</h2>
+
+    <form id="uploadForm">
+      <input type="file" name="transcript" id="transcript" accept=".xlsx" required />
+      <br><br>
+      <button type="submit">Upload & Process</button>
+    </form>
+
+    <div class="result" id="resultBox"></div>
+  </div>
+
+
+<script>
+  document.getElementById("uploadForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const fileInput = document.getElementById("transcript");
+    const formData = new FormData();
+    formData.append("transcript", fileInput.files[0]);
+
+    const resultBox = document.getElementById("resultBox");
+    resultBox.innerHTML = "Processing...";
+
+    try {
+      const response = await fetch("http://localhost:8080/process.php", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        resultBox.innerHTML = "✅ Success!";
+
+        // Create download button
+        const downloadBtn = document.createElement("a");
+        downloadBtn.textContent = "⬇️ Download Processed File";
+        downloadBtn.href = `transcripts_output/${data.filename}`;
+        downloadBtn.download = data.filename;
+        downloadBtn.style.display = "inline-block";
+        downloadBtn.style.marginTop = "10px";
+        downloadBtn.style.padding = "10px";
+        downloadBtn.style.backgroundColor = "#007bff";
+        downloadBtn.style.color = "white";
+        downloadBtn.style.textDecoration = "none";
+        downloadBtn.style.borderRadius = "5px";
+
+        resultBox.appendChild(document.createElement("br"));
+        resultBox.appendChild(downloadBtn);
+      } else {
+        resultBox.textContent = "❌ Error: " + data.message;
+      }
+    } catch (err) {
+      resultBox.textContent = "❌ Error: " + err.message;
+    }
+  });
+</script>
+
+
+</body>
+</html>

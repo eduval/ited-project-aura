@@ -1,0 +1,3 @@
+Received file: C:\Users\Public\aura-backend/uploads/popopopopo.xlsx
+Alerts pushed to Firebase.
+Zipped and returned: PROCESSED_FILE::All_Transcripts.zip

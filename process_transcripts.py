@@ -2,6 +2,8 @@ import os
 import openpyxl
 from openpyxl import load_workbook
 from copy import copy
+from datetime import datetime
+from firebase_utils import fetch_thresholds  # ✅ Import dynamic threshold fetcher
 
 def process_transcripts(input_file, output_dir="transcripts_output"):
     if not input_file.endswith(".xlsx"):
@@ -10,6 +12,10 @@ def process_transcripts(input_file, output_dir="transcripts_output"):
         raise FileNotFoundError(f"File not found: {input_file}")
 
     os.makedirs(output_dir, exist_ok=True)
+
+    # ✅ Fetch threshold values from Firebase
+    min_grade, min_attendance = fetch_thresholds()
+
     wb = load_workbook(input_file)
     raw_sheet = wb["Raw"]
     headers = [str(cell.value).strip() if cell.value else "" for cell in raw_sheet[1]]
@@ -58,15 +64,59 @@ def process_transcripts(input_file, output_dir="transcripts_output"):
 
         for key, value in student.items():
             if isinstance(key, str) and ("grade" in key.lower() or "attendance" in key.lower()):
+                timestamp = datetime.now().isoformat()
+
                 if value is None:
-                    alerts.append(f"{student_no} is missing {key}")
-                elif "grade" in key.lower() and isinstance(value, (int, float)) and value < 40:
-                    alerts.append(f"{student_no} has low grade in {key} ({value})")
-                elif "attendance" in key.lower() and isinstance(value, (int, float)) and value < 60:
-                    alerts.append(f"{student_no} has low attendance in {key} ({value})")
+                    alerts.append({
+                        "studentId": student_no,
+                        "title": "Missing Data",
+                        "message": f"{student_no} is missing {key}",
+                        "issuedBy": "system",
+                        "timestamp": timestamp,
+                        "read": False
+                    })
+                elif "grade" in key.lower() and isinstance(value, (int, float)) and value < min_grade:
+                    alerts.append({
+                        "studentId": student_no,
+                        "title": "Low Grade",
+                        "message": f"{student_no} has low grade in {key} ({value})",
+                        "issuedBy": "system",
+                        "timestamp": timestamp,
+                        "read": False
+                    })
+                elif "attendance" in key.lower() and isinstance(value, (int, float)) and value < min_attendance:
+                    alerts.append({
+                        "studentId": student_no,
+                        "title": "Low Attendance",
+                        "message": f"{student_no} has low attendance in {key} ({value})",
+                        "issuedBy": "system",
+                        "timestamp": timestamp,
+                        "read": False
+                    })
+
+                try:
+                    parts = key.rsplit(" ", 1)
+                    if len(parts) != 2:
+                        continue
+                    course_code, field = parts
+                    field = field.lower()
+                    if isinstance(value, (int, float)):
+                        if field == "attendance":
+                            attendance_values.append(float(value))
+                        elif field == "grade":
+                            grade_values.append(float(value))
+                    for row in range(1, new_ws.max_row + 1):
+                        if new_ws.cell(row=row, column=1).value == course_code:
+                            col = 5 if field == "attendance" else 6
+                            new_ws.cell(row=row, column=col, value=value)
+                except Exception as e:
+                    print(f"Error processing {key}: {e}")
+                    continue
 
         avg_attendance = round(sum(attendance_values) / len(attendance_values), 2) if attendance_values else None
         avg_grade = round(sum(grade_values) / len(grade_values), 2) if grade_values else None
+
+        print(f"{student_no} | Intake: {intake} | Avg Attendance: {avg_attendance} | Avg Grade: {avg_grade}")
 
         if intake.startswith("BM"):
             new_ws["E19"] = avg_attendance
@@ -75,8 +125,13 @@ def process_transcripts(input_file, output_dir="transcripts_output"):
             new_ws["E11"] = avg_attendance
             new_ws["F11"] = avg_grade
 
-    for intake, wb in output_books.items():
-        out_path = os.path.join(output_dir, f"{intake}_Transcripts.xlsx")
-        wb.save(out_path)
+    generated_files = []
 
-    return output_dir, alerts
+    for intake, wb in output_books.items():
+        output_file_name = f"{intake}_Transcripts.xlsx"
+        out_path = os.path.join(output_dir, output_file_name)
+        wb.save(out_path)
+        generated_files.append(output_file_name)
+
+    print(f"All transcripts generated in: {output_dir}")
+    return output_dir, alerts, generated_files

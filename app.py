@@ -1,39 +1,55 @@
-from flask import Flask, request, jsonify
+# app.py (CLI version with targeted zipping)
+import sys
 import os
+import json
+import zipfile
 from process_transcripts import process_transcripts
 from firebase_utils import push_alerts_to_realtime_db
 
-app = Flask(__name__)
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+def log_debug(message):
+    with open("debug_output.txt", "a", encoding="utf-8") as f:
+        f.write(message + "\n")
 
-@app.route("/upload", methods=["POST"])
-def upload_excel():
-    if "file" not in request.files:
-        return jsonify({"error": "No file found in request"}), 400
+def main():
+    if len(sys.argv) < 2:
+        log_debug(" Missing input argument")
+        print("Usage: python app.py <file_path>")
+        return
 
-    file = request.files["file"]
-    if file.filename == "":
-        return jsonify({"error": "No file selected"}), 400
-
-    if not file.filename.endswith(".xlsx"):
-        return jsonify({"error": "Only .xlsx files allowed"}), 400
-
-    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(filepath)
+    file_path = sys.argv[1]
+    log_debug(f"Received file: {file_path}")
+    print(f"Received file: {file_path}")
 
     try:
-        output_dir, alerts = process_transcripts(filepath)
-        push_alerts_to_realtime_db(file.filename, alerts)
+        # Process and get only generated files for this run
+        output_dir, alerts, generated_files = process_transcripts(file_path)
 
-        return jsonify({
-            "message": "File processed successfully.",
-            "output_folder": output_dir,
-            "alerts": alerts
-        }), 200
+        if alerts:
+            push_alerts_to_realtime_db(os.path.basename(file_path), alerts)
+            log_debug("Alerts pushed to Firebase.")
+            print("Alerts pushed to Firebase.")
+        else:
+            log_debug("No alerts to push.")
+            print("No alerts generated.")
+
+        # ✅ Zip only the current run’s outputs
+        zip_file_name = "All_Transcripts.zip"
+        zip_path = os.path.join(output_dir, zip_file_name)
+
+        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
+            for file in generated_files:
+                file_path = os.path.join(output_dir, file)
+                if os.path.exists(file_path):
+                    zipf.write(file_path, arcname=file)
+        
+        # ✅ Output ZIP file name for PHP to capture
+        print(f"PROCESSED_FILE::{zip_file_name}")
+        log_debug(f"Zipped and returned: PROCESSED_FILE::{zip_file_name}")
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        error_msg = f"Error: {str(e)}"
+        log_debug(" " + error_msg)
+        print(error_msg)
 
 if __name__ == "__main__":
-    app.run()
+    main()

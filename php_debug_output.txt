@@ -1,0 +1,14 @@
+Received file: C:\Users\Public\aura-backend/uploads/popopopopo.xlsx
+0
+100
+Thresholds from Firebase: Grade= 0, Attendance= 100
+2201234 | Intake: BA-2024 | Avg Attendance: 55.0 | Avg Grade: 42.5
+123 | Intake: BA-2024 | Avg Attendance: 55.0 | Avg Grade: 42.5
+12345 | Intake: BA-2024 | Avg Attendance: 55.0 | Avg Grade: 42.5
+All transcripts generated in: transcripts_output
+ Using REST API to push alerts...
+Firebase URL: https://aura-cctb-testing-default-rtdb.firebaseio.com/Alerts_test/popopopopo_xlsx.json
+ Firebase response: {"alert_1":{"issuedBy":"system","message":"2201234 has low attendance in Math Attendance (55)","read":false,"studentId":"2201234","timestamp":"2025-08-01T11:33:13.904693","title":"Low Attendance"},"alert_2":{"issuedBy":"system","message":"2201234 is missing English Attendance","read":false,"studentId":"2201234","timestamp":"2025-08-01T11:33:13.904709","title":"Missing Data"},"alert_3":{"issuedBy":"system","message":"123 has low attendance in Math Attendance (55)","read":false,"studentId":"123","timestamp":"2025-08-01T11:33:13.904880","title":"Low Attendance"},"alert_4":{"issuedBy":"system","message":"123 is missing English Attendance","read":false,"studentId":"123","timestamp":"2025-08-01T11:33:13.904892","title":"Missing Data"},"alert_5":{"issuedBy":"system","message":"12345 has low attendance in Math Attendance (55)","read":false,"studentId":"12345","timestamp":"2025-08-01T11:33:13.905037","title":"Low Attendance"},"alert_6":{"issuedBy":"system","message":"12345 is missing English Attendance","read":false,"studentId":"12345","timestamp":"2025-08-01T11:33:13.905046","title":"Missing Data"}}
+Alerts pushed to Firebase successfully.
+Alerts pushed to Firebase.
+PROCESSED_FILE::All_Transcripts.zip
