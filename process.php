@@ -16,15 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["transcript"])) {
 
     if (move_uploaded_file($_FILES["transcript"]["tmp_name"], $targetFile)) {
         $escapedPath = escapeshellarg($targetFile);
-        $versionCheck = shell_exec("python --version 2>&1");
-        file_put_contents("python_version_used_by_php.txt", $versionCheck);
 
         // ✅ Run Python from the correct directory
         $command = "cd " . __DIR__ . " && python3 app.py $escapedPath 2>&1";
         $output = shell_exec($command);
-
-        // ✅ Log the full output from Python
-        file_put_contents("php_debug_output.txt", $output);
 
         // ✅ Extract the processed filename
         $matches = [];
