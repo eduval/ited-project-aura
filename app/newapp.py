@@ -1,62 +1,14 @@
+import os
+import tempfile
 from flask import Flask, request, render_template
 from openpyxl import load_workbook
 from numbers import Number
-import os
-import tempfile
+
+from transcript_generator import generate_transcripts
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        file = request.files["file"]
-
-        if file and file.filename.endswith(".xlsx"):
-            temp_dir = tempfile.mkdtemp()
-            file_path = os.path.join(temp_dir, file.filename)
-            file.save(file_path)
-
-            try:
-                # This checks if the uploaded file is valid
-                issues = validate_excel(file_path)
-                if issues:
-                    # Return a clear message if invalid file, so the user can replace it 
-                    html = "<h2>This file is not valid, please try with another one.</h2>"
-                    html += "<h3>Validation Errors Found:</h3>"
-                    for sheet, problems in issues.items():
-                        html += f"<h4>Sheet: {sheet}</h4><ul>"
-                        for p in problems:
-                            html += f"<li>{p}</li>"
-                        html += "</ul>"
-                    return html
-
-                sheet_summary = process_excel(file_path)
-                html_output = "<h2>Uploaded Excel File Processed</h2>"
-                for sheet, rows in sheet_summary.items():
-                    html_output += f"<h3>Sheet: {sheet}</h3><pre>"
-                    for row in rows[:10]:  # Show only first 10 rows
-                        html_output += str(row) + "\n"
-                    html_output += "</pre>"
-                return html_output
-
-            except Exception as e:
-                return f"<h3>Error while processing Excel file:</h3><pre>{e}</pre>"
-
-        return "<h3>Invalid file type. Please upload a .xlsx file.</h3>"
-
-    return render_template("Page.html")
-
-#  Function to process Excel data
-def process_excel(input_file):
-    wb = load_workbook(input_file, data_only=True)
-    sheet_data = {}
-    for sheet_name in wb.sheetnames:
-        ws = wb[sheet_name]
-        rows = [list(row) for row in ws.iter_rows(values_only=True)]
-        sheet_data[sheet_name] = rows
-    return sheet_data
-
-#  Function to classify value type
+# === Helper Function: Simple Type Classification ===
 def get_simple_type(value):
     if isinstance(value, str):
         return "str"
@@ -67,7 +19,7 @@ def get_simple_type(value):
     else:
         return "other"
 
-#  Function to validate Excel content
+# === Helper Function: Validate Excel File ===
 def validate_excel(file_path):
     wb = load_workbook(file_path, data_only=True)
     issues = {}
@@ -143,6 +95,64 @@ def validate_excel(file_path):
             issues[sheet_name] = problems
 
     return issues
+
+# === Optional Helper: Read Workbook Data ===
+def process_excel(input_file):
+    wb = load_workbook(input_file, data_only=True)
+    sheet_data = {}
+    for sheet_name in wb.sheetnames:
+        ws = wb[sheet_name]
+        rows = [list(row) for row in ws.iter_rows(values_only=True)]
+        sheet_data[sheet_name] = rows
+    return sheet_data
+
+# === Flask Route ===
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        file = request.files["file"]
+        if file and file.filename.endswith(".xlsx"):
+            temp_dir = tempfile.mkdtemp()
+            file_path = os.path.join(temp_dir, file.filename)
+            file.save(file_path)
+
+            try:
+                issues = validate_excel(file_path)
+                if issues:
+                    html = "<h2>This file is not valid, please try with another one.</h2>"
+                    html += "<h3>Validation Errors Found:</h3>"
+                    for sheet, problems in issues.items():
+                        html += f"<h4>Sheet: {sheet}</h4><ul>"
+                        for p in problems:
+                            html += f"<li>{p}</li>"
+                        html += "</ul>"
+                    return html
+
+                # === Call transcript generator ===
+                template_path = "template.docx"
+                transcript_path = file_path  # could be another, depending on your logic
+                output_dir = os.path.join(temp_dir, "word_output")
+                generate_transcripts(
+                    input_file=file_path,
+                    transcript_file=transcript_path,
+                    word_output_dir=output_dir,
+                    template_docx_path=template_path
+                )
+
+                files = os.listdir(output_dir)
+                html_output = "<h2>Transcript(s) generated successfully!</h2><ul>"
+                for fname in files:
+                    html_output += f"<li>{fname}</li>"
+                html_output += "</ul>"
+
+                return html_output
+
+            except Exception as e:
+                return f"<h3>Error while processing Excel file:</h3><pre>{e}</pre>"
+
+        return "<h3>Invalid file type. Please upload a .xlsx file.</h3>"
+
+    return render_template("templateone.html")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
