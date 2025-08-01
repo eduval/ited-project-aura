@@ -6,18 +6,12 @@ import zipfile
 from process_transcripts import process_transcripts
 from firebase_utils import push_alerts_to_realtime_db
 
-def log_debug(message):
-    with open("debug_output.txt", "a", encoding="utf-8") as f:
-        f.write(message + "\n")
-
 def main():
     if len(sys.argv) < 2:
-        log_debug(" Missing input argument")
         print("Usage: python app.py <file_path>")
         return
 
     file_path = sys.argv[1]
-    log_debug(f"Received file: {file_path}")
     print(f"Received file: {file_path}")
 
     try:
@@ -26,10 +20,8 @@ def main():
 
         if alerts:
             push_alerts_to_realtime_db(os.path.basename(file_path), alerts)
-            log_debug("Alerts pushed to Firebase.")
             print("Alerts pushed to Firebase.")
         else:
-            log_debug("No alerts to push.")
             print("No alerts generated.")
 
         # ✅ Zip only the current run’s outputs
@@ -41,15 +33,12 @@ def main():
                 file_path = os.path.join(output_dir, file)
                 if os.path.exists(file_path):
                     zipf.write(file_path, arcname=file)
-        
+
         # ✅ Output ZIP file name for PHP to capture
         print(f"PROCESSED_FILE::{zip_file_name}")
-        log_debug(f"Zipped and returned: PROCESSED_FILE::{zip_file_name}")
 
     except Exception as e:
-        error_msg = f"Error: {str(e)}"
-        log_debug(" " + error_msg)
-        print(error_msg)
+        print(f"Error: {str(e)}")
 
 if __name__ == "__main__":
     main()
