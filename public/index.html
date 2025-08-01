@@ -61,9 +61,14 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-    <script src="js/FirebaseAuth.js"></script>
+ <!-- <script src="js/FirebaseAuth.js"></script> -->
+    <script type="module">
+      import "./js/firebase-config.js";
+      import "./js/auth.js";
+    </script>
 
-    <script>
+
+    <!-- <script>
 
       // Redirect logic based on Firebase auth
       firebase.auth().onAuthStateChanged(function (user) {
@@ -98,7 +103,7 @@
             errorMsg.textContent = error.message;
           });
       });
-    </script>
+    </script> -->
 </body>
 
 </html>
