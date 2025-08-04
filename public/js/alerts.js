@@ -1,41 +1,54 @@
 import { db } from './firebase-config.js';
-import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const alertsRef = ref(db, 'Alerts_test');
 
-get(alertsRef)
-    .then(snapshot => {
-        if (snapshot.exists()) {
-            const alerts = snapshot.val();
+onValue(alertsRef, snapshot => {
+    if (snapshot.exists()) {
+        const alerts = snapshot.val();
 
-            // Access the first (and presumably only) nested object inside Alerts_test:
-            // Adjust this if you have multiple children nodes under Alerts_test
-            const firstKey = Object.keys(alerts)[0];
-            const nestedAlerts = alerts[firstKey];
+        let alertList = [];
 
-            // Convert nested alerts object to array
-            const alertList = Object.values(nestedAlerts)
-                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-            const alertContainer = document.querySelector('.dropdown-menu .scrollable-vertical');
-            const alertHeader = document.querySelector('.dropdown-menu .dropdown-header');
-
-            if (alertList.length === 0) {
-                alertContainer.innerHTML = `<div class="py-5 text-gray-400 text-center">NO ITEMS!</div>`;
-                alertHeader.textContent = `No notifications`;
-            } else {
-                alertHeader.textContent = `${alertList.length} new notification${alertList.length > 1 ? 's' : ''}`;
-                alertContainer.innerHTML = alertList.map(renderAlertItem).join('');
+        for (const uploadKey in alerts) {
+            const group = alerts[uploadKey];
+            for (const alertKey in group) {
+                const alert = group[alertKey];
+                if (!alert.read) {
+                    alertList.push(alert); // ✅ Only push unread alerts
+                }
             }
-
-            const notifCountElem = document.querySelector('.notification-count');
-            if (notifCountElem) notifCountElem.textContent = alertList.length;
-
-        } else {
-            console.warn('No alerts found.');
         }
-    })
-    .catch(console.error);
+
+        // Sort alerts by timestamp (most recent first)
+        alertList.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        const alertContainer = document.querySelector('.dropdown-menu .scrollable-vertical');
+        const alertHeader = document.querySelector('.dropdown-menu .dropdown-header');
+
+        if (alertList.length === 0) {
+            alertContainer.innerHTML = `<div class="py-5 text-gray-400 text-center">NO ITEMS!</div>`;
+            alertHeader.textContent = `No notifications`;
+        } else {
+            alertHeader.textContent = `${alertList.length} new notification${alertList.length > 1 ? 's' : ''}`;
+            alertContainer.innerHTML = alertList.map(renderAlertItem).join('');
+        }
+
+        // 🔵 Update notification badge
+        const notifCountElem = document.querySelector('.notification-count');
+        if (notifCountElem) notifCountElem.textContent = alertList.length;
+
+        // 🔵 Update header ("You've got X new alerts today")
+        const alertText = document.getElementById("alertText");
+        if (alertText) {
+            alertText.textContent = `You've got ${alertList.length} new alert${alertList.length !== 1 ? 's' : ''} today`;
+        }
+
+    } else {
+        console.warn('No alerts found.');
+    }
+}, error => {
+    console.error("Error listening for alerts:", error);
+});
 
 function renderAlertItem(alert) {
     return `
