@@ -1,6 +1,8 @@
 import { db } from './firebase-config.js';
 import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
+const currentPath = window.location.pathname.split('/').pop(); // e.g., 'settings.html'
+
 const menuRef = ref(db, 'menu');
 
 get(menuRef).then(snapshot => {
@@ -12,11 +14,12 @@ get(menuRef).then(snapshot => {
             .sort(([, a], [, b]) => (a.id || 0) - (b.id || 0));
 
         const menuHTML = sortedMenuEntries
-            .map(([key, item], index) => renderMenuItem(key, item, index === 0))
+            .map(([key, item]) => renderMenuItem(key, item, currentPath))
             .join('');
 
         document.getElementById('dynamicMenu').innerHTML = menuHTML;
 
+        // Menu toggle events
         setTimeout(() => {
             document.querySelectorAll('#dynamicMenu .nav-link').forEach(link => {
                 link.addEventListener('click', function (e) {
@@ -28,7 +31,6 @@ get(menuRef).then(snapshot => {
 
                         submenu.classList.toggle('d-none');
 
-                        // Style submenu
                         if (!submenu.classList.contains('d-none')) {
                             submenu.style.display = 'block';
                             submenu.style.visibility = 'visible';
@@ -41,7 +43,6 @@ get(menuRef).then(snapshot => {
                             submenu.style.overflow = '';
                         }
 
-                        // Toggle arrows
                         const arrowEnd = this.querySelector('.fi-arrow-end');
                         const arrowDown = this.querySelector('.fi-arrow-down');
                         if (arrowEnd && arrowDown) {
@@ -49,7 +50,6 @@ get(menuRef).then(snapshot => {
                             arrowDown.classList.toggle('d-none');
                         }
 
-                        // Set active class on parent <li>
                         document.querySelectorAll('#dynamicMenu .nav-item').forEach(li => {
                             li.classList.remove('active');
                         });
@@ -63,7 +63,7 @@ get(menuRef).then(snapshot => {
     }
 }).catch(console.error);
 
-function renderMenuItem(key, item, isFirst = false) {
+function renderMenuItem(key, item, currentPath) {
     if (!item.enable) return '';
 
     const iconHtml = item.iconSvg
@@ -72,33 +72,44 @@ function renderMenuItem(key, item, isFirst = false) {
 
     const hasChildren = item.children && Object.values(item.children).some(c => c.enable);
 
+    let isActive = false;
+
+    // Check if current item or one of its children matches current page
+    if (item.link && item.link.split('/').pop() === currentPath) {
+        isActive = true;
+    } else if (hasChildren) {
+        isActive = Object.values(item.children).some(child =>
+            child.link && child.link.split('/').pop() === currentPath
+        );
+    }
+
     if (hasChildren) {
         const sortedChildrenEntries = Object.entries(item.children)
             .filter(([_, child]) => child.enable)
             .sort(([, a], [, b]) => (a.id || 0) - (b.id || 0));
 
         const childrenHTML = sortedChildrenEntries
-            .map(([childKey, childItem]) => renderMenuItem(childKey, childItem))
+            .map(([childKey, childItem]) => renderMenuItem(childKey, childItem, currentPath))
             .join('');
 
         return `
-<li class="nav-item${isFirst ? ' active' : ''}">
+<li class="nav-item${isActive ? ' active' : ''}">
   <a class="nav-link" href="#">
     ${iconHtml}
     <span style="line-height: 1;">${item.title}</span>
     <span class="group-icon float-end">
-      <i class="fi fi-arrow-end${isFirst ? ' d-none' : ''}"></i>
-      <i class="fi fi-arrow-down${isFirst ? '' : ' d-none'}"></i>
+      <i class="fi fi-arrow-end${isActive ? ' d-none' : ''}"></i>
+      <i class="fi fi-arrow-down${isActive ? '' : ' d-none'}"></i>
     </span>
   </a>
-  <ul class="nav flex-column ms-3${isFirst ? '' : ' d-none'}" style="${isFirst ? 'display: block; visibility: visible; height: auto; overflow: visible;' : ''} margin-left: 0; padding-left: 20px;">
+  <ul class="nav flex-column ms-3${isActive ? '' : ' d-none'}" style="${isActive ? 'display: block; visibility: visible; height: auto; overflow: visible;' : ''} margin-left: 0; padding-left: 20px;">
     ${childrenHTML}
   </ul>
 </li>
 `;
     } else {
         return `
-<li class="nav-item${isFirst ? ' active' : ''}">
+<li class="nav-item${isActive ? ' active' : ''}">
   <a class="nav-link" href="${item.link || '#'}" style="display: flex; align-items: center;">
     ${iconHtml}
     <span style="line-height: 1;">${item.title}</span>
