@@ -312,17 +312,7 @@
 
                         </div>
 
-                        <div class="col-auto">
-                            <a href="#!" role="button" class="btn btn-sm btn-primary d-inline-flex align-items-center">
-                                <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                                <span class="d-none d-sm-inline-block ps-2">Product</span>
-                            </a>
-                        </div>
+
                     </div>
 
                 </header>
@@ -350,7 +340,7 @@
                                         <input type="text"
                                             class="dropdown-toggle form-control form-control-sm border-0 shadow-none ps-5 bg-gray-100"
                                             data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                                            placeholder="Product title / SKU">
+                                            placeholder="Filename / Date">
 
                                         <!--
                         .dropdown-mega-sm
@@ -442,7 +432,7 @@
                                             d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z">
                                         </path>
                                     </svg>
-                                    <span class="text-muted">Cash on delivery</span>
+                                    <span class="text-muted">Completed</span>
                                 </a>
                             </li>
                             <li class="list-inline-item me-1">
@@ -462,8 +452,17 @@
 
                     <div class="card-body pt-1">
 
+                        <div id="logs-loading" class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+
+
+
+
                         <!-- item list -->
-                        <div class="table-responsive-md">
+                        <div id="logs-table-wrapper" class="table-responsive-md d-none">
 
                             <table class="table table-align-middle" role="grid" aria-describedby="mobile-page-info">
                                 <thead>

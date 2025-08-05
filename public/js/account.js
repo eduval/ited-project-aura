@@ -20,11 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const userData = snap.val();
 
+
             // Prepare fields
             const name = userData.name || 'No Name';
             const email = user.email || 'No Email';
             const role = userData.role || 'No Role';
-            const photoURL = user.photoURL || null;
+            const photoURL = userData.photoURL || null;
             const lastLogin = user.metadata?.lastSignInTime
                 ? new Date(user.metadata.lastSignInTime).toLocaleString()
                 : 'Unknown';
