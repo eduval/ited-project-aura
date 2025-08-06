@@ -19,21 +19,31 @@ if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Get input values by ID (matches your HTML)
     const email = document.getElementById("account_email").value.trim();
     const password = document.getElementById("account_passwd").value.trim();
 
-    // Clear old status
     statusMsg.style.display = "none";
     statusMsg.textContent = "";
 
     try {
-      // Firebase login
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       const uid = userCred.user.uid;
       const userRef = ref(db, `users/${uid}`);
 
-      console.log("✅ Logged in:", uid);
+      // Get geolocation (browser-based)
+      let location = { lat: null, lng: null };
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
+        });
+
+        location.lat = position.coords.latitude;
+        location.lng = position.coords.longitude;
+
+        console.log("📍 Location captured:", location);
+      } catch (geoErr) {
+        console.warn("⚠️ Location not available:", geoErr.message);
+      }
 
       const userSnap = await get(userRef);
 
@@ -41,7 +51,8 @@ if (loginForm) {
         console.log("👤 Existing user → updating info");
         await update(userRef, {
           email: email,
-          enable: true
+          enable: true,
+          location: location  // ✅ Save location
         });
       } else {
         console.log("🆕 New user → creating profile");
@@ -49,16 +60,25 @@ if (loginForm) {
           email: email,
           enable: true,
           name: "Unknown",
-          role: "operator"
+          role: "operator",
+          location: location  // ✅ Save location
         });
       }
 
-      // Log login time
+      // Log login time and location
       const now = new Date().toISOString();
-      await push(ref(db, `users/${uid}/logins`), now);
-      console.log("📌 Login time recorded");
+      await update(ref(db, `users/${uid}/logins`), {
+        lastLogin: now,
+        lastLocation: location
+      });
+      await push(ref(db, `users/${uid}/logins/history`), {
+        timestamp: now,
+        location: location
+      });
 
-      // ✅ Redirect to dashboard
+      console.log("📌 Login time and location recorded");
+
+      // ✅ Redirect
       console.log("➡️ Redirecting to dashboard.html...");
       window.location.href = "dashboard.html";
 
