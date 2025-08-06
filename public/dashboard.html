@@ -523,8 +523,9 @@
 
             -->
           <nav class="nav-deep nav-deep-sm nav-deep-light">
-            <ul class="nav flex-column">
+            <ul class="nav flex-column" id="sidebarMenuItems">
 
+<!--
               <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                   <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -539,7 +540,7 @@
                   <span>Dashboard</span>
                 </a>
               </li>
-
+           esto lo comento para evitar errores -->
               <li class="nav-item">
                 <a class="nav-link" href="#">
                   <svg width="18px" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
@@ -556,7 +557,7 @@
                   </span>
                 </a>
 
-                <ul class="nav flex-column">
+                <ul class="nav flex-column" id="sidebarMenuItems">
                   <li class="nav-item">
                     <a class="nav-link" href="#">
                       <span class="group-icon float-end">
@@ -2419,6 +2420,12 @@
         );
       });
     </script>
+    <!-- Firebase Realtime Database -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+<!-- Script para cargar el menú dinámicamente -->
+<script src="js/loadmenu.js"></script>
+
 
 </body>
 
