@@ -90,7 +90,21 @@ $(document).ready(function () {
                     if (res.success) {
                         status.html(`<span class="text-success">✅ Upload and processing complete.</span>`);
                     } else {
-                        status.html(`<span class="text-danger">❌ Server Error: ${res.error || 'Unknown error.'}</span>`);
+                        // Map server error to friendly messages
+                        let userMessage = "An error occurred during upload.";
+
+                        if (res.error) {
+                            if (res.error.toLowerCase().includes("header validation failed")) {
+                                userMessage = "The uploaded file has incorrect headers. Please check the template and try again.";
+                            } else if (res.error.toLowerCase().includes("upload failed")) {
+                                userMessage = "The file upload failed. Please try again.";
+                            } else {
+                                // You can add more specific cases here
+                                userMessage = "Server error: " + res.error;
+                            }
+                        }
+
+                        status.html(`<span class="text-danger">❌ ${userMessage}</span>`);
                     }
                 } catch (e) {
                     status.html(`<span class="text-danger">❌ Unexpected response from server.</span>`);
@@ -104,12 +118,38 @@ $(document).ready(function () {
                     .addClass('bg-danger')
                     .text('Failed');
                 fileInput.value = '';
-                status.html(
-                    `<span class="text-danger">
-            ❌ Upload failed: ${xhr.status} - ${xhr.statusText}<br>
-            Server response: ${xhr.responseText || 'No response'}
-          </span>`
-                );
+
+                let userMessage = `Upload failed: ${xhr.status} - ${xhr.statusText}`;
+
+                try {
+                    const res = JSON.parse(xhr.responseText);
+                    if (res && res.error) {
+                        // Base error message
+                        userMessage = res.error;
+
+                        // Append details if available
+                        if (res.details) {
+                            userMessage += ": " + res.details;
+                        }
+                    }
+                } catch (e) {
+                    // Not JSON or parse error, fallback to generic message
+                }
+
+                // Escape HTML to avoid injection
+                function escapeHtml(text) {
+                    return text.replace(/[&<>"']/g, function (m) {
+                        return ({
+                            '&': '&amp;',
+                            '<': '&lt;',
+                            '>': '&gt;',
+                            '"': '&quot;',
+                            "'": '&#39;'
+                        })[m];
+                    });
+                }
+
+                status.html(`<span class="text-danger">❌ ${escapeHtml(userMessage)}</span>`);
             }
         });
     });
