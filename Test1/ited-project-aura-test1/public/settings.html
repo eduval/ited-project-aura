@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AURA – Settings</title>
+  <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
+  <link rel="stylesheet" href="assets/css/core.min.css" />
+  <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
+</head>
+<body class="layout-admin layout-padded aside-sticky">
+  <div id="wrapper" class="d-flex align-items-stretch flex-column">
+
+    <!-- Header (keep yours) -->
+    <header id="header" class="d-flex align-items-center bg-transparent">
+      <div class="px-3 px-lg-0 w-100 position-relative">
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
+          <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
+            <img src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA" />
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <div id="wrapper_content" class="d-flex flex-fill">
+
+      <!-- Sidebar (same structure so menu.js fills it) -->
+      <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
+        <div class="py-2 px-3 mb-3 mt-3">
+          <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="..." /></a>
+        </div>
+        <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
+          <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
+            <ul id="dynamicMenu" class="nav flex-column"></ul>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main id="middle" class="flex-fill mx-auto">
+        <div class="container">
+          <header>
+            <h1 class="h4">Passing Criteria</h1>
+            <ol class="breadcrumb small"><li class="breadcrumb-item text-muted active">Settings</li></ol>
+          </header>
+
+          <div class="section p-xl-4">
+            <form id="criteria-form" class="row g-3" autocomplete="off">
+              <div class="col-md-4">
+                <label class="form-label">Minimum Grade (%)</label>
+                <input type="number" min="0" max="100" step="1" id="minGrade" class="form-control" placeholder="e.g., 50" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Minimum Attendance (%)</label>
+                <input type="number" min="0" max="100" step="1" id="minAttendance" class="form-control" placeholder="e.g., 75" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Minimum GPA</label>
+                <input type="number" min="0" max="4" step="0.01" id="minGPA" class="form-control" placeholder="e.g., 2.0" />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Passing Credits (per term)</label>
+                <input type="number" min="0" step="1" id="passingCredits" class="form-control" placeholder="e.g., 12" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Grace Assignments Allowed</label>
+                <input type="number" min="0" step="1" id="graceAssignments" class="form-control" placeholder="e.g., 1" />
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Notes / Policy</label>
+                <textarea id="policyNotes" class="form-control" rows="3" placeholder="Late rules, exceptions, etc."></textarea>
+              </div>
+
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                <span id="criteria-save-status" class="small text-muted"></span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div>
+  </footer>
+
+  <!-- JS -->
+  <script src="assets/js/core.min.js"></script>
+  <script src="assets/js/vendor_bundle.min.js"></script>
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/menu.js"></script>
+  <script type="module" src="js/setting.js"></script>
+</body>
+</html>
