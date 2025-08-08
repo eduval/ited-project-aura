@@ -4,43 +4,43 @@ import { ref, onValue, query, limitToLast } from "https://www.gstatic.com/fireba
 const logsRef = query(ref(db, 'ProcessingLogs'), limitToLast(3));
 
 onValue(logsRef, snapshot => {
-    const logsContainer = document.getElementById('processing-log-list');
-    logsContainer.innerHTML = '';
+  const logsContainer = document.getElementById('processing-log-list');
+  logsContainer.innerHTML = '';
 
-    if (snapshot.exists()) {
-        const logs = snapshot.val();
+  if (snapshot.exists()) {
+    const logs = snapshot.val();
 
-        // Firebase returns objects, not arrays – we convert to array first
-        const logItems = Object.values(logs)
-            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // newest first
+    // Firebase returns objects, not arrays – we convert to array first
+    const logItems = Object.values(logs)
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // newest first
 
-        logItems.forEach(log => {
-            logsContainer.innerHTML += renderLogItem(log);
-        });
-    } else {
-        logsContainer.innerHTML = `<div class="text-muted p-3">No logs found.</div>`;
-    }
+    logItems.forEach(log => {
+      logsContainer.innerHTML += renderLogItem(log);
+    });
+  } else {
+    logsContainer.innerHTML = `<div class="text-muted p-3">No logs found.</div>`;
+  }
 });
 
 function renderLogItem(log) {
-    const {
-        filename = "unknown.xlsx",
-        alerts = 0,
-        lowAttendance = 0,
-        lowGrades = 0,
-        timestamp = ""
-    } = log;
+  const {
+    filename = "unknown.xlsx",
+    alerts = 0,
+    lowAttendance = 0,
+    lowGrades = 0,
+    timestamp = ""
+  } = log;
 
-    const formattedTime = timestamp
-        ? new Date(timestamp).toLocaleString('en-US', {
-            day: 'numeric', month: 'long', year: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-        })
-        : "No timestamp";
+  const formattedTime = timestamp
+    ? new Date(timestamp).toLocaleString('en-US', {
+      day: 'numeric', month: 'long', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    })
+    : "No timestamp";
 
-    const downloadUrl = `https://ited.org.ec/aura/excelfiles_upload/uploads/${filename}`;
+  const downloadUrl = `https://ited.org.ec/aura/excelfiles_upload/uploads/${filename}`;
 
-    return `
+  return `
     <div class="d-flex align-items-center p-3 border-bottom border-light">
       <div class="flex-none">
         <img width="40" height="40" class="img-fluid" src="assets/images/logo/excel.svg" alt="Excel Icon">
@@ -62,8 +62,9 @@ function renderLogItem(log) {
           </span>
         </a>
         <div class="prefix-link-icon prefix-icon-dot dropdown-menu mt-2">
-          <a href="#" class="dropdown-item disabled">View Log</a>
-          <a href="${downloadUrl}" class="dropdown-item" download>Download</a>
+          <a href="#" class="dropdown-item">Transcripts (Excel)</a>
+          <a href="#" class="dropdown-item">Transcripts (Word)</a>
+          <a href="${downloadUrl}" class="dropdown-item" download>Download raw</a>
         </div>
       </div>
     </div>`;

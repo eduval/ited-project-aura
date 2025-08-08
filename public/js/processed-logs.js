@@ -89,11 +89,26 @@ function renderLogRow(log, rowNumber) {
             </td>
             <td>
                 <span class="d-block text-muted small">${formattedDate}</span>
-                <span class="d-block text-muted small">${daysAgo} ago</span>
+                <span class="d-block text-muted small">${daysAgo}</span>
             </td>
             <td>
-                <span class="d-block text-info">Completed</span>
-                <span class="badge bg-secondary rounded-pill">Processing Log</span>
+        
+                <div class="flex-none ms-2 small text-muted text-align-end dropdown">
+        <a href="#" class="dropdown-toggle btn btn-sm btn-light px-2 py-1 mt-n1"
+           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="options">
+          <span>
+            <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
+            </svg>
+          </span>
+        </a>
+        <div class="prefix-link-icon prefix-icon-dot dropdown-menu mt-2">
+          <a href="#" class="dropdown-item">Transcripts (Excel)</a>
+          <a href="#" class="dropdown-item">Transcripts (Word)</a>
+          <a href="${downloadUrl}" class="dropdown-item" download>Download raw</a>
+        </div>
+      </div>
             </td>
         </tr>
     `;
@@ -102,7 +117,17 @@ function renderLogRow(log, rowNumber) {
 function calcDaysAgo(dateString) {
     const date = new Date(dateString);
     const now = new Date();
-    const diffMs = now - date;
+
+    // Get only year, month, day (ignore hours) to avoid timezone rounding errors
+    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    const diffMs = nowOnly - dateOnly;
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    return diffDays === 0 ? 'Today' : `${diffDays} day${diffDays > 1 ? 's' : ''}`;
+
+    if (diffDays === 0) return "Today";
+    if (diffDays === 1) return "1 day ago";
+    return `${diffDays} days ago`;
 }
+
+

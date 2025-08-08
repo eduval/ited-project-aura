@@ -1,7 +1,7 @@
 import { db } from './firebase-config.js';
 import { ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const alertsRef = ref(db, 'Alerts_test');
+const alertsRef = ref(db, 'alerts');
 
 onValue(alertsRef, snapshot => {
     if (snapshot.exists()) {

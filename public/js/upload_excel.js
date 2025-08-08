@@ -88,7 +88,7 @@ $(document).ready(function () {
                 try {
                     const res = typeof response === 'string' ? JSON.parse(response) : response;
                     if (res.success) {
-                        status.html(`<span class="text-success">✅ Upload and processing complete.<br>Processed: ${res.processedZip || 'N/A'}</span>`);
+                        status.html(`<span class="text-success">✅ Upload and processing complete.</span>`);
                     } else {
                         status.html(`<span class="text-danger">❌ Server Error: ${res.error || 'Unknown error.'}</span>`);
                     }
