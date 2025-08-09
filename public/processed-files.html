@@ -749,27 +749,6 @@
         import "./js/processed-logs.js";
     </script>
 
-    <!-- Aquí ya puedes usar firebase.auth() -->
-    <script type="module">
-        import { auth } from "./js/firebase-config.js";
-        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-        onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                window.location.href = "index.html";
-            } else {
-                document.getElementById("user-email").textContent = user.email;
-                document.getElementById("user-name").textContent = user.displayName || "Usuario";
-            }
-        });
-
-        document.getElementById("logout-btn").addEventListener("click", async (e) => {
-            e.preventDefault();
-            await signOut(auth);
-            window.location.href = "index.html";
-        });
-    </script>
-
 
 
 </body>

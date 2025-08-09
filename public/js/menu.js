@@ -14,7 +14,20 @@ get(menuRef).then(snapshot => {
             .sort(([, a], [, b]) => (a.id || 0) - (b.id || 0));
 
         const menuHTML = sortedMenuEntries
-            .map(([key, item]) => renderMenuItem(key, item, currentPath))
+            .map(([key, item]) => {
+                // Replace '999999999' with your Canvas API node key
+                const apiCanvasKeys = ["999999999", "anotherCanvasApiKey"]; // list your keys here if multiple
+
+                const insertDivider = apiCanvasKeys.includes(key);
+                let dividerHTML = '';
+                if (insertDivider) {
+                    dividerHTML = `
+<li class="nav-title mt-3">
+  <h6 class="mb-0 smaller text-muted text-uppercase">API AREA</h6>
+</li>`;
+                }
+                return dividerHTML + renderMenuItem(key, item, currentPath);
+            })
             .join('');
 
         document.getElementById('dynamicMenu').innerHTML = menuHTML;

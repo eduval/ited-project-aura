@@ -200,45 +200,20 @@
             <main id="middle" class="flex-fill mx-auto">
                 <div class="container">
                     <header>
-                        <h1 class="h4">Settings</h1>
+                        <h1 class="h4">Token API</h1>
                         <ol class="breadcrumb small">
-                            <li class="breadcrumb-item text-muted active">Settings</li>
+                            <li class="breadcrumb-item text-muted active">Token API</li>
                         </ol>
                     </header>
 
                     <div class="section p-xl-4">
                         <form id="criteria-form" class="row g-3" autocomplete="off">
-                            <div class="col-md-4">
-                                <label class="form-label">Minimum Grade (%)</label>
-                                <input type="number" min="0" max="100" step="1" id="minGrade" class="form-control"
-                                    placeholder="e.g., 50" />
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Minimum Attendance (%)</label>
-                                <input type="number" min="0" max="100" step="1" id="minAttendance" class="form-control"
-                                    placeholder="e.g., 75" />
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Minimum GPA</label>
-                                <input type="number" min="0" max="4" step="0.01" id="minGPA" class="form-control"
-                                    placeholder="e.g., 2.0" />
+                            <div class="col-md-12">
+                                <label class="form-label">Token API</label>
+                                <input type="password" min="0" max="500" step="1" id="token_api" class="form-control"
+                                    placeholder="e.g., jErYqrdhdUEIwsxcdFAITH0XaFAITHCM1oHhfsS0JMfs60xlVbb8ITED7724WLwLw" />
                             </div>
 
-                            <div class="col-md-4">
-                                <label class="form-label">Passing Credits (per term)</label>
-                                <input type="number" min="0" step="1" id="passingCredits" class="form-control"
-                                    placeholder="e.g., 12" />
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Grace Assignments Allowed</label>
-                                <input type="number" min="0" step="1" id="graceAssignments" class="form-control"
-                                    placeholder="e.g., 1" />
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Notes / Policy</label>
-                                <textarea id="policyNotes" class="form-control" rows="3"
-                                    placeholder="Late rules, exceptions, etc."></textarea>
-                            </div>
 
                             <div class="col-12 d-flex gap-2">
                                 <button type="submit" class="btn btn-primary btn-sm">Save</button>
@@ -265,7 +240,6 @@
         import "./js/menu.js";
         import "./js/alerts.js";
         import "./js/account.js";
-        import "./js/setting.js";
 
     </script>
 
