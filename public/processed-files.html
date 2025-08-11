@@ -529,157 +529,105 @@
 
                         </div>
 
-                        <!-- pagination, selected items -->
-                        <div class="row">
-                            <div class="col py-3 text-center text-md-start">
+                        <div class="mt-5">
+                            <!-- pagination, selected items -->
+                            <div class="row">
+                                <div class="col py-3 text-center text-md-start">
 
-                                <!-- selected items -->
-                                <div class="dropup">
-                                    <a class="btn btn-sm btn-primary dropdown-toggle" href="#" role="button"
-                                        id="ddSelected" data-bs-toggle="dropdown" aria-expanded="false"
-                                        data-bs-offset="0,0">
-                                        <span class="group-icon">
-                                            <svg height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-                                                fill="currentColor">
-                                                <path fill-rule="evenodd"
-                                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
-                                                </path>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                                            </svg>
-                                        </span>
-                                        <span>Selected items</span>
-                                    </a>
-
-                                    <ul class="dropdown-menu shadow-lg p-3 my-2" aria-labelledby="ddSelected">
-                                        <li class="small px-3 py-2 text-muted">Set order</li>
-                                        <li>
-                                            <a class="dropdown-item" href="#!">
-                                                <svg class="text-muted" width="18px" height="18px"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                                <span>Completed</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#!">
-                                                <svg class="text-muted" width="18px" height="18px"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                </svg>
-                                                <span>Canceled</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#!">
-                                                <svg class="text-muted" width="18px" height="18px"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                </svg>
-                                                <span>Declined</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#!">
-                                                <svg class="text-muted" width="18px" height="18px"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                </svg>
-                                                <span>Refunded</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#!">
-                                                <svg class="text-muted" width="18px" height="18px"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4">
+                                    <!-- selected items -->
+                                    <div class="dropup">
+                                        <a class="btn btn-sm btn-primary dropdown-toggle" href="#" role="button"
+                                            id="ddSelected" data-bs-toggle="dropdown" aria-expanded="false"
+                                            data-bs-offset="0,0">
+                                            <span class="group-icon">
+                                                <svg height="18px" viewBox="0 0 16 16"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
                                                     </path>
                                                 </svg>
-                                                <span class="w-100">Archive</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                </svg>
+                                            </span>
+                                            <span>Selected items</span>
+                                        </a>
 
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-auto py-3">
-
-                                <!-- pagination -->
-                                <nav class="w-100 text-center" aria-label="Pagination">
-
-                                    <!-- pagination : desktop -->
-                                    <nav class="text-center float-md-end mt-3 mt-md-0 d-none d-md-flex"
-                                        aria-label="Pagination">
-                                        <ul class="nav nav-sm nav-invert">
-                                            <li class="nav-item">
-                                                <a class="nav-link px-3 px-3 disabled" href="#" tabindex="-1">
-                                                    <span aria-hidden="true">&laquo;</span>
+                                        <ul class="dropdown-menu shadow-lg p-3 my-2" aria-labelledby="ddSelected">
+                                            <li class="small px-3 py-2 text-muted">Set order</li>
+                                            <li>
+                                                <a class="dropdown-item" href="#!">
+                                                    <svg class="text-muted" width="18px" height="18px"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                    <span>Completed</span>
                                                 </a>
                                             </li>
-                                            <li class="nav-item"><a class="nav-link px-3" href="#">1</a></li>
-                                            <li class="nav-item" aria-current="page">
-                                                <a class="nav-link px-3 px-3 active" href="#">2</a>
+                                            <li>
+                                                <a class="dropdown-item" href="#!">
+                                                    <svg class="text-muted" width="18px" height="18px"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                    </svg>
+                                                    <span>Canceled</span>
+                                                </a>
                                             </li>
-                                            <li class="nav-item"><a class="nav-link px-3" href="#">3</a></li>
-                                            <li class="nav-item"><a class="nav-link px-3" href="#">4</a></li>
-                                            <li class="nav-item">
-                                                <a class="nav-link px-3 px-3" href="#">
-                                                    <span aria-hidden="true">&raquo;</span>
+                                            <li>
+                                                <a class="dropdown-item" href="#!">
+                                                    <svg class="text-muted" width="18px" height="18px"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                    </svg>
+                                                    <span>Declined</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#!">
+                                                    <svg class="text-muted" width="18px" height="18px"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                    </svg>
+                                                    <span>Refunded</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#!">
+                                                    <svg class="text-muted" width="18px" height="18px"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4">
+                                                        </path>
+                                                    </svg>
+                                                    <span class="w-100">Archive</span>
                                                 </a>
                                             </li>
                                         </ul>
-                                    </nav>
 
-                                    <!-- pagination : mobile -->
-                                    <ul class="list-inline mb-0 d-md-none">
-                                        <li class="list-inline-item">
-                                            <a href="#!" class="btn btn-sm rounded-circle link-normal disabled"
-                                                tabindex="0">
-                                                <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                                </svg>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#!" class="btn btn-sm rounded-circle link-normal" tabindex="0">
-                                                <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                                </svg>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="text-muted small d-md-none" id="mobile-page-info" role="status"
-                                        aria-live="polite">
-                                        Showing results 1 to 30 of 180
                                     </div>
 
-                                </nav>
+                                </div>
 
+                                <!-- Replace your existing pagination div with this single one -->
+                                <div class="col-md-auto py-3 pagination-container">
+                                    <!-- Pagination will be inserted here by JavaScript -->
+                                </div>
                             </div>
                         </div>
 
