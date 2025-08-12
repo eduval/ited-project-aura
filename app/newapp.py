@@ -8,7 +8,7 @@ from transcript_generator import generate_transcripts
 from xlsxgeneratorV2 import split_excel_transcripts_anysheet  # Your script that splits the Excel file
 
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024  # 32 MB, puedes ajustar el valor
+app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024  # 32 MB, adjust the value as needed
 def get_simple_type(value):
     if isinstance(value, str):
         return "str"
@@ -23,6 +23,8 @@ def validate_excel(file_path):
     print("Validating Excel file at:", file_path)
     wb = load_workbook(file_path, data_only=False)
     issues = {}
+    # Define columns that must be numeric (adjust as needed)
+    numeric_columns = ["Grade", "Attendance", "Student No"]
 
     for sheet_name in wb.sheetnames:
         ws = wb[sheet_name]
@@ -79,6 +81,37 @@ def validate_excel(file_path):
         if empty_columns:
             problems.append(f"Empty columns with no values: {empty_columns}")
 
+        # Validate numeric columns
+        for col_idx, header in enumerate(headers):
+            if header is None:
+                continue
+            if header in numeric_columns:
+                for row in ws.iter_rows(min_row=2, min_col=col_idx+1, max_col=col_idx+1):
+                    val = row[0].value
+                    if val is not None and not isinstance(val, (int, float)):
+                        problems.append(f"Non-numeric value '{val}' found in numeric column '{header}' (row {row[0].row})")
+
+        # Validate type mismatches (optional, for columns not in numeric_columns)
+        type_mismatches = {}
+        for col_idx, header in enumerate(headers):
+            if header is None or header in numeric_columns:
+                continue
+            expected_type = None
+            for row in ws.iter_rows(min_row=2, min_col=col_idx+1, max_col=col_idx+1):
+                val = row[0].value
+                if val is None:
+                    continue
+                val_type = get_simple_type(val)
+                if expected_type is None:
+                    expected_type = val_type
+                elif val_type != expected_type:
+                    type_mismatches.setdefault(header, []).append(val)
+        if type_mismatches:
+            msg = "Type mismatches found in columns:<br>"
+            for k, v in type_mismatches.items():
+                msg += f" - {k}: examples {v[:3]}<br>"
+            problems.append(msg.strip())
+
         empty_cells = []
         merged_ranges = [r for r in ws.merged_cells.ranges]
         for row_idx, row in enumerate(ws.iter_rows(min_row=2), start=2):
@@ -110,16 +143,6 @@ def index():
             print("File saved to:", file_path)
 
             print("Starting validation...")
-            # validation_issues = validate_excel(file_path)
-            # if validation_issues:
-            #     print("Validation issues found:", validation_issues)
-            #     errors = ""
-            #     for sheet, probs in validation_issues.items():
-            #         errors += f"<strong>Sheet: {sheet}</strong><ul>"
-            #         for p in probs:
-            #             errors += f"<li>{p}</li>"
-            #         errors += "</ul>"
-            #     return render_template("templateone.html", errors=errors)
             print("Validation passed. Proceeding to split and generate transcripts.")
             try:
                 split_dir = os.path.join(tempfile.gettempdir(), "split_excels")
