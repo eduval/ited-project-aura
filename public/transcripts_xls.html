@@ -1,16 +1,72 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>AURA</title>
-    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
-    <link rel="stylesheet" href="assets/css/core.min.css" />
-    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
+    <meta name="description" content="AURA">
+
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+
+    <!-- up to 10% speed up for external res -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <!-- preloading icon font is helping to speed up a little bit -->
+    <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="assets/css/core.min.css">
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <style>
+        .fi-arrow-down {
+            display: inline-block !important;
+        }
+
+        .fi-arrow-down.rotated {
+            transform: rotate(90deg);
+            transition: transform 0.3s ease;
+        }
+
+        .d-none {
+            display: none !important;
+        }
+    </style>
+
 </head>
 
-<body class="layout-admin layout-padded aside-sticky">
+
+<!--
+
+    Layout Admin
+      .layout-admin   (required)
+
+      .aside-sticky           - sidebar : fixed and push header
+      .header-sticky          - header : always visible on top (acting as old .header-focus)
+
+    ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++
+
+    SCROLL TO TOP BUTTON [optional styling]
+
+      data-s2t-disable="true"
+      data-s2t-position="start|end"
+      data-s2t-class="btn-secondary btn-sm"   (default)
+      data-s2t-class="btn-secondary rounded-circle"
+      data-s2t-class="btn-warning rounded-circle"
+
+    ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++ ++
+
+  -->
+
+<body class="layout-admin layout-padded aside-sticky"
+    data-s2t-class="btn-primary btn-sm bg-gradient-default rounded-circle border-0">
+
     <div id="wrapper" class="d-flex align-items-stretch flex-column">
+
 
         <!--  header -->
         <header id="header" class="d-flex align-items-center bg-transparent">
@@ -178,61 +234,200 @@
         </header>
         <!-- /Header -->
 
+
+        <!-- content -->
         <div id="wrapper_content" class="d-flex flex-fill">
 
-            <!-- Sidebar (same structure so menu.js fills it) -->
+
+            <!-- sidebar -->
             <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
+
+
+                <!-- sidebar : logo -->
                 <div class="py-2 px-3 mb-3 mt-3">
-                    <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50"
-                            alt="..." /></a>
+                    <a href="dashboard.html">
+                        <img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="...">
+                    </a>
                 </div>
+                <!-- /sidebar : logo -->
+
+
+                <!-- sidebar : navigation -->
                 <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
                     <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
                         <ul id="dynamicMenu" class="nav flex-column"></ul>
-
                     </nav>
                 </div>
+
+
+                <!-- /sidebar : navigation -->
+
+
+                <!-- sidebar : footer -->
+                <div class="d-flex align-self-baseline w-100 py-3 px-3 border-top border-light small">
+
+
+
+                </div>
+                <!-- /sidebar : footer -->
+
+
             </aside>
+            <!-- /sidebar -->
 
-
-
-            <!-- Main -->
+            <!-- main -->
             <main id="middle" class="flex-fill mx-auto">
                 <div class="container">
+
+                    <!-- PAGE TITLE -->
                     <header>
-                        <h1 class="h4">Token API</h1>
-                        <ol class="breadcrumb small">
-                            <li class="breadcrumb-item text-muted active">Token API</li>
-                        </ol>
+                        <h1 class="h4">Processed Transcripts</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb small">
+                                <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+                                <li class="breadcrumb-item">Reports &amp; Documents</li>
+                                <li class="breadcrumb-item text-muted active" aria-current="page">Transcripts (Excel)
+                                </li>
+                            </ol>
+                        </nav>
                     </header>
+                    <!-- /PAGE TITLE -->
 
+                    <!-- CONTENT -->
                     <div class="section p-xl-4">
-                        <form id="criteria-form" class="row g-3" autocomplete="off">
-                            <div class="col-md-12">
-                                <label class="form-label">Token API</label>
-                                <input type="password" min="0" max="500" step="1" id="token_api" class="form-control"
-                                    placeholder="e.g., jErYqrdhdUEIwsxcdFAITH0XaFAITHCM1oHhfsS0JMfs60xlVbb8ITED7724WLwLw" />
-                            </div>
+                        <div class="card shadow-sm">
+                            <div class="card-body">
 
+                                <!-- Toolbar -->
+                                <div class="row g-2 align-items-center mb-3">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fi fi-search"></i></span>
+                                            <input id="tx-search" type="text" class="form-control"
+                                                placeholder="Search by file or origin...">
+                                        </div>
+                                    </div>
 
-                            <div class="col-12 d-flex gap-2">
-                                <button type="submit" class="btn btn-primary btn-sm">Save</button>
-                                <span id="criteria-save-status" class="small text-muted"></span>
+                                    <div class="col-md-3">
+                                        <select id="tx-filter-status" class="form-select">
+                                            <option value="">All status</option>
+                                            <option value="completed">Completed</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="failed">Failed</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 text-md-end">
+                                        <button id="btn-download-selected" class="btn btn-primary">
+                                            <i class="fi fi-arrow-download"></i> Download Selected
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Table -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="small text-muted">
+                                            <tr>
+                                                <th style="width:36px;"><input id="tx-select-all" type="checkbox"
+                                                        class="form-check-input"></th>
+                                                <th>File Name</th>
+                                                <th>Origin</th>
+                                                <th>Date Processed</th>
+                                                <th>Processed By</th>
+                                                <th>Status</th>
+                                                <th class="text-end">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tx-tbody"><!-- injected by transcripts.js --></tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Empty state -->
+                                <div id="tx-empty"
+                                    class="text-center text-muted border border-dashed rounded p-5 d-none">
+                                    <div class="mb-2">📂 No transcripts found.</div>
+                                    <div class="small">Try changing filters or upload a new file.</div>
+                                </div>
+
+                                <!-- Footer / pagination -->
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div class="small text-muted" id="tx-count">0 items</div>
+                                    <nav>
+                                        <ul class="pagination pagination-sm mb-0" id="tx-pagination">
+                                            <!-- built in JS -->
+                                        </ul>
+                                    </nav>
+                                </div>
+
                             </div>
-                        </form>
+                        </div>
+                    </div>
+                    <!-- /CONTENT -->
+
+                </div>
+
+                <!-- Preview Modal -->
+                <div class="modal fade" id="tx-preview-modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="tx-preview-title">Preview</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="tx-preview-body" class="text-muted">Loading preview...</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>
-        </div>
-    </div>
 
-    <footer id="footer">
-        <div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div>
-    </footer>
-    <!-- JS -->
+
+        </div>
+        <!-- /content -->
+
+
+        <!-- footer -->
+        <footer id="footer">
+            <div class="p-3 bg-white shadow-sm rounded">
+
+                <span class="small fw-medium">&copy; AURA</span>
+
+                <div class="d-inline-block float-end dropdown">
+                    <ul class="list-inline m-0">
+
+                        <!-- LANGUAGE -->
+                        <li class="dropdown list-inline-item m-0">
+
+                            <a id="topDDLanguage" href="#" class="d-inline-block" data-bs-toggle="dropdown"
+                                aria-expanded="false" aria-haspopup="true">
+                                <i class="flag flag-us"></i>
+                                <span class="small px-2">English</span>
+                            </a>
+
+
+                        </li>
+                        <!-- /LANGUAGE -->
+
+                    </ul>
+                </div>
+
+            </div>
+        </footer>
+        <!-- /footer -->
+
+
+    </div><!-- /#wrapper -->
+
+
+
+
     <!-- Core javascripts -->
     <script src="assets/js/core.min.js"></script>
     <script src="assets/js/vendor_bundle.min.js"></script>
+
 
     <script type="module">
         import "./js/firebase-config.js";
@@ -240,9 +435,10 @@
         import "./js/menu.js";
         import "./js/alerts.js";
         import "./js/account.js";
-        import "./js/tokenAPI.js";
+        import "./js/transcripts_excel.js";
 
     </script>
+
 
 </body>
 
