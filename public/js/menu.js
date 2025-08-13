@@ -1,9 +1,49 @@
 import { db } from './firebase-config.js';
-import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { ref, get, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const currentPath = window.location.pathname.split('/').pop(); // e.g., 'settings.html'
+const currentPath = window.location.pathname.split('/').pop();
+const dynamicMenu = document.getElementById('dynamicMenu');
+
+// Show loading spinner initially
+dynamicMenu.innerHTML = `
+  <li class="text-center py-4">
+    <div class="spinner-grow text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </li>
+`;
 
 const menuRef = ref(db, 'menu');
+const alertsRef = ref(db, 'alerts');
+
+let unreadAlertCount = 0; // store live alerts count
+
+// Listen for Alerts changes in real time
+onValue(alertsRef, snapshot => {
+    if (snapshot.exists()) {
+        const alerts = snapshot.val();
+        let alertList = [];
+
+        for (const uploadKey in alerts) {
+            const group = alerts[uploadKey];
+            for (const alertKey in group) {
+                const alert = group[alertKey];
+                if (!alert.read) {
+                    alertList.push(alert);
+                }
+            }
+        }
+
+        unreadAlertCount = alertList.length;
+
+        // Update the badge if menu is already rendered
+        const badgeEl = document.querySelector('.notification-count-alerts');
+        if (badgeEl) {
+            badgeEl.textContent = unreadAlertCount;
+            badgeEl.style.display = unreadAlertCount > 0 ? 'inline-block' : 'none';
+        }
+    }
+});
 
 get(menuRef).then(snapshot => {
     if (snapshot.exists()) {
@@ -15,10 +55,9 @@ get(menuRef).then(snapshot => {
 
         const menuHTML = sortedMenuEntries
             .map(([key, item]) => {
-                // Replace '999999999' with your Canvas API node key
-                const apiCanvasKeys = ["999999999", "anotherCanvasApiKey"]; // list your keys here if multiple
-
+                const apiCanvasKeys = ["999999999", "anotherCanvasApiKey"];
                 const insertDivider = apiCanvasKeys.includes(key);
+
                 let dividerHTML = '';
                 if (insertDivider) {
                     dividerHTML = `
@@ -30,7 +69,7 @@ get(menuRef).then(snapshot => {
             })
             .join('');
 
-        document.getElementById('dynamicMenu').innerHTML = menuHTML;
+        dynamicMenu.innerHTML = menuHTML;
 
         // Menu toggle events
         setTimeout(() => {
@@ -71,10 +110,19 @@ get(menuRef).then(snapshot => {
                 });
             });
         }, 0);
+
     } else {
+        dynamicMenu.innerHTML = `
+          <li class="text-center py-3 text-muted">No menu data found</li>
+        `;
         console.warn('No menu data found.');
     }
-}).catch(console.error);
+}).catch(err => {
+    console.error(err);
+    dynamicMenu.innerHTML = `
+      <li class="text-center py-3 text-danger">Error loading menu</li>
+    `;
+});
 
 function renderMenuItem(key, item, currentPath) {
     if (!item.enable) return '';
@@ -96,6 +144,12 @@ function renderMenuItem(key, item, currentPath) {
         );
     }
 
+    // Add badge ONLY if menu title is "Alerts"
+    const badgeHtml = item.title === "Alerts"
+        ? `<span class="notification-count-alerts"
+            style="position: absolute; top: -10px; right: -20px; background: red; color: white; border-radius: 50%; padding: 5px 5px; font-size: 12px;">${unreadAlertCount}</span>`
+        : '';
+
     if (hasChildren) {
         const sortedChildrenEntries = Object.entries(item.children)
             .filter(([_, child]) => child.enable)
@@ -106,10 +160,10 @@ function renderMenuItem(key, item, currentPath) {
             .join('');
 
         return `
-<li class="nav-item${isActive ? ' active' : ''}">
+<li class="nav-item${isActive ? ' active' : ''}" style="position: relative;">
   <a class="nav-link" href="#">
     ${iconHtml}
-    <span style="line-height: 1;">${item.title}</span>
+    <span style="line-height: 1; position: relative;">${item.title}${badgeHtml}</span>
     <span class="group-icon float-end">
       <i class="fi fi-arrow-end${isActive ? ' d-none' : ''}"></i>
       <i class="fi fi-arrow-down${isActive ? '' : ' d-none'}"></i>
@@ -122,10 +176,10 @@ function renderMenuItem(key, item, currentPath) {
 `;
     } else {
         return `
-<li class="nav-item${isActive ? ' active' : ''}">
-  <a class="nav-link" href="${item.link || '#'}" style="display: flex; align-items: center;">
+<li class="nav-item${isActive ? ' active' : ''}" style="position: relative;">
+  <a class="nav-link" href="${item.link || '#'}" style="display: flex; align-items: center; position: relative;">
     ${iconHtml}
-    <span style="line-height: 1;">${item.title}</span>
+    <span style="line-height: 1; position: relative;">${item.title}${badgeHtml}</span>
   </a>
 </li>
 `;

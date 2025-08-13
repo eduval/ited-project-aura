@@ -1,12 +1,27 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>AURA</title>
-    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
-    <link rel="stylesheet" href="assets/css/core.min.css" />
-    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
+    <meta name="description" content="AURA">
+
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+
+    <!-- up to 10% speed up for external res -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <!-- preloading icon font is helping to speed up a little bit -->
+    <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="assets/css/core.min.css">
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
 </head>
 
 <body class="layout-admin layout-padded aside-sticky">
@@ -54,37 +69,11 @@
                     <!-- options -->
                     <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
 
+
                         <!-- notifications -->
                         <li class="list-inline-item mx-1 dropdown">
 
-                            <a href="#" id="dropdownNotificationOptions"
-                                class="btn btn-sm btn-light rounded-circle text-primary-hover dropdown-toggle"
-                                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
-                                aria-haspopup="true" aria-label="Notifications">
 
-                                <!-- svg icon -->
-                                <span style="margin-top: -3px;">
-                                    <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <path fill="currentColor"
-                                                d="M17,12 L18.5,12 C19.3284271,12 20,12.6715729 20,13.5 C20,14.3284271 19.3284271,15 18.5,15 L5.5,15 C4.67157288,15 4,14.3284271 4,13.5 C4,12.6715729 4.67157288,12 5.5,12 L7,12 L7.5582739,6.97553494 C7.80974924,4.71225688 9.72279394,3 12,3 C14.2772061,3 16.1902508,4.71225688 16.4417261,6.97553494 L17,12 Z">
-                                            </path>
-
-                                            <!-- animate-blink -->
-                                            <!-- <rect class="animate-blink" fill="#6dbb30" opacity="0.8" x="10" y="16" width="4" height="4" rx="2"></rect> -->
-
-                                            <!-- no animate -->
-                                            <rect fill="#000000" opacity="0.3" x="10" y="16" width="4" height="4"
-                                                rx="2"></rect>
-                                        </g>
-                                    </svg>
-                                    <span class="notification-count"
-                                        style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; padding: 2px 9px; font-size: 12px;">0</span>
-
-                                </span>
-
-                            </a>
 
                             <div aria-labelledby="dropdownNotificationOptions"
                                 class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
@@ -92,21 +81,14 @@
                                 <div class="dropdown-divider"></div>
                                 <div class="max-vh-50 scrollable-vertical">
 
-                                    <div class="max-vh-50 scrollable-vertical" id="notifications-container">
-                                        <div class="py-5 text-gray-400 text-center" id="no-alerts-msg">Loading...</div>
-                                    </div>
+
 
 
                                 </div>
-                                <div class="dropdown-divider mb-0"></div>
-                                <a href="#"
-                                    class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore fw-medium py-3">
-                                    View all
-                                </a>
+
                             </div>
 
                         </li>
-
 
 
 

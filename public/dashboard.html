@@ -137,7 +137,7 @@
 
               <div aria-labelledby="dropdownNotificationOptions"
                 class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
-                <div class="dropdown-header p-4">1 new notification</div>
+                <div class="dropdown-header p-4">... new notification</div>
                 <div class="dropdown-divider"></div>
                 <div class="max-vh-50 scrollable-vertical">
 
@@ -245,7 +245,14 @@
         <!-- sidebar : navigation -->
         <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
           <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
-            <ul id="dynamicMenu" class="nav flex-column"></ul>
+            <ul id="dynamicMenu" class="nav flex-column">
+              <!-- Initial loading spinner -->
+              <li class="text-center py-4">
+                <div class="spinner-grow text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </li>
+            </ul>
           </nav>
         </div>
 
@@ -541,8 +548,8 @@
     import "./js/auth.js";
     import "./js/menu.js";
     import "./js/user_data.js";
-    import "./js/alerts.js";
     import "./js/account.js";
+    import "./js/alerts.js";
     import "./js/processing-log-list.js";
   </script>
 
