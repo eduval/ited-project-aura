@@ -1,12 +1,13 @@
 import { db } from './firebase-config.js';
 import { ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// Pagination configuration
+// Pagination + state
 const config = {
     itemsPerPage: 10,
     currentPage: 1,
     totalPages: 1,
-    allLogs: []
+    allLogs: [],
+    filteredLogs: []
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,68 +16,55 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingDiv: document.getElementById('logs-loading'),
         tableWrapper: document.getElementById('logs-table-wrapper'),
         paginationContainer: document.querySelector('.pagination-container'),
-        mobilePageInfo: document.getElementById('mobile-page-info')
+        mobilePageInfo: document.getElementById('mobile-page-info'),
+        searchInput: document.getElementById('logs-search')
     };
 
-    // Validate required elements
-    if (!elements.tbody || !elements.loadingDiv || !elements.tableWrapper || !elements.paginationContainer) {
+    // Ensure required DOM elements exist
+    if (Object.values(elements).some(el => el === null)) {
         console.error("Missing required DOM elements");
         return;
     }
 
     const logsRef = ref(db, 'ProcessingLogs');
 
-    // Show initial loading state
-    elements.loadingDiv.classList.remove('d-none');
-    elements.tableWrapper.classList.add('d-none');
+    showLoading(elements, true);
 
     onValue(logsRef, snapshot => {
-        elements.loadingDiv.classList.remove('d-none');
-        elements.tableWrapper.classList.add('d-none');
+        showLoading(elements, true);
         elements.tbody.innerHTML = '';
 
         if (snapshot.exists()) {
             const logs = snapshot.val();
 
-            // Process and sort logs
+            // Sort logs by timestamp descending
             config.allLogs = Object.values(logs).sort((a, b) =>
                 new Date(b.timestamp) - new Date(a.timestamp)
             );
 
-            config.totalPages = Math.ceil(config.allLogs.length / config.itemsPerPage);
-            updatePaginationControls(elements, config);
-            renderPage(elements, config);
+            // Start with all logs visible
+            config.filteredLogs = [...config.allLogs];
+            config.totalPages = Math.ceil(config.filteredLogs.length / config.itemsPerPage);
 
+            renderPage(elements, config);
+            updatePaginationControls(elements, config);
         } else {
-            elements.tbody.innerHTML = `
-                <tr>
-                    <td colspan="5" class="text-center text-muted py-4">
-                        No processing logs found
-                    </td>
-                </tr>
-            `;
+            showEmptyState(elements.tbody, "No processing logs found");
             elements.paginationContainer.style.display = 'none';
         }
 
-        elements.loadingDiv.classList.add('d-none');
-        elements.tableWrapper.classList.remove('d-none');
+        showLoading(elements, false);
     }, error => {
         console.error("Error loading logs:", error);
-        elements.tbody.innerHTML = `
-            <tr>
-                <td colspan="5" class="text-center text-danger py-4">
-                    Error loading logs
-                </td>
-            </tr>
-        `;
-        elements.loadingDiv.classList.add('d-none');
-        elements.tableWrapper.classList.remove('d-none');
+        showEmptyState(elements.tbody, "Error loading logs", true);
+        showLoading(elements, false);
     });
 
-    // Event delegation for pagination
-    document.addEventListener('click', function (e) {
+    // Pagination click handlers
+    document.addEventListener('click', e => {
         if (e.target.classList.contains('page-link')) {
             e.preventDefault();
+
             const page = parseInt(e.target.dataset.page);
             if (!isNaN(page)) {
                 config.currentPage = page;
@@ -103,37 +91,70 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // Search handler
+    elements.searchInput.addEventListener('input', () => {
+        const term = elements.searchInput.value.trim().toLowerCase();
+        config.filteredLogs = config.allLogs.filter(log =>
+            log.filename.toLowerCase().includes(term) ||
+            new Date(log.timestamp).toLocaleString().toLowerCase().includes(term)
+        );
+
+        config.currentPage = 1;
+        config.totalPages = Math.ceil(config.filteredLogs.length / config.itemsPerPage);
+
+        renderPage(elements, config);
+        updatePaginationControls(elements, config);
+    });
 });
 
+/**
+ * Show or hide loading state
+ */
+function showLoading(elements, isLoading) {
+    elements.loadingDiv.classList.toggle('d-none', !isLoading);
+    elements.tableWrapper.classList.toggle('d-none', isLoading);
+}
+
+/**
+ * Show empty/error state in the table
+ */
+function showEmptyState(tbody, message, isError = false) {
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="5" class="text-center ${isError ? 'text-danger' : 'text-muted'} py-4">
+                ${message}
+            </td>
+        </tr>
+    `;
+}
+
+/**
+ * Render the current page of logs
+ */
 function renderPage(elements, config) {
     const startIndex = (config.currentPage - 1) * config.itemsPerPage;
-    const endIndex = Math.min(startIndex + config.itemsPerPage, config.allLogs.length);
-    const pageLogs = config.allLogs.slice(startIndex, endIndex);
-
-    elements.tbody.innerHTML = '';
+    const endIndex = Math.min(startIndex + config.itemsPerPage, config.filteredLogs.length);
+    const pageLogs = config.filteredLogs.slice(startIndex, endIndex);
 
     if (pageLogs.length === 0) {
-        elements.tbody.innerHTML = `
-            <tr>
-                <td colspan="5" class="text-center text-muted py-4">
-                    No logs found for this page
-                </td>
-            </tr>
-        `;
+        showEmptyState(elements.tbody, "No logs found for this page");
         return;
     }
 
-    pageLogs.forEach((log, index) => {
-        const rowNumber = startIndex + index + 1;
-        elements.tbody.innerHTML += renderLogRow(log, rowNumber);
-    });
+    elements.tbody.innerHTML = pageLogs
+        .map((log, index) => renderLogRow(log, startIndex + index + 1))
+        .join('');
 
     if (elements.mobilePageInfo) {
         elements.mobilePageInfo.textContent =
-            `Showing ${startIndex + 1} to ${endIndex} of ${config.allLogs.length} results`;
+            `Showing ${startIndex + 1} to ${endIndex} of ${config.filteredLogs.length} results`;
     }
 }
 
+/**
+ * Update pagination controls
+ */
 function updatePaginationControls(elements, config) {
     if (config.totalPages <= 1) {
         elements.paginationContainer.style.display = 'none';
@@ -144,95 +165,84 @@ function updatePaginationControls(elements, config) {
     elements.paginationContainer.innerHTML = generatePaginationHTML(config);
 }
 
+/**
+ * Generate pagination HTML
+ */
 function generatePaginationHTML(config) {
     const maxVisiblePages = 5;
     let startPage = 1;
     let endPage = config.totalPages;
 
     if (config.totalPages > maxVisiblePages) {
-        const maxPagesBeforeCurrent = Math.floor(maxVisiblePages / 2);
-        const maxPagesAfterCurrent = Math.ceil(maxVisiblePages / 2) - 1;
+        const half = Math.floor(maxVisiblePages / 2);
 
-        if (config.currentPage <= maxPagesBeforeCurrent) {
+        if (config.currentPage <= half) {
             endPage = maxVisiblePages;
-        } else if (config.currentPage + maxPagesAfterCurrent >= config.totalPages) {
+        } else if (config.currentPage + half >= config.totalPages) {
             startPage = config.totalPages - maxVisiblePages + 1;
         } else {
-            startPage = config.currentPage - maxPagesBeforeCurrent;
-            endPage = config.currentPage + maxPagesAfterCurrent;
+            startPage = config.currentPage - half;
+            endPage = config.currentPage + half;
         }
     }
 
-    let paginationHTML = `
+    let html = `
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <li class="page-item ${config.currentPage === 1 ? 'disabled' : ''}">
                     <a class="page-link prev-page" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                        &laquo;
                     </a>
                 </li>
     `;
 
-    // First page
+    // First page + ellipsis
     if (startPage > 1) {
-        paginationHTML += `
-            <li class="page-item">
-                <a class="page-link" href="#" data-page="1">1</a>
-            </li>
-        `;
+        html += `<li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>`;
         if (startPage > 2) {
-            paginationHTML += `
-                <li class="page-item disabled">
-                    <span class="page-link">...</span>
-                </li>
-            `;
+            html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
         }
     }
 
-    // Page numbers
+    // Main pages
     for (let i = startPage; i <= endPage; i++) {
-        paginationHTML += `
+        html += `
             <li class="page-item ${i === config.currentPage ? 'active' : ''}">
                 <a class="page-link" href="#" data-page="${i}">${i}</a>
             </li>
         `;
     }
 
-    // Last page
+    // Last page + ellipsis
     if (endPage < config.totalPages) {
         if (endPage < config.totalPages - 1) {
-            paginationHTML += `
-                <li class="page-item disabled">
-                    <span class="page-link">...</span>
-                </li>
-            `;
+            html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
         }
-        paginationHTML += `
-            <li class="page-item">
-                <a class="page-link" href="#" data-page="${config.totalPages}">${config.totalPages}</a>
-            </li>
-        `;
+        html += `<li class="page-item"><a class="page-link" href="#" data-page="${config.totalPages}">${config.totalPages}</a></li>`;
     }
 
     // Next button
-    paginationHTML += `
+    html += `
                 <li class="page-item ${config.currentPage === config.totalPages ? 'disabled' : ''}">
                     <a class="page-link next-page" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
+                        &raquo;
                     </a>
                 </li>
             </ul>
         </nav>
         <div class="text-muted small text-center mt-2">
-            Showing ${((config.currentPage - 1) * config.itemsPerPage) + 1} to 
-            ${Math.min(config.currentPage * config.itemsPerPage, config.allLogs.length)} of 
-            ${config.allLogs.length} results
+            Showing ${(config.currentPage - 1) * config.itemsPerPage + 1} to 
+            ${Math.min(config.currentPage * config.itemsPerPage, config.filteredLogs.length)} of 
+            ${config.filteredLogs.length} results
         </div>
     `;
 
-    return paginationHTML;
+    return html;
 }
 
+/**
+ * Render a single log row
+ */
 function renderLogRow(log, rowNumber) {
     const { filename, alerts, lowAttendance, lowGrades, minAttendance, minGrade, timestamp } = log;
     const formattedDate = new Date(timestamp).toLocaleString();
@@ -241,42 +251,37 @@ function renderLogRow(log, rowNumber) {
 
     return `
         <tr>
-            <th>
-                <div class="form-check">
-                    <input class="form-check-input form-check-input-primary" type="checkbox" value="">
-                </div>
-            </th>
-            <td class="position-relative">
-                <a href="${downloadUrl}" class="link-normal fw-medium stretched-link d-block" download>
-                    ${filename}
-                </a>
-                <span class="d-block smaller text-muted">
+            <th>${rowNumber}</th>
+            <td>
+                <a href="${downloadUrl}" class="link-normal fw-medium d-block" download>${filename}</a>
+                <span class="smaller text-muted d-block">
                     ${alerts} alerts | Min Attendance: ${minAttendance} | Min Grade: ${minGrade}
                 </span>
             </td>
             <td>
-                <span class="d-block text-success">${lowAttendance} Low Attendance</span>
-                <span class="d-block text-danger">${lowGrades} Low Grades</span>
+                <span class="text-success d-block">${lowAttendance} Low Attendance</span>
+                <span class="text-danger d-block">${lowGrades} Low Grades</span>
             </td>
             <td>
-                <span class="d-block text-muted small">${formattedDate}</span>
-                <span class="d-block text-muted small">${daysAgo}</span>
+                <span class="small text-muted d-block">${formattedDate}</span>
+                <span class="small text-muted d-block">${daysAgo}</span>
             </td>
-             <td>
-                <div class="flex-none ms-2 small text-muted text-align-end dropdown">
-                    <a href="#" class="dropdown-toggle btn btn-sm btn-light px-2 py-1 mt-n1"
-                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="options">
-                      <span>
-                        <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                          class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                          <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
+            <td>
+                <div class="dropdown text-muted small">
+                    <a href="#" class="dropdown-toggle btn btn-sm btn-light" data-bs-toggle="dropdown">
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 
+                                     1.5 1.5 0 0 1 3 0zm0-5a1.5 
+                                     1.5 0 1 1-3 0 1.5 1.5 
+                                     0 0 1 3 0zm0-5a1.5 1.5 
+                                     0 1 1-3 0 1.5 1.5 
+                                     0 0 1 3 0z"></path>
                         </svg>
-                      </span>
                     </a>
-                    <div class="prefix-link-icon prefix-icon-dot dropdown-menu mt-2">
-                      <a href="#" class="dropdown-item">Transcripts (Excel)</a>
-                      <a href="#" class="dropdown-item">Transcripts (Word)</a>
-                      <a href="${downloadUrl}" class="dropdown-item" download>Download raw</a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Transcripts (Excel)</a>
+                        <a href="#" class="dropdown-item">Transcripts (Word)</a>
+                        <a href="${downloadUrl}" class="dropdown-item" download>Download raw</a>
                     </div>
                 </div>
             </td>
@@ -284,12 +289,11 @@ function renderLogRow(log, rowNumber) {
     `;
 }
 
+/**
+ * Calculate how many days ago a date was
+ */
 function calcDaysAgo(dateString) {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = now - date;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
+    const diffDays = Math.floor((Date.now() - new Date(dateString)) / (1000 * 60 * 60 * 24));
     if (diffDays === 0) return "Today";
     if (diffDays === 1) return "1 day ago";
     return `${diffDays} days ago`;

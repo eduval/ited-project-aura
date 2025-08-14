@@ -85,7 +85,6 @@ function rowHTML(r) {
       <td class="fw-medium">${esc(shownName)}</td>
       <td class="text-muted">${esc(r.origin)}</td>
       <td>${esc(r.dateProcessed)}</td>
-      <td>${esc(r.operatorIP || "—")}</td>
       <td>${statusBadge}</td>
       <td class="text-end">${dl}</td>
     </tr>
