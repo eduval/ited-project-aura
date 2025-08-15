@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <title>AURA</title>
+  <meta name="description" content="AURA" />
+  <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
+
+  <!-- perf -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com/" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" />
+  <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="assets/css/core.min.css" />
+  <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" />
+
+  <link rel="shortcut icon" href="favicon.ico" />
+
+  <style>
+    .fi-arrow-down{display:inline-block!important}
+    .fi-arrow-down.rotated{transform:rotate(90deg);transition:transform .3s ease}
+    .d-none{display:none!important}
+
+    /* width like history page */
+    .page-wrap{max-width:none;margin:0 auto}
+    .section{padding:1.5rem 2rem}
+    .card{border-radius:10px}
+
+    /* darker checkboxes used inside expanded list */
+    .tx-file-check{border:2px solid #555!important}
+    .tx-file-check:checked{background-color:#1d4ed8!important;border-color:#1d4ed8!important}
+  </style>
+</head>
+
+<body class="layout-admin layout-padded aside-sticky" data-s2t-class="btn-primary btn-sm bg-gradient-default rounded-circle border-0">
+  <div id="wrapper" class="d-flex align-items-stretch flex-column">
+
+    <!-- header -->
+    <header id="header" class="d-flex align-items-center bg-transparent">
+      <div class="px-3 px-lg-0 w-100 position-relative">
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
+          <div class="align-items-start">
+            <a href="#aside-main" class="btn-sidebar-toggle h-100 d-inline-block d-lg-none justify-content-center align-items-center p-2" aria-label="Toggle sidebar">
+              <span>
+                <svg width="25" height="25" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M19.9876 1.998H-.0108V-.0019H19.9876V1.998z"></path>
+                  <path d="M19.9876 7.9979H-.0108V5.9979H19.9876V7.9979z"></path>
+                  <path d="M19.9876 13.9977H-.0108V11.9978H19.9876V13.9977z"></path>
+                  <path d="M19.9876 19.9976H-.0108V17.9976H19.9876V19.9976z"></path>
+                </svg>
+              </span>
+            </a>
+            <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
+              <img src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA" />
+            </a>
+          </div>
+
+          <!-- right options -->
+          <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
+
+            <!-- notifications (same ids as dashboard) -->
+            <li class="list-inline-item mx-1 dropdown">
+              <a href="#" id="dropdownNotificationOptions"
+                 class="btn btn-sm btn-light rounded-circle text-primary-hover dropdown-toggle"
+                 data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                 aria-expanded="false" aria-haspopup="true" aria-label="Notifications">
+                <span style="margin-top:-3px;">
+                  <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                    <g fill="none" fill-rule="evenodd">
+                      <path fill="currentColor" d="M17,12 L18.5,12 C19.33,12 20,12.67 20,13.5 C20,14.33 19.33,15 18.5,15 L5.5,15 C4.67,15 4,14.33 4,13.5 C4,12.67 4.67,12 5.5,12 L7,12 L7.56,6.98 C7.81,4.71 9.72,3 12,3 C14.28,3 16.19,4.71 16.44,6.98 L17,12 Z"></path>
+                      <rect fill="#000" opacity=".3" x="10" y="16" width="4" height="4" rx="2"></rect>
+                    </g>
+                  </svg>
+                  <span class="notification-count"
+                        style="position:absolute;top:-5px;right:-5px;background:red;color:#fff;border-radius:50%;padding:2px 9px;font-size:12px;">0</span>
+                </span>
+              </a>
+
+              <div aria-labelledby="dropdownNotificationOptions"
+                   class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
+                <div class="dropdown-header p-4" id="notify-title">0 new notifications</div>
+                <div class="dropdown-divider"></div>
+                <div class="max-vh-50 scrollable-vertical">
+                  <div class="max-vh-50 scrollable-vertical" id="notifications-container">
+                    <div class="py-5 text-gray-400 text-center" id="no-alerts-msg">Loading...</div>
+                  </div>
+                </div>
+                <div class="dropdown-divider mb-0"></div>
+                <a href="#" class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore fw-medium py-3">View all</a>
+              </div>
+            </li>
+
+            <!-- account (same as dashboard) -->
+            <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display:none;">
+              <a href="#" id="dropdownAccountOptions"
+                 class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
+                 style="background-image:url(assets/images/users_img/user.jpg)"
+                 data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                 aria-expanded="false" aria-haspopup="true" aria-label="Account options"></a>
+
+              <div aria-labelledby="dropdownAccountOptions"
+                   class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
+                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4">
+                  <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
+                  <span id="user-email" class="d-block smaller fw-medium text-truncate">Cargando...</span>
+                  <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
+                </div>
+
+                <div class="dropdown-divider mb-3"></div>
+
+                <a href="#" class="dropdown-item text-truncate">
+                  <small class="badge bg-success-soft float-end">10 new</small>
+                  <span class="fw-medium">My Alerts</span>
+                  <small class="d-block text-muted smaller">inbox, projects, tasts</small>
+                </a>
+
+                <div class="dropdown-divider mb-0 mt-3"></div>
+                <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
+                  <i class="fi fi-power float-start"></i> Log Out
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div id="wrapper_content" class="d-flex flex-fill">
+      <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
+        <div class="py-2 px-3 mb-3 mt-3">
+          <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="..." /></a>
+        </div>
+        <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
+          <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
+            <ul id="dynamicMenu" class="nav flex-column"></ul>
+          </nav>
+        </div>
+      </aside>
+
+      <main id="middle" class="flex-fill mx-auto">
+        <div class="container-fluid">
+          <div class="page-wrap">
+            <header class="mb-4">
+              <h1 style="font-size:1.6rem;font-weight:500;margin-bottom:.25rem;">Transcripts (Excel)</h1>
+              <p style="color:#6c757d;font-size:.95rem;margin:0;">Processed Transcripts</p>
+            </header>
+
+            <div class="section p-xl-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <div class="row g-2 align-items-center mb-3">
+                    <div class="col-md-7">
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="fi fi-search"></i></span>
+                        <input id="tx-search" type="text" class="form-control" placeholder="Search by file..." />
+                      </div>
+                    </div>
+
+                    <div class="col-md-5 text-md-end">
+                      <div class="d-flex gap-2 justify-content-md-end">
+                        <select id="tx-sort" class="form-select">
+                          <option value="date_desc">Sort by: Date (newest)</option>
+                          <option value="date_asc">Date (oldest)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                      <thead class="small text-muted">
+                        <tr>
+                          <th>File</th>
+                          <th style="width:160px;">Date Processed</th>
+                          <th style="width:320px;">Processed By</th>
+                          <th style="width:120px;">Status</th>
+                          <th class="text-end" style="width:120px;">Expand</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tx-tbody"></tbody>
+                    </table>
+                  </div>
+
+                  <div id="tx-empty" class="text-center text-muted border border-dashed rounded p-5 d-none">
+                    <div class="mb-2">📂 No transcripts found.</div>
+                    <div class="small">Try changing the search or sort.</div>
+                  </div>
+
+                  <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="small text-muted" id="tx-count">0 items</div>
+                    <nav>
+                      <ul class="pagination pagination-sm mb-0" id="tx-pagination"></ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- optional modal (kept) -->
+            <div class="modal fade" id="tx-preview-modal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="tx-preview-title">Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div id="tx-preview-body" class="text-muted">Loading preview...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /.page-wrap -->
+        </div><!-- /.container-fluid -->
+      </main>
+    </div>
+
+    <footer id="footer">
+      <div class="p-3 bg-white shadow-sm rounded">
+        <span class="small fw-medium">&copy; AURA</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- core -->
+  <script src="assets/js/core.min.js"></script>
+  <script src="assets/js/vendor_bundle.min.js"></script>
+
+  <!-- app modules -->
+  <script type="module">
+    import "./js/firebase-config.js";
+    import "./js/auth.js";
+    import "./js/menu.js";
+    import "./js/alerts.js";   // loads notifications like dashboard
+    import "./js/account.js";  // general account helpers (kept)
+    import "./js/transcripts_excel.js";
+  </script>
+
+  <!-- same tiny auth glue as dashboard to populate name/email & logout -->
+  <script type="module">
+    import { auth } from "./js/firebase-config.js";
+    import {
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+      } else {
+        const emailEl = document.getElementById("user-email");
+        const nameEl  = document.getElementById("user-name");
+        if (emailEl) emailEl.textContent = user.email || "";
+        if (nameEl)  nameEl.textContent  = user.displayName || "Usuario";
+        // reveal account dropdown if hidden
+        const acc = document.getElementById("account-dropdown");
+        if (acc) acc.style.display = "";
+      }
+    });
+
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+          await signOut(auth);
+        } finally {
+          window.location.href = "index.html";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
