@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AlertsPage</title>
+    <meta name="description" content="AURA">
+
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="assets/css/core.min.css">
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body class="layout-admin layout-padded aside-sticky">
+    <div id="wrapper" class="d-flex align-items-stretch flex-column">
+
+        <header id="header" class="d-flex align-items-center bg-transparent">
+        </header>
+
+        <div id="wrapper_content" class="d-flex flex-fill">
+
+            <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
+                <div class="py-2 px-3 mb-3 mt-3">
+                    <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="..." /></a>
+                </div>
+                <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
+                    <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
+                        <ul id="dynamicMenu" class="nav flex-column"></ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <main id="middle" class="flex-fill mx-auto">
+                <div class="container">
+                    <header>
+                        <h1 class="h4">All Alerts</h1>
+                        <ol class="breadcrumb small">
+                            <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+                            <li class="breadcrumb-item text-muted active">All Alerts</li>
+                        </ol>
+                    </header>
+
+                    <div class="section p-xl-4">
+                        <div id="all-alerts-container">
+                            <p class="text-center text-muted p-5">Loading alerts...</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer id="footer">
+             <div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div>
+        </footer>
+    </div>
+
+
+    <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/vendor_bundle.min.js"></script>
+
+    <script type="module">
+        import "./js/firebase-config.js";
+        import "./js/auth.js";
+        import "./js/menu.js";
+        import "./js/account.js";
+        import "./js/allAlerts.js";
+    </script>
+
+</body>
+</html>
