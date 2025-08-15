@@ -57,6 +57,28 @@
             background-color: #1d4ed8 !important;
             border-color: #1d4ed8 !important
         }
+
+        /* --- column sizing: pull the Date column closer to the File name --- */
+        .table .tx-col-file {
+            width: 42%;
+        }
+
+        .table .tx-col-date {
+            width: 200px;
+            padding-left: 12px;
+            white-space: nowrap;
+        }
+
+        .table .tx-col-ip {
+            width: 300px;
+        }
+
+        .table td.tx-col-date {
+            padding-left: 8px;
+            white-space: nowrap;
+        }
+
+        /* nudge left & prevent wrap */
     </style>
 </head>
 
@@ -209,13 +231,19 @@
 
                                     <div class="table-responsive">
                                         <table class="table table-hover align-middle">
+                                            <!-- enforce consistent column widths so Date appears closer -->
+                                            <colgroup>
+                                                <col class="tx-col-file">
+                                                <col class="tx-col-date">
+                                                <col class="tx-col-ip">
+                                                <col style="width:130px">
+                                            </colgroup>
                                             <thead class="small text-muted">
                                                 <tr>
-                                                    <th>File</th>
-                                                    <th style="width:160px;">Date Processed</th>
-                                                    <th style="width:320px;">Processed By</th>
-                                                    <th style="width:120px;">Status</th>
-                                                    <th class="text-end" style="width:120px;">Expand</th>
+                                                    <th style="width: 45%;">File</th>
+                                                    <th style="width: 200px;">Date Processed</th>
+                                                    <th>Processed By</th>
+                                                    <th class="text-end">Expand</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tx-tbody"></tbody>

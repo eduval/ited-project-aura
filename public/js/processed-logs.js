@@ -279,8 +279,8 @@ function renderLogRow(log, rowNumber) {
                         </svg>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Transcripts (Excel)</a>
-                        <a href="#" class="dropdown-item">Transcripts (Word)</a>
+                        <a href="transcripts_xls.html" class="dropdown-item">Transcripts (Excel)</a>
+                        <a href="transcripts_word.html" class="dropdown-item">Transcripts (Word)</a>
                         <a href="${downloadUrl}" class="dropdown-item" download>Download raw</a>
                     </div>
                 </div>

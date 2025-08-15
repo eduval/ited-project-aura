@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 modal?.hide();
                             } catch (_) { }
 
-                            alert("Profile updated.");
+                            alert("✅ Profile updated.");
                         } catch (err) {
                             console.error("❌ Error updating account info:", err);
                             alert("⚠️ Failed to update profile. Please check your inputs.");

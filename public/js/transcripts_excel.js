@@ -34,8 +34,10 @@ if (!el.tbody || !el.count || !el.pagination) {
 }
 
 // ---------- State ----------
-const PAGE_SIZE = 10; // batches per page
-let allGroups = [];   // [{batchId, dateProcessed, operatorIP, files:[...], totalSize}]
+const PAGE_SIZE = 10;           // batches per page (top-level)
+const CHILD_PAGE_SIZE = 8;      // files per page (inside expanded batch)
+
+let allGroups = [];   // [{batchId, dateProcessed, operatorIP, files:[...], totalSize, childPage?}]
 let filteredGroups = [];
 let currentPage = 1;
 
@@ -80,14 +82,6 @@ function byEpoch(batchId) {
     return isFinite(ts) ? ts : 0;
 }
 
-function humanSize(n) {
-    const b = Number(n) || 0;
-    if (b <= 0) return "—";
-    const units = ["B", "KB", "MB", "GB", "TB"];
-    const i = Math.floor(Math.log(b) / Math.log(1024));
-    return `${(b / Math.pow(1024, i)).toFixed(i ? 1 : 0)} ${units[i]}`;
-}
-
 function showEmpty(msg) {
     if (!el.empty) return;
     el.tbody.innerHTML = "";
@@ -99,19 +93,17 @@ function showEmpty(msg) {
 
 // ---------- Render ----------
 function parentRowHTML(g) {
-    const statusBadge = `<span class="badge bg-success-soft text-success">Completed</span>`;
     return `
     <tr class="tx-parent" data-batch="${esc(g.batchId)}">
-      <td><div class="fw-medium">${esc(g.batchId)}</div></td>
-      <td style="width:180px">${esc(g.dateProcessed)}</td>
-      <td style="width:320px">${esc(g.operatorIP || "—")}</td>
-      <td style="width:120px">${statusBadge}</td>
-      <td class="text-end" style="width:130px">
+      <td style="width:45%"><div class="fw-medium">${esc(g.batchId)}</div></td>
+      <td style="width:200px" class="tx-col-date">${esc(g.dateProcessed)}</td>
+      <td>${esc(g.operatorIP || "—")}</td>
+      <td class="text-end" style="width:120px">
         <button class="btn btn-sm btn-primary btn-toggle" data-batch="${esc(g.batchId)}">Expand</button>
       </td>
     </tr>
     <tr class="tx-child-row d-none" data-child-of="${esc(g.batchId)}">
-      <td colspan="5">
+      <td colspan="4">
         ${childBoxHTML(g)}
       </td>
     </tr>
@@ -120,35 +112,78 @@ function parentRowHTML(g) {
 
 function childBoxHTML(g) {
     if (!g.files?.length) {
-        return `<div class="text-muted">No files in this batch.</div>`;
+        return `<div class="p-3 rounded border" id="tx-child-box-${esc(g.batchId)}">
+      <div class="text-muted">No files in this batch.</div>
+    </div>`;
     }
 
-    const items = g.files.map((f, idx) => {
-        const shownName = f.name?.split("/").pop() || f.name || `File ${idx + 1}`;
-        const sizeTxt = humanSize(f.size);
+    const total = g.files.length;
+    const page = Math.min(Math.max(1, g.childPage || 1), Math.ceil(total / CHILD_PAGE_SIZE));
+    g.childPage = page;
+
+    const start = (page - 1) * CHILD_PAGE_SIZE;
+    const visible = g.files.slice(start, start + CHILD_PAGE_SIZE);
+
+    const items = visible.map((f, idxOnPage) => {
+        const globalIndex = start + idxOnPage; // index in g.files
+        const shownName = f.name?.split("/").pop() || f.name || `File ${globalIndex + 1}`;
         return `
       <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
         <label class="d-flex align-items-center gap-3 mb-0">
           <input class="form-check-input tx-file-check" type="checkbox"
-                 data-batch="${esc(g.batchId)}" data-index="${idx}">
+                 data-batch="${esc(g.batchId)}" data-index="${globalIndex}">
           <span class="fw-medium">${esc(shownName)}</span>
         </label>
-        <div class="small text-muted me-3">${sizeTxt}</div>
+        <div class="small text-muted me-3">${esc(g.dateProcessed)}</div>
         <a class="btn btn-sm btn-outline-primary" href="${esc(f.url)}" download>Download</a>
       </div>
     `;
     }).join("");
 
+    const pages = Math.max(1, Math.ceil(total / CHILD_PAGE_SIZE));
+    let pager = "";
+    if (pages > 1) {
+        const win = 3; // numeric window around current
+        const startWin = Math.max(1, page - win);
+        const endWin = Math.min(pages, page + win);
+
+        pager += `<ul class="pagination pagination-sm mb-0">`;
+        if (page > 1) {
+            pager += `<li class="page-item">
+        <a class="page-link tx-child-page-link" href="#" data-batch="${esc(g.batchId)}" data-child-page="${page - 1}">&laquo;</a>
+      </li>`;
+        }
+        for (let i = startWin; i <= endWin; i++) {
+            pager += `<li class="page-item ${i === page ? "active" : ""}">
+        <a class="page-link tx-child-page-link" href="#" data-batch="${esc(g.batchId)}" data-child-page="${i}">${i}</a>
+      </li>`;
+        }
+        if (page < pages) {
+            pager += `<li class="page-item">
+        <a class="page-link tx-child-page-link" href="#" data-batch="${esc(g.batchId)}" data-child-page="${page + 1}">&raquo;</a>
+      </li>`;
+        }
+        pager += `</ul>`;
+    }
+
     return `
-    <div class="p-3 rounded border">
+    <div class="p-3 rounded border" id="tx-child-box-${esc(g.batchId)}">
       <div class="d-flex justify-content-between align-items-center mb-2">
-        <div class="fw-medium">Files in ${esc(g.batchId)}</div>
+        <div class="fw-medium">
+          Files in ${esc(g.batchId)}
+          <span class="text-muted small">(${start + 1}-${Math.min(start + CHILD_PAGE_SIZE, total)} of ${total})</span>
+        </div>
         <button class="btn btn-sm btn-primary tx-download-selected" data-batch="${esc(g.batchId)}">
           Download Selected
         </button>
       </div>
+
       <div class="border rounded">
         ${items}
+      </div>
+
+      <div class="d-flex justify-content-end pt-2">
+        ${pager}
       </div>
     </div>
   `;
@@ -169,7 +204,6 @@ function render() {
 
     let html = "";
 
-    // Show << only if not on the first chunk
     if (chunkStart > 1) {
         html += `
       <li class="page-item">
@@ -179,7 +213,6 @@ function render() {
     `;
     }
 
-    // Page numbers
     for (let i = chunkStart; i <= chunkEnd; i++) {
         html += `
       <li class="page-item ${i === currentPage ? "active" : ""}">
@@ -188,7 +221,6 @@ function render() {
     `;
     }
 
-    // Show >> only if there are more chunks ahead
     if (chunkEnd < pages) {
         html += `
       <li class="page-item">
@@ -200,8 +232,6 @@ function render() {
 
     el.pagination.innerHTML = html;
 }
-
-
 
 // ---------- Search + Sort ----------
 function filterAndSort() {
@@ -241,9 +271,32 @@ function paginateClick(e) {
     }
 }
 
-// ---------- Expand/Collapse + Batch downloads ----------
+// ---------- Helpers to update only a child box ----------
+function rerenderChildBox(batchId) {
+    const group = allGroups.find((g) => g.batchId === batchId);
+    if (!group) return;
+    const box = el.tbody.querySelector(`#tx-child-box-${cssEscape(batchId)}`);
+    if (!box) return;
+    box.outerHTML = childBoxHTML(group);
+}
+
+// ---------- Expand/Collapse + Batch downloads + Child pagination ----------
 function onTbodyClick(e) {
-    // single toggle (Expand <-> Collapse)
+    // Child pagination inside expanded batch
+    const childPager = e.target.closest(".tx-child-page-link");
+    if (childPager) {
+        e.preventDefault();
+        const batch = childPager.dataset.batch;
+        const page = parseInt(childPager.dataset.childPage, 10);
+        const group = allGroups.find((g) => g.batchId === batch);
+        if (group && page >= 1) {
+            group.childPage = page;
+            rerenderChildBox(batch);
+        }
+        return;
+    }
+
+    // Expand/Collapse
     const toggleBtn = e.target.closest(".btn-toggle");
     if (toggleBtn) {
         const batch = toggleBtn.dataset.batch;
@@ -255,14 +308,20 @@ function onTbodyClick(e) {
         const willExpand = childRow.classList.contains("d-none");
         childRow.classList.toggle("d-none", !willExpand);
 
-        // keep consistent styling (always primary/blue)
         toggleBtn.classList.add("btn-primary");
         toggleBtn.classList.remove("btn-secondary");
         toggleBtn.textContent = willExpand ? "Collapse" : "Expand";
+
+        // Ensure a default child page is set the first time we expand
+        const group = allGroups.find((g) => g.batchId === batch);
+        if (group && !group.childPage) {
+            group.childPage = 1;
+            rerenderChildBox(batch);
+        }
         return;
     }
 
-    // download selected within an expanded batch
+    // Download selected within an expanded batch (current child page selection)
     const dlSelBtn = e.target.closest(".tx-download-selected");
     if (dlSelBtn) {
         const batch = dlSelBtn.dataset.batch;
@@ -277,12 +336,9 @@ function onTbodyClick(e) {
             return;
         }
 
-        // Optional: visual feedback while queuing downloads
         const oldText = dlSelBtn.textContent;
         dlSelBtn.disabled = true;
         dlSelBtn.textContent = "Downloading...";
-
-
 
         let delay = 0;
         checks.forEach((cb) => {
@@ -302,11 +358,9 @@ function onTbodyClick(e) {
             }, delay);
 
             delay += 350;
+            cb.checked = false; // uncheck after queuing
         });
-        // ✅ Immediately return UI to normal: uncheck all selected boxes
-        checks.forEach((cb) => { cb.checked = false; });
 
-        // Restore button after a short moment
         setTimeout(() => {
             dlSelBtn.disabled = false;
             dlSelBtn.textContent = oldText;
@@ -340,12 +394,11 @@ async function buildGroups() {
                 const name = file?.name || `File ${k}`;
                 const rel = (file?.path || "").replace(/^\/+/, "");
                 const url = rel ? publicUrl(rel) : "";
-                const size = Number(file?.size || 0); // optional
+                const size = Number(file?.size || 0); // optional (unused now)
                 return { name, url, size };
             });
 
-            const totalSize = files.reduce((acc, f) => acc + (Number(f.size) || 0), 0);
-            groups.push({ batchId, dateProcessed, operatorIP, files, totalSize });
+            groups.push({ batchId, dateProcessed, operatorIP, files, totalSize: 0, childPage: 1 });
         }
 
         allGroups = groups;
