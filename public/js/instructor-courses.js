@@ -38,6 +38,7 @@ async function loadInstructorCourses(instructorId) {
 
         // Step 1: Fetch from Canvas
         setLoadingMessage("Fetching from Canvas");
+        showLoading("Fetching from Canvas");
         const apiUrl = `https://ited.org.ec/aura/canvas_api/get_instructor_courses.php?instructor_id=${instructorId}&user_uid=${encodeURIComponent(user.uid)}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
@@ -48,21 +49,25 @@ async function loadInstructorCourses(instructorId) {
 
         // Step 2: Processing enrollments
         setLoadingMessage("Processing enrollments");
+        showLoading("Processing enrollments");
         // (simulate processing time if needed)
         await new Promise(r => setTimeout(r, 100)); // optional small pause
 
         // Step 3: Processing assignments
         setLoadingMessage("Processing assignments");
+        showLoading("Processing assignments");
         // any processing logic here if needed
         await new Promise(r => setTimeout(r, 100));
 
         // Step 4: Processing grades
         setLoadingMessage("Processing grades");
+        showLoading("Processing grades");
         // any processing logic here if needed
         await new Promise(r => setTimeout(r, 100));
 
         // Step 5: Finalizing data
         setLoadingMessage("Finalizing data");
+        showLoading("Finalizing data");
         allCourses = data.courses; // save for search filtering
         updateUI(data);
 
@@ -158,7 +163,7 @@ function renderCoursesTable(courses) {
         row.innerHTML = `
     <td>${index + 1}</td>
     <td>
-        ${course.name}
+        <a href="#">${course.name}</a>
         <small class="text-muted d-block">${startDate}</small>
     </td>
     <td>${course.course_code || course.id}</td>
@@ -167,7 +172,7 @@ function renderCoursesTable(courses) {
         <span class="badge ${isActive ? 'bg-success' : 'bg-warning'}">
             ${isActive ? 'Active' : 'Inactive'}
         </span>
-        ${ungradedBadge} ${problemsBadge}
+        <a href="#">${ungradedBadge}</a> <a href="#">${problemsBadge}</a>
     </td>
     <td>
         <div class="flex-none ms-2 small text-muted text-align-end dropdown">
@@ -181,7 +186,6 @@ function renderCoursesTable(courses) {
             </a>
             <div class="dropdown-menu mt-2">
                 <a href="#" class="dropdown-item">View Details</a>
-                <a href="#" class="dropdown-item">Students</a>
             </div>
         </div>
     </td>
@@ -193,19 +197,27 @@ function renderCoursesTable(courses) {
 
 
 // Helper functions
-function showLoading() {
+function showLoading(message) {
+    // old UI parts
     document.getElementById("logs-loading").classList.remove("d-none");
     document.getElementById("logs-table-wrapper").classList.add("d-none");
+
+    // new: lock the whole screen
+    const lock = document.getElementById("screen-lock");
+    const msg = document.getElementById("screen-lock-message");
+    if (msg) msg.textContent = message;
+    lock.style.display = "flex"; // flex to center
 
     const loadingTextEl = document.getElementById("loading-text");
     let msgIndex = 0;
     let dots = 0;
 
+
     loadingInterval = setInterval(() => {
         dots = (dots + 1) % 4; // cycles 0,1,2,3 dots
         loadingTextEl.textContent = messages[msgIndex] + '.'.repeat(dots);
 
-        // change message every 4 steps (~2 seconds if interval=500ms)
+        // change message every 4 steps (~2 seconds)
         if (dots === 0) {
             msgIndex = (msgIndex + 1) % messages.length;
         }
@@ -215,6 +227,10 @@ function showLoading() {
 function hideLoading() {
     document.getElementById("logs-loading").classList.add("d-none");
     document.getElementById("logs-table-wrapper").classList.remove("d-none");
+
+    // hide the lock overlay
+    const lock = document.getElementById("screen-lock");
+    lock.style.display = "none";
 
     if (loadingInterval) {
         clearInterval(loadingInterval);

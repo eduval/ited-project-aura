@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
   <meta charset="UTF-8" />
   <title>AURA</title>
@@ -20,210 +21,303 @@
   <link rel="shortcut icon" href="favicon.ico" />
 
   <style>
-    .d-none{display:none!important;}
-    .page-wrap{max-width:none;margin:0 auto}
-    .section{padding:1.5rem 2rem}
-    .card{border-radius:10px}
-    .tx-file-check{border:2px solid #555!important}
-    .tx-file-check:checked{background-color:#574fec!important;border-color:#574fec!important}
-    .tx-child-pager .page-link{min-width:2rem;text-align:center}
+    .d-none {
+      display: none !important;
+    }
+
+    .page-wrap {
+      max-width: none;
+      margin: 0 auto
+    }
+
+    .section {
+      padding: 1.5rem 2rem
+    }
+
+    .card {
+      border-radius: 10px
+    }
+
+    .tx-file-check {
+      border: 2px solid #555 !important
+    }
+
+    .tx-file-check:checked {
+      background-color: #574fec !important;
+      border-color: #574fec !important
+    }
+
+    .tx-child-pager .page-link {
+      min-width: 2rem;
+      text-align: center
+    }
   </style>
 </head>
 
-<body class="layout-admin layout-padded aside-sticky" data-s2t-class="btn-primary btn-sm bg-gradient-default rounded-circle border-0">
-<div id="wrapper" class="d-flex align-items-stretch flex-column">
+<body class="layout-admin layout-padded aside-sticky"
+  data-s2t-class="btn-primary btn-sm bg-gradient-default rounded-circle border-0">
+  <div id="wrapper" class="d-flex align-items-stretch flex-column">
 
-  <!-- header (trimmed to essentials; same ids so alerts/account still work) -->
-  <header id="header" class="d-flex align-items-center bg-transparent">
-    <div class="px-3 px-lg-0 w-100 position-relative">
-      <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
-        <div class="align-items-start">
-          <a href="#aside-main" class="btn-sidebar-toggle d-inline-block d-lg-none p-2" aria-label="Toggle sidebar">
-            <span><svg width="25" height="25" viewBox="0 0 20 20"><path d="M20 2H0V0h20v2zM20 8H0V6h20v2zM20 14H0v-2h20v2zM20 20H0v-2h20v2z"/></svg></span>
-          </a>
-          <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
-            <img src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA" />
-          </a>
-        </div>
+    <!--  header -->
+    <header id="header" class="d-flex align-items-center bg-transparent">
 
-        <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
-          <!-- notifications shell kept for script compatibility -->
-          <li class="list-inline-item mx-1 dropdown">
-            <a href="#" id="dropdownNotificationOptions" class="btn btn-sm btn-light rounded-circle text-primary-hover dropdown-toggle"
-               data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true" aria-label="Notifications">
-              <span style="position:relative;display:inline-block;">
-                <svg width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path fill="currentColor" d="M17 12h1.5a1.5 1.5 0 1 1 0 3H5.5a1.5 1.5 0 1 1 0-3H7l.56-5.02A5 5 0 0 1 12 3a5 5 0 0 1 4.44 3.98L17 12z"/><rect fill="#000" opacity=".3" x="10" y="16" width="4" height="4" rx="2"/></g></svg>
-                <span class="notification-count" style="position:absolute;top:-6px;right:-6px;background:#f00;color:#fff;border-radius:50%;padding:2px 8px;font-size:12px;">0</span>
+      <!-- Navbar -->
+      <div class="px-3 px-lg-0 w-100 position-relative">
+
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
+
+          <!-- logo, navigation toggler -->
+          <div class="align-items-start">
+
+            <!-- sidebar toggler -->
+            <a href="#aside-main"
+              class="btn-sidebar-toggle h-100 d-inline-block d-lg-none justify-content-center align-items-center p-2">
+              <span>
+                <svg width="25" height="25" viewBox="0 0 20 20">
+                  <path d="M 19.9876 1.998 L -0.0108 1.998 L -0.0108 -0.0019 L 19.9876 -0.0019 L 19.9876 1.998 Z">
+                  </path>
+                  <path d="M 19.9876 7.9979 L -0.0108 7.9979 L -0.0108 5.9979 L 19.9876 5.9979 L 19.9876 7.9979 Z">
+                  </path>
+                  <path d="M 19.9876 13.9977 L -0.0108 13.9977 L -0.0108 11.9978 L 19.9876 11.9978 L 19.9876 13.9977 Z">
+                  </path>
+                  <path d="M 19.9876 19.9976 L -0.0108 19.9976 L -0.0108 17.9976 L 19.9876 17.9976 L 19.9876 19.9976 Z">
+                  </path>
+                </svg>
               </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
-              <div class="dropdown-header p-4" id="notify-title">0 new notifications</div>
-              <div class="dropdown-divider"></div>
-              <div class="max-vh-50 scrollable-vertical">
-                <div class="max-vh-50 scrollable-vertical" id="notifications-container">
-                  <div class="py-5 text-gray-400 text-center" id="no-alerts-msg">Loading...</div>
+
+            <!-- logo : mobile only -->
+            <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
+              <img src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA">
+            </a>
+
+          </div>
+
+          <!-- options -->
+          <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
+
+            <!-- notifications -->
+            <li class="list-inline-item mx-1 dropdown">
+
+
+
+              <div aria-labelledby="dropdownNotificationOptions"
+                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
+                <div class="dropdown-header p-4">1 new notification</div>
+                <div class="dropdown-divider"></div>
+                <div class="max-vh-50 scrollable-vertical">
+
+
+
+
                 </div>
-              </div>
-              <div class="dropdown-divider mb-0"></div>
-              <a href="#" class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore fw-medium py-3">View all</a>
-            </div>
-          </li>
 
-          <!-- account dropdown -->
-          <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display:none;">
-            <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
-               style="background-image:url(assets/images/users_img/user.jpg)" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-               aria-expanded="false" aria-haspopup="true" aria-label="Account options"></a>
-            <div class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
-              <div class="dropdown-header bg-primary bg-gradient text-white small p-4 rounded-bottom-0">
-                <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
-                <span id="user-email" class="d-block smaller fw-medium text-truncate">Cargando...</span>
-                <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
               </div>
-              <div class="dropdown-divider mb-3"></div>
-              <a href="#" class="dropdown-item text-truncate">
-                <small class="badge bg-success-soft float-end">10 new</small>
-                <span class="fw-medium">My Alerts</span>
-                <small class="d-block text-muted smaller">inbox, projects, tasks</small>
-              </a>
-              <div class="dropdown-divider mb-0 mt-3"></div>
-              <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold"><i class="fi fi-power float-start"></i> Log Out</a>
-            </div>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
 
-  <div id="wrapper_content" class="d-flex flex-fill">
-    <!-- aside -->
-    <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
-      <div class="py-2 px-3 mb-3 mt-3">
-        <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="..."></a>
-      </div>
-      <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
-        <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
-          <ul id="dynamicMenu" class="nav flex-column"></ul>
+            </li>
+
+
+
+
+            <!-- account -->
+            <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display: none;">
+
+              <!-- has avatar -->
+              <a href="#" id="dropdownAccountOptions"
+                class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
+                style="background-image:url(assets/images/users_img/user.jpg)" data-bs-toggle="dropdown"
+                data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
+                aria-label="Account options"></a>
+
+              <!-- no avatar -->
+              <!--
+                <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                  <span class="small fw-bold">JD</span>
+                </a>
+                -->
+
+              <div aria-labelledby="dropdownAccountOptions"
+                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
+
+                <!-- user detail -->
+                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4">
+                  <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
+                  <span id="user-email" class="d-block smaller fw-medium text-truncate">Cargando...</span>
+                  <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
+                </div>
+
+
+                <div class="dropdown-divider mb-3"></div>
+
+
+
+                <a href="#" class="dropdown-item text-truncate">
+                  <small class="badge bg-success-soft float-end">10 new</small>
+                  <span class="fw-medium">My Alerts</span>
+                  <small class="d-block text-muted smaller">inbox, projects, tasts</small>
+                </a>
+
+
+
+
+
+
+
+                <div class="dropdown-divider mb-0 mt-3"></div>
+
+                <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
+                  <i class="fi fi-power float-start"></i> Log Out
+                </a>
+
+              </div>
+
+            </li>
+
+          </ul>
+          <!-- /options -->
+
         </nav>
+
       </div>
-    </aside>
+      <!-- /Navbar -->
 
-    <!-- main -->
-    <main id="middle" class="flex-fill mx-auto">
-      <div class="container-fluid">
-        <div class="page-wrap">
-          <header class="mb-4">
-            <h1 style="font-size:1.6rem;font-weight:500;margin-bottom:.25rem;">Transcripts (Word)</h1>
-            <p style="color:#6c757d;font-size:.95rem;margin:0;">Processed Word</p>
-          </header>
+    </header>
+    <!-- /Header -->
 
-          <div class="section p-xl-4">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <!-- toolbar -->
-                <div class="row g-2 align-items-center mb-3">
-                  <div class="col-md-7">
-                    <div class="input-group">
-                      <span class="input-group-text"><i class="fi fi-search"></i></span>
-                      <input id="tx-search" type="text" class="form-control" placeholder="Search by file..." />
+    <div id="wrapper_content" class="d-flex flex-fill">
+      <!-- aside -->
+      <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
+        <div class="py-2 px-3 mb-3 mt-3">
+          <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="..."></a>
+        </div>
+        <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
+          <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
+            <ul id="dynamicMenu" class="nav flex-column"></ul>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- main -->
+      <main id="middle" class="flex-fill mx-auto">
+        <div class="container-fluid">
+          <div class="page-wrap">
+            <header class="mb-4">
+              <h1 style="font-size:1.6rem;font-weight:500;margin-bottom:.25rem;">Transcripts (Word)</h1>
+              <p style="color:#6c757d;font-size:.95rem;margin:0;">Processed Word</p>
+            </header>
+
+            <div class="section p-xl-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <!-- toolbar -->
+                  <div class="row g-2 align-items-center mb-3">
+                    <div class="col-md-7">
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="fi fi-search"></i></span>
+                        <input id="tx-search" type="text" class="form-control" placeholder="Search by file..." />
+                      </div>
+                    </div>
+                    <div class="col-md-5 text-md-end">
+                      <div class="d-flex gap-2 justify-content-md-end">
+                        <select id="tx-sort" class="form-select">
+                          <option value="date_desc">Sort by: Date (newest)</option>
+                          <option value="date_asc">Date (oldest)</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-5 text-md-end">
-                    <div class="d-flex gap-2 justify-content-md-end">
-                      <select id="tx-sort" class="form-select">
-                        <option value="date_desc">Sort by: Date (newest)</option>
-                        <option value="date_asc">Date (oldest)</option>
-                      </select>
-                    </div>
+
+                  <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                      <thead class="small text-muted">
+                        <tr>
+                          <th>File</th>
+                          <th style="width:180px;">Date Processed</th>
+                          <th style="width:320px;">Processed By</th>
+                          <th class="text-end" style="width:130px;">Expand</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tx-tbody"></tbody>
+                    </table>
                   </div>
-                </div>
 
-                <div class="table-responsive">
-                  <table class="table table-hover align-middle">
-                    <thead class="small text-muted">
-                      <tr>
-                        <th>File</th>
-                        <th style="width:180px;">Date Processed</th>
-                        <th style="width:320px;">Processed By</th>
-                        <th class="text-end" style="width:130px;">Expand</th>
-                      </tr>
-                    </thead>
-                    <tbody id="tx-tbody"></tbody>
-                  </table>
-                </div>
+                  <div id="tx-empty" class="text-center text-muted border border-dashed rounded p-5 d-none">
+                    <div class="mb-2">📂 No transcripts found.</div>
+                    <div class="small">Try changing the search or sort.</div>
+                  </div>
 
-                <div id="tx-empty" class="text-center text-muted border border-dashed rounded p-5 d-none">
-                  <div class="mb-2">📂 No transcripts found.</div>
-                  <div class="small">Try changing the search or sort.</div>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                  <div class="small text-muted" id="tx-count">0 items</div>
-                  <nav><ul class="pagination pagination-sm mb-0" id="tx-pagination"></ul></nav>
+                  <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="small text-muted" id="tx-count">0 items</div>
+                    <nav>
+                      <ul class="pagination pagination-sm mb-0" id="tx-pagination"></ul>
+                    </nav>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- preview modal shell (kept; optional) -->
-          <div class="modal fade" id="tx-preview-modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="tx-preview-title">Preview</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- preview modal shell (kept; optional) -->
+            <div class="modal fade" id="tx-preview-modal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="tx-preview-title">Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div id="tx-preview-body" class="text-muted">Loading preview...</div>
+                  </div>
                 </div>
-                <div class="modal-body"><div id="tx-preview-body" class="text-muted">Loading preview...</div></div>
               </div>
             </div>
-          </div>
 
-        </div><!-- /.page-wrap -->
-      </div><!-- /.container-fluid -->
-    </main>
+          </div><!-- /.page-wrap -->
+        </div><!-- /.container-fluid -->
+      </main>
+    </div>
+
+    <footer id="footer">
+      <div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div>
+    </footer>
   </div>
 
-  <footer id="footer">
-    <div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div>
-  </footer>
-</div>
+  <!-- core -->
+  <script src="assets/js/core.min.js"></script>
+  <script src="assets/js/vendor_bundle.min.js"></script>
 
-<!-- core -->
-<script src="assets/js/core.min.js"></script>
-<script src="assets/js/vendor_bundle.min.js"></script>
+  <!-- modules -->
+  <script type="module">
+    import "./js/firebase-config.js";
+    import "./js/auth.js";
+    import "./js/menu.js";
+    import "./js/alerts.js";
+    import "./js/account.js";
+    import "./js/transcripts_word.js";
+  </script>
 
-<!-- modules -->
-<script type="module">
-  import "./js/firebase-config.js";
-  import "./js/auth.js";
-  import "./js/menu.js";
-  import "./js/alerts.js";
-  import "./js/account.js";
-  import "./js/transcripts_word.js";
-</script>
-
-<!-- auth glue (same as dashboard) -->
-<script type="module">
-  import { auth } from "./js/firebase-config.js";
-  import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  onAuthStateChanged(auth, (user) => {
-    if (!user) { window.location.href = "index.html"; }
-    else {
-      const emailEl = document.getElementById("user-email");
-      const nameEl  = document.getElementById("user-name");
-      if (emailEl) emailEl.textContent = user.email || "";
-      if (nameEl)  nameEl.textContent  = user.displayName || "Usuario";
-      const acc = document.getElementById("account-dropdown");
-      if (acc) acc.style.display = "";
-    }
-  });
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", async (e) => {
-      e.preventDefault();
-      try { await signOut(auth); } finally { window.location.href = "index.html"; }
+  <!-- auth glue (same as dashboard) -->
+  <script type="module">
+    import { auth } from "./js/firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    onAuthStateChanged(auth, (user) => {
+      if (!user) { window.location.href = "index.html"; }
+      else {
+        const emailEl = document.getElementById("user-email");
+        const nameEl = document.getElementById("user-name");
+        if (emailEl) emailEl.textContent = user.email || "";
+        if (nameEl) nameEl.textContent = user.displayName || "Usuario";
+        const acc = document.getElementById("account-dropdown");
+        if (acc) acc.style.display = "";
+      }
     });
-  }
-</script>
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try { await signOut(auth); } finally { window.location.href = "index.html"; }
+      });
+    }
+  </script>
 </body>
+
 </html>

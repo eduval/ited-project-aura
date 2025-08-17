@@ -35,6 +35,31 @@
         .d-none {
             display: none !important;
         }
+
+        .clickable-card {
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .clickable-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .click-icon {
+            position: absolute;
+            bottom: -10px;
+            /* place it below inside/outside */
+            right: -10px;
+            /* stick to the right */
+            width: 30px;
+            height: 30px;
+        }
+
+        .click-icon svg {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 
 </head>
@@ -353,18 +378,37 @@
                         </div>
                     </div>
 
-                    <!-- Total Assignment Ungraded -->
+
                     <div class="col-lg-2">
-                        <div class="section p-4 bg-soft-danger rounded">
+                        <div class="section p-4 bg-soft-danger rounded clickable-card position-relative"
+                            onclick="window.location.href='students_with_problems.php';">
                             <h6 class="mb-2 text-danger">Students with Problems</h6>
                             <div class="d-flex align-items-center">
                                 <span class="w-100">
                                     <span class="fs-3 fw-bold text-danger" id="total-students-problems">0</span>
                                 </span>
+                            </div>
 
+                            <!-- Floating SVG icon -->
+                            <div class="click-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.999 511.999">
+                                    <polygon style="fill:#F4A026;"
+                                        points="208.841,150.526 168.846,385.04 248.295,318.964 352.381,499.244 442.949,446.955   338.863,266.674 431.977,233.119 " />
+                                    <path
+                                        d="M453.994,440.579l-96.462-167.077l78.769-28.383c5.039-1.816,8.407-6.587,8.43-11.944  c0.024-5.355-3.303-10.156-8.326-12.015l-223.137-82.595c-3.561-1.316-7.518-0.981-10.806,0.916  c-3.285,1.898-5.555,5.16-6.193,8.901l-39.995,234.514c-0.898,5.263,1.576,10.528,6.202,13.194  c4.623,2.668,10.421,2.171,14.525-1.243l67.816-56.401l96.52,167.178c1.691,2.929,4.477,5.067,7.744,5.942  c1.087,0.292,2.195,0.435,3.301,0.435c2.219,0,4.422-0.579,6.377-1.709l90.568-52.29  C455.426,454.478,457.515,446.679,453.994,440.579z M357.049,481.823L259.34,312.586c-1.88-3.257-5.101-5.517-8.803-6.179  c-0.746-0.133-1.496-0.198-2.242-0.198c-2.955,0-5.846,1.029-8.156,2.949l-52.921,44.015l31.61-185.35l175.974,65.138  l-60.263,21.714c-3.553,1.28-6.356,4.07-7.655,7.618c-1.298,3.547-0.955,7.488,0.932,10.759l97.709,169.237L357.049,481.823z" />
+                                    <path
+                                        d="M144.361,123.46l-72.009-19.295c-6.805-1.825-13.796,2.215-15.619,9.018c-1.824,6.803,2.214,13.796,9.018,15.619  l72.011,19.295c1.106,0.296,2.215,0.439,3.308,0.439c5.631,0,10.784-3.758,12.311-9.457  C155.203,132.277,151.165,125.284,144.361,123.46z" />
+                                    <path
+                                        d="M226.121,97.085c1.106,0.296,2.215,0.439,3.308,0.439c5.631,0,10.784-3.758,12.311-9.457l19.295-72.009  c1.824-6.803-2.214-13.796-9.018-15.619c-6.808-1.824-13.796,2.215-15.619,9.018l-19.295,72.009  C215.279,88.267,219.317,95.261,226.121,97.085z" />
+                                    <path
+                                        d="M160.585,93.076c2.363,4.091,6.648,6.379,11.057,6.379c2.163,0,4.355-0.552,6.364-1.712c6.1-3.523,8.19-11.321,4.668-17.421  l-28.696-49.703c-3.523-6.099-11.318-8.19-17.421-4.668c-6.1,3.523-8.19,11.321-4.668,17.421L160.585,93.076z" />
+                                </svg>
                             </div>
                         </div>
                     </div>
+
+
+
 
 
                 </div>
@@ -552,6 +596,23 @@
 
     </script>
 
+    <div id="screen-lock" style="
+  display: none; 
+  position: fixed; 
+  z-index: 9999; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7); 
+  backdrop-filter: blur(4px);
+  justify-content: center; 
+  align-items: center;">
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+            <div class="mt-3 fw-bold" id="screen-lock-message">Please wait... Fetching from Canvas</div>
+        </div>
+    </div>
 
 </body>
 
