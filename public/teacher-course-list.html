@@ -290,18 +290,18 @@
 
                 <div class="row g-4 mb-4">
                     <!-- Total Courses -->
-                    <div class="col-lg-3">
-                        <div class="section p-4 bg-soft-primary rounded">
-                            <h6 class="mb-2 text-primary">Total Courses</h6>
+                    <div class="col-lg-2">
+                        <div class="section p-4 bg-soft-success rounded">
+                            <h6 class="mb-2 text-success">Total <br>Courses</h6>
                             <div class="d-flex align-items-center">
-                                <span class="w-100 fs-3 fw-bold mb-0 text-primary" id="total-courses">0</span>
+                                <span class="w-100 fs-3 fw-bold mb-0 text-success" id="total-courses">0</span>
 
                             </div>
                         </div>
                     </div>
 
                     <!-- Active Courses -->
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="section p-4 bg-soft-success rounded">
                             <h6 class="mb-2 text-success">Active Courses</h6>
                             <div class="d-flex align-items-center">
@@ -317,12 +317,12 @@
                     </div>
 
                     <!-- Total Students -->
-                    <div class="col-lg-3">
-                        <div class="section p-4 bg-soft-info rounded">
-                            <h6 class="mb-2 text-info">Total Students</h6>
+                    <div class="col-lg-2">
+                        <div class="section p-4 bg-soft-success rounded">
+                            <h6 class="mb-2 text-success">Total <br>Students</h6>
                             <div class="d-flex align-items-center">
                                 <span class="w-100">
-                                    <span class="fs-3 fw-bold text-info" id="total-students">0</span>
+                                    <span class="fs-3 fw-bold text-success" id="total-students">0</span>
                                 </span>
 
                             </div>
@@ -330,15 +330,43 @@
                     </div>
 
                     <!-- Active Students -->
-                    <div class="col-lg-3">
-                        <div class="section p-4 bg-soft-warning rounded">
-                            <h6 class="mb-2 text-warning">Active Students</h6>
+                    <div class="col-lg-2">
+                        <div class="section p-4 bg-soft-success rounded">
+                            <h6 class="mb-2 text-success">Active Students</h6>
                             <div class="d-flex align-items-center">
-                                <span class="fs-3 fw-bold text-warning" id="active-students">0</span>
+                                <span class="fs-3 fw-bold text-success" id="active-students">0</span>
 
                             </div>
                         </div>
                     </div>
+
+                    <!-- Total Assignment Ungraded -->
+                    <div class="col-lg-2">
+                        <div class="section p-4 bg-soft-danger rounded">
+                            <h6 class="mb-2 text-danger">Ungraded Assignments</h6>
+                            <div class="d-flex align-items-center">
+                                <span class="w-100">
+                                    <span class="fs-3 fw-bold text-danger" id="total-ungraded">0</span>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Assignment Ungraded -->
+                    <div class="col-lg-2">
+                        <div class="section p-4 bg-soft-danger rounded">
+                            <h6 class="mb-2 text-danger">Students with Problems</h6>
+                            <div class="d-flex align-items-center">
+                                <span class="w-100">
+                                    <span class="fs-3 fw-bold text-danger" id="total-students-problems">0</span>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
 
 
@@ -379,11 +407,6 @@
                             </div>
 
                             <!-- options -->
-                            <div class="order-1 order-md-2 col-md-auto">
-                                <div class="btn-group w-100" role="group" aria-label="Product options">
-                                    <a href="#!" role="button" class="btn btn-sm small btn-secondary">Export</a>
-                                </div>
-                            </div>
 
                         </div>
 
@@ -397,8 +420,8 @@
                             <div class="spinner-border text-primary" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
+                            <small id="loading-text" class="text-muted d-block">Starting...</small>
                         </div>
-
 
                         <!-- item list -->
                         <div id="logs-table-wrapper" class="table-responsive-md d-none">
@@ -406,11 +429,11 @@
                             <table class="table table-align-middle" role="grid" aria-describedby="mobile-page-info">
                                 <thead>
                                     <tr>
-                                        <th style="width:46px">
+                                        <th style="width:5%">
                                             #
                                         </th>
-                                        <th class="small text-muted">COURSE NAME</th>
-                                        <th class="small text-muted" style="width:250px">
+                                        <th class="small text-muted" style="width:35%">COURSE NAME</th>
+                                        <th class="small text-muted" style="width:25%">
                                             <a href="#!" class="d-flex link-muted" title="order by price"
                                                 aria-label="order by inventory">
                                                 <span class="d-flex flex-column lh-1">
@@ -431,7 +454,7 @@
                                                 <span class="ms-2">COURSE ID</span>
                                             </a>
                                         </th>
-                                        <th class="small text-muted" style="width:300px">
+                                        <th class="small text-muted" style="width:15%">
                                             <a href="#!" class="d-flex link-muted" title="order by inventory"
                                                 aria-label="order by inventory">
                                                 <span class="d-flex flex-column lh-1">
@@ -449,10 +472,11 @@
                                                             stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                                     </svg>
                                                 </span>
-                                                <span class="ms-2">NUMBER OF STUDENTS</span>
+                                                <span class="ms-2"># STUDENTS</span>
                                             </a>
                                         </th>
-                                        <th class="small text-muted" style="width:100px">OPTIONS</th>
+                                        <th class="small text-muted" style="width:25%">ALERTS</th>
+                                        <th class="small text-muted" style="width:5%">OPTIONS</th>
 
                                     </tr>
                                 </thead>
