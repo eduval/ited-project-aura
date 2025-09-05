@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Risks - AURA</title>
+    <meta name="description" content="AURA">
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="assets/css/core.min.css">
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body class="layout-admin layout-padded aside-sticky">
+
+    <div id="wrapper" class="d-flex align-items-stretch flex-column">
+
+        <!-- Header -->
+        <header id="header" class="d-flex align-items-center bg-transparent">
+            <!-- The header will be populated by your existing JS -->
+        </header>
+
+        <!-- Content -->
+        <div id="wrapper_content" class="d-flex flex-fill">
+
+            <!-- Sidebar -->
+            <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
+                <div class="py-2 px-3 mb-3 mt-3">
+                    <a href="dashboard.html">
+                        <img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="...">
+                    </a>
+                </div>
+                <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
+                    <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
+                        <ul id="dynamicMenu" class="nav flex-column"></ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main -->
+            <main id="middle" class="flex-fill mx-auto">
+
+                <!-- Page Title -->
+                <header>
+                    <div class="row g-1 align-items-center">
+                        <div class="col">
+                            <h1 class="h4">Student Risks</h1>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb small">
+                                    <li class="breadcrumb-item"><a href="teacher-list.html">Instructor Directory</a>
+                                    </li>
+                                    <!-- This part will be updated by JS -->
+                                    <li class="breadcrumb-item" id="instructor-breadcrumb"></li>
+                                    <li class="breadcrumb-item text-muted active" aria-current="page">Student Risks</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Info Boxes -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="section p-3">
+                            <h2 class="h6 text-muted mb-2">Course Name</h2>
+                            <span class="fs-4 fw-bold" id="course-name-display">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="section p-3">
+                            <h2 class="h6 text-muted mb-2">Total Students</h2>
+                            <span class="fs-4 fw-bold" id="total-students-display">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Risk Table -->
+                <div class="section p-0">
+                    <div class="card-body">
+                        <div id="loading-spinner" class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status"></div>
+                        </div>
+
+                        <div id="risk-table-wrapper" class="table-responsive-md d-none">
+                            <table class="table table-align-middle">
+                                <thead>
+                                    <tr>
+                                        <th class="small text-muted" style="width:20%">STUDENT ID</th>
+                                        <th class="small text-muted" style="width:30%">NAME</th>
+                                        <th class="small text-muted" style="width:50%">PROBLEM & ACTIONS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="student-risk-list">
+                                    <!-- Rows will be injected here by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="p-3 bg-white shadow-sm rounded">
+                <span class="small fw-medium">&copy; AURA</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Core Javascripts -->
+    <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/vendor_bundle.min.js"></script>
+    <!-- Page-specific Scripts -->
+    <script type="module">
+        import "./js/firebase-config.js";
+        import "./js/auth.js";
+        import "./js/menu.js";
+        import "./js/account.js";
+        import "./js/student-risks.js"; 
+    </script>
+
+</body>
+
+</html>
