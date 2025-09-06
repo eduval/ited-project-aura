@@ -1,67 +1,53 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>AURA</title>
-    <meta name="description" content="AURA">
+    <meta charset="UTF-8" />
+    <title>AURA – Users</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
 
-    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
-
-    <!-- up to 10% speed up for external res -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/">
-    <!-- preloading icon font is helping to speed up a little bit -->
-    <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin>
-
-    <link rel="stylesheet" href="assets/css/core.min.css">
-    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
-
-    <!-- favicon -->
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/core.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
     <style>
         .role-badge {
             padding: .2rem .5rem;
             border-radius: .35rem;
             font-size: .75rem;
-            font-weight: 600;
+            font-weight: 600
         }
 
         .role-admin {
             background: rgba(220, 53, 69, .12);
-            color: #dc3545;
+            color: #dc3545
         }
 
         .role-operator {
             background: rgba(13, 110, 253, .12);
-            color: #0d6efd;
+            color: #0d6efd
         }
 
         .role-student {
             background: rgba(25, 135, 84, .12);
-            color: #198754;
+            color: #198754
         }
 
         .role-unknown {
             background: rgba(108, 117, 125, .12);
-            color: #6c757d;
+            color: #6c757d
         }
 
         .table thead th {
-            white-space: nowrap;
+            white-space: nowrap
         }
 
         .search-wrap {
-            gap: .5rem;
+            gap: .5rem
         }
 
         .action-btns {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 4px
         }
     </style>
 </head>
@@ -69,8 +55,9 @@
 <body class="layout-admin layout-padded aside-sticky">
     <div id="wrapper" class="d-flex align-items-stretch flex-column">
 
-        <!--  header -->
+        <!-- header -->
         <header id="header" class="d-flex align-items-center bg-transparent">
+
             <!-- Navbar -->
             <div class="px-3 px-lg-0 w-100 position-relative">
                 <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
@@ -103,12 +90,10 @@
                         <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
                             <img src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA">
                         </a>
-
                     </div>
 
                     <!-- options -->
                     <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
-
 
                         <!-- notifications -->
                         <li class="list-inline-item mx-1 dropdown">
@@ -117,21 +102,20 @@
 
                             <div aria-labelledby="dropdownNotificationOptions"
                                 class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
-                                <div class="dropdown-header p-4">1 new notification</div>
+                                <div class="dropdown-header p-4">... new notification</div>
                                 <div class="dropdown-divider"></div>
                                 <div class="max-vh-50 scrollable-vertical">
-
-
-
-
+                                    <div class="max-vh-50 scrollable-vertical" id="notifications-container">
+                                        <div class="py-5 text-gray-400 text-center" id="no-alerts-msg">Loading...</div>
+                                    </div>
                                 </div>
-
+                                <div class="dropdown-divider mb-0"></div>
+                                <a href="#"
+                                    class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore fw-medium py-3">
+                                    View all
+                                </a>
                             </div>
-
                         </li>
-
-
-
 
                         <!-- account -->
                         <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display: none;">
@@ -143,19 +127,14 @@
                                 data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
                                 aria-label="Account options"></a>
 
-                            <!-- no avatar -->
-                            <!--
-                <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                  <span class="small fw-bold">JD</span>
-                </a>
-                -->
+
 
                             <div aria-labelledby="dropdownAccountOptions"
                                 class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
 
                                 <!-- user detail -->
-                                <div
-                                    class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4">
+                                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4"
+                                    style="cursor: pointer;" onclick="window.location.href='profile.html'">
                                     <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
                                     <span id="user-email"
                                         class="d-block smaller fw-medium text-truncate">Cargando...</span>
@@ -163,9 +142,8 @@
                                 </div>
 
 
+
                                 <div class="dropdown-divider mb-3"></div>
-
-
 
                                 <a href="#" class="dropdown-item text-truncate">
                                     <small class="badge bg-success-soft float-end">10 new</small>
@@ -173,41 +151,39 @@
                                     <small class="d-block text-muted smaller">inbox, projects, tasts</small>
                                 </a>
 
-
-
-
-
-
-
                                 <div class="dropdown-divider mb-0 mt-3"></div>
-
                                 <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
                                     <i class="fi fi-power float-start"></i> Log Out
                                 </a>
-
                             </div>
-
                         </li>
-
                     </ul>
                     <!-- /options -->
+
                 </nav>
             </div>
+            <!-- /Navbar -->
         </header>
+        <!-- /Header -->
+
 
         <div id="wrapper_content" class="d-flex flex-fill">
             <!-- Sidebar -->
             <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
                 <div class="py-2 px-3 mb-3 mt-3">
-                    <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50"
-                            alt="..." /></a>
+                    <a href="dashboard.html">
+                        <img data-org-logo src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="...">
+                    </a>
+                    <span data-org-name class="small text-muted d-block mt-1"></span>
                 </div>
+
                 <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
                     <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
                         <ul id="dynamicMenu" class="nav flex-column"></ul>
                     </nav>
                 </div>
             </aside>
+            <!-- /Sidebar -->
 
             <!-- Main -->
             <main id="middle" class="flex-fill mx-auto">
@@ -219,40 +195,70 @@
                                 <li class="breadcrumb-item text-muted active">Directory</li>
                             </ol>
                         </div>
-                        <!-- Admin-only -->
                         <button id="addUserBtn" class="btn btn-sm btn-primary" style="display:none;">Add user</button>
                     </header>
 
-                    <!-- Admin Add User form -->
+                    <!-- Add User (card) - hidden by default -->
                     <div class="section p-xl-4 pt-2 add-user-wrap d-none">
-                        <form id="addUserForm" class="row g-2">
-                            <div class="col-md-4">
-                                <input id="addUserEmail" type="email" class="form-control"
-                                    placeholder="Email (required)">
+                        <div class="card shadow-sm">
+                            <div class="card-header d-flex align-items-center justify-content-between">
+                                <h6 class="mb-0">Add User</h6>
+                                <button type="button" class="btn btn-sm btn-light" id="addUserClose">Close</button>
                             </div>
-                            <div class="col-md-4">
-                                <input id="addUserName" type="text" class="form-control"
-                                    placeholder="Full name (optional)">
+
+                            <div class="card-body">
+                                <form id="addUserForm" class="row g-3 needs-validation" novalidate>
+                                    <div class="col-md-5">
+                                        <label for="addUserEmail" class="form-label">Email <span
+                                                class="text-danger">*</span></label>
+                                        <input id="addUserEmail" type="email" class="form-control"
+                                            placeholder="user@school.edu" required />
+                                        <div class="invalid-feedback">Please enter a valid email.</div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="addUserName" class="form-label">Full name</label>
+                                        <input id="addUserName" type="text" class="form-control"
+                                            placeholder="(James Bahadur" />
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="addUserRole" class="form-label">Role</label>
+                                        <select id="addUserRole" class="form-select">
+                                            <option value="operator">Operator</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="student">Student</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Single password field -->
+                                    <div class="col-md-5">
+                                        <label for="addUserPassword" class="form-label">Set password (min 6)</label>
+                                        <div class="input-group">
+                                            <input id="addUserPassword" type="password" class="form-control"
+                                                minlength="6" autocomplete="new-password" />
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="togglePw">Show</button>
+                                        </div>
+                                        <div class="form-text">They can change it later from account settings.</div>
+                                    </div>
+
+                                    <div class="col-12 d-flex align-items-center gap-2">
+                                        <button type="submit" class="btn btn-primary" id="addUserSubmit">Create
+                                            user</button>
+                                        <button type="button" class="btn btn-light" id="addUserCancel">Cancel</button>
+                                        <span id="addUserStatus" class="small text-muted"></span>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="col-md-3">
-                                <select id="addUserRole" class="form-select">
-                                    <option value="operator">Operator</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="student">Student</option>
-                                </select>
-                            </div>
-                            <div class="col-md-12 d-flex align-items-center gap-2">
-                                <button type="submit" class="btn btn-sm btn-primary">Create user</button>
-                                <span id="addUserStatus" class="small text-muted"></span>
-                            </div>
-                        </form>
+                        </div>
                     </div>
 
                     <!-- Filters -->
                     <div class="section p-xl-4 pb-3">
                         <div class="d-flex flex-wrap align-items-center search-wrap">
                             <input id="searchInput" class="form-control" style="max-width:300px"
-                                placeholder="Search by name or email">
+                                placeholder="Search by name or email" />
                             <select id="roleFilter" class="form-select" style="max-width:200px">
                                 <option value="">All roles</option>
                                 <option value="admin">Admin</option>
@@ -273,7 +279,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th style="width: 130px;">Last Login</th>
+                                        <th style="width:130px;">Last Login</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -286,7 +292,6 @@
                             </table>
                         </div>
 
-                        <!-- Simple pagination -->
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <div class="small text-muted">Client-side paging</div>
                             <div class="btn-group">
@@ -300,12 +305,42 @@
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script type="module" src="js/firebase-config.js"></script>
-    <script type="module" src="js/menu.js"></script>
-    <script type="module" src="js/account.js"></script>
-    <script type="module" src="js/users.js"></script>
-    <script type="module" src="js/index.js"></script>
+    <!-- footer -->
+    <footer id="footer">
+        <div class="p-3 bg-white shadow-sm rounded">
+            <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
+
+            <div class="d-inline-block float-end dropdown">
+                <ul class="list-inline m-0">
+                    <!-- LANGUAGE -->
+                    <li class="dropdown list-inline-item m-0">
+                        <a id="topDDLanguage" href="#" class="d-inline-block" data-bs-toggle="dropdown"
+                            aria-expanded="false" aria-haspopup="true">
+                            <i class="flag flag-us"></i>
+                            <span class="small px-2">English</span>
+                        </a>
+                    </li>
+                    <!-- /LANGUAGE -->
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- /footer -->
+
+
+    <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/vendor_bundle.min.js"></script>
+
+    <script type="module">
+        import "./js/firebase-config.js";
+        import "./js/auth.js";
+        import "./js/menu.js";
+        import "./js/account.js";
+        import "./js/alerts.js";
+        import "./js/processing-log-list.js";
+        import "./js/users.js";
+        import "./js/setting.js";
+    </script>
 </body>
 
 </html>

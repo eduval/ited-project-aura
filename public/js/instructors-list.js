@@ -64,8 +64,8 @@ function displayInstructors(instructors) {
         // Add instructor_id parameter to the link
         const row = `
             <tr>
-                <td><a href="teacher-course-list.html?instructor_id=${t.id}">${index + 1}</a></td>
-                <td><a href="teacher-course-list.html?instructor_id=${t.id}">${t.name}</a></td>
+                <td><a href="teacher-course-list.html?instructor_id=${t.id}&instructor_name=${t.name}">${index + 1}</a></td>
+                <td><a href="teacher-course-list.html?instructor_id=${t.id}&instructor_name=${t.name}">${t.name}</a></td>
                 <td>${t.login_id || "N/A"}</td>
                 <td>${t.last_activity || "No activity"}</td>
                 <td>
@@ -80,9 +80,8 @@ function displayInstructors(instructors) {
                           </span>
                         </a>
                         <div class="prefix-link-icon prefix-icon-dot dropdown-menu mt-2">
-                          <a href="teacher-course-list.html?instructor_id=${t.id}" class="dropdown-item">View Courses</a>
-                          <a href="#" class="dropdown-item">Other Option</a>
-                        </div>
+                          <a href="teacher-course-list.html?instructor_id=${t.id}&instructor_name=${t.name}" class="dropdown-item">View Courses</a>
+                         </div>
                     </div>
                 </td>
             </tr>

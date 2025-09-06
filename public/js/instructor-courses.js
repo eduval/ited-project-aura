@@ -153,6 +153,26 @@ function showError(message) {
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const instructorId = urlParams.get('instructor_id');
+    const instructorName = urlParams.get('instructor_name');
+
+    if (instructorName) {
+        const header = document.querySelector("h2.mb-5.fw-bold");
+        if (header) {
+            header.textContent = decodeURIComponent(instructorName);
+        }
+    }
+
+    const dashboardTitle = document.getElementById("instructor_name_dashboard");
+    if (dashboardTitle && instructorName) {
+        dashboardTitle.textContent = `${decodeURIComponent(instructorName)} Courses Dashboard`;
+    }
+
+    const instructor_name_dashboard_small = document.getElementById("instructor_name_dashboard_small");
+    if (instructor_name_dashboard_small && instructorName) {
+        instructor_name_dashboard_small.textContent = `${decodeURIComponent(instructorName)} Courses Dashboard`;
+    }
+
+
 
     const searchInput = document.getElementById("course-search");
     if (searchInput) {
