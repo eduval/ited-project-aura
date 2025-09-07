@@ -3,6 +3,7 @@ import { auth } from "./firebase-config.js";
 let allCourses = []; // store fetched courses for search
 let loadingInterval;
 let loadingDotsInterval;
+let instructorName;
 
 const messages = [
     "Fetching from Canvas",
@@ -88,7 +89,7 @@ function renderCoursesTable(courses) {
 
         const courseId = course.id;
         const problemsBadge = course.students_with_problems && course.students_with_problems > 0
-            ? `<a href="student-risks.html?instructor_id=${instructorId}&course_id=${courseId}" class="notification-count-alerts" style="position: relative; display: inline-block; background: red; color: white; border-radius: 50%; padding: 10px 8px; font-size: 12px; margin-left: 5px; text-align: center; text-decoration: none;">
+            ? `<a href="student-risks.html?instructor_id=${instructorId}&course_id=${courseId}&instructor_name=${instructorName}" class="notification-count-alerts" style="position: relative; display: inline-block; background: red; color: white; border-radius: 50%; padding: 10px 8px; font-size: 12px; margin-left: 5px; text-align: center; text-decoration: none;">
                 ${course.students_with_problems}
                 <div style="font-size: 8px; color: #fff; line-height: 1; margin-top: 2px;">Problems</div>
                </a>`
@@ -153,7 +154,7 @@ function showError(message) {
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const instructorId = urlParams.get('instructor_id');
-    const instructorName = urlParams.get('instructor_name');
+    instructorName = urlParams.get('instructor_name');
 
     if (instructorName) {
         const header = document.querySelector("h2.mb-5.fw-bold");

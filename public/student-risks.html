@@ -55,8 +55,12 @@
                                 <ol class="breadcrumb small">
                                     <li class="breadcrumb-item"><a href="teacher-list.html">Instructor Directory</a>
                                     </li>
+                                    <li class="breadcrumb-item" id="instructor_name_title" aria-current="page">
+                                    </li>
+
+                                    </li>
                                     <!-- This part will be updated by JS -->
-                                    <li class="breadcrumb-item" id="instructor-breadcrumb"></li>
+
                                     <li class="breadcrumb-item text-muted active" aria-current="page">Student Risks</li>
                                 </ol>
                             </nav>
@@ -66,19 +70,44 @@
 
                 <!-- Info Boxes -->
                 <div class="row g-4 mb-4">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="section p-3">
                             <h2 class="h6 text-muted mb-2">Course Name</h2>
-                            <span class="fs-4 fw-bold" id="course-name-display">Loading...</span>
+                            <span class="fs-6 fw-bold" id="course-name-display">Loading...</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <div class="section p-3">
-                            <h2 class="h6 text-muted mb-2">Total Students</h2>
-                            <span class="fs-4 fw-bold" id="total-students-display">0</span>
+                            <h2 class="h6 text-success mb-2">Total <br>Students</h2>
+                            <span class="fs-4 fw-bold text-success" id="total-students-display">0</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="section p-3">
+                            <h2 class="h6 text-danger mb-2">Students with <br>Problems</h2>
+                            <span class="fs-4 fw-bold text-danger" id="total-students-display">0</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="section p-3">
+                            <h2 class="h6 text-primary mb-2">Minimum <br>Grade (%)</h2>
+                            <span class="fs-4 fw-bold text-primary" id="total-students-display">0</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="section p-3">
+                            <h2 class="h6 text-primary mb-2">Minimum <br>Attendance (%)</h2>
+                            <span class="fs-4 fw-bold text-primary" id="total-students-display">0</span>
                         </div>
                     </div>
                 </div>
+
+                <h2 class="mb-5 fw-bold">
+                    Instructor Name
+                </h2>
 
                 <!-- Student Risk Table -->
                 <div class="section p-0">
@@ -91,9 +120,11 @@
                             <table class="table table-align-middle">
                                 <thead>
                                     <tr>
-                                        <th class="small text-muted" style="width:20%">STUDENT ID</th>
-                                        <th class="small text-muted" style="width:30%">NAME</th>
-                                        <th class="small text-muted" style="width:50%">PROBLEM & ACTIONS</th>
+                                        <th class="small text-muted" style="width:10%">STUDENT ID</th>
+                                        <th class="small text-muted" style="width:15%">NAME</th>
+                                        <th class="small text-muted" style="width:25%">PROGRAM</th>
+                                        <th class="small text-muted" style="width:65%">PROBLEM & ACTIONS</th>
+
                                     </tr>
                                 </thead>
                                 <tbody id="student-risk-list">
