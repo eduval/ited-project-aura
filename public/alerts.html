@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>AlertsPage</title>
+    <title>AURA - AlertsPage</title>
     <meta name="description" content="AURA">
 
     <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
@@ -110,13 +110,12 @@
                                 class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
 
                                 <!-- user detail -->
-                                <div
-                                    class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4">
+                                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4"
+                                    style="cursor: pointer;" onclick="window.location.href='profile.html'">
                                     <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
                                     <span id="user-email"
                                         class="d-block smaller fw-medium text-truncate">Cargando...</span>
-                                    <span class="d-block smaller" id="profile-last-login"><b>Last Login:</b> 2019-09-03
-                                        01:48</span>
+                                    <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
                                 </div>
 
 
@@ -191,7 +190,9 @@
         </div>
 
         <footer id="footer">
-            <div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div>
+            <div class="p-3 bg-white shadow-sm rounded">
+                <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
+            </div>
         </footer>
     </div>
 
@@ -204,7 +205,9 @@
         import "./js/auth.js";
         import "./js/menu.js";
         import "./js/account.js";
+        import "./js/alerts.js";
         import "./js/allAlerts.js";
+        import "./js/setting.js";
     </script>
 
 </body>

@@ -1,237 +1,381 @@
 import { auth, db } from "./firebase-config.js";
 import {
-    ref,
-    get,
-    update
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-import {
     onAuthStateChanged,
     updateProfile,
-    updateEmail,
-    sendEmailVerification,
     EmailAuthProvider,
-    reauthenticateWithCredential
+    reauthenticateWithCredential,
+    updateEmail,
+    updatePassword,
+    sendEmailVerification,
+    verifyBeforeUpdateEmail,
+    signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-    // ===== Common elements (header dropdown) =====
-    const nameElem = document.getElementById("user-name");
-    const emailElem = document.getElementById("user-email");
-    const lastLoginElem = document.getElementById("last-login"); // optional id in some headers
-    const avatarBtn = document.getElementById("dropdownAccountOptions");
-    const accountDropdown = document.getElementById("account-dropdown");
+import { ref as dbRef, get, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-    // ===== Profile page / Settings page display fields =====
-    const profileNameEl = document.getElementById("profile-name");
-    const profileRoleEl = document.getElementById("profile-role");
-    const profileLastLoginEl = document.getElementById("profile-last-login");
-    const profileLocationEl = document.getElementById("profile-location");
-    const currentEmailElem = document.getElementById("current-email");
-    const accountPhoneElem = document.getElementById("account-phone");
+const DEFAULT_AVATAR = "assets/images/users_img/user.jpg";
+const $ = (id) => document.getElementById(id);
 
-    // ===== Account edit modal fields (Settings page) =====
-    const nameCard = document.getElementById("name-card");
-    const accountName = document.getElementById("account-name");
-    const fnameInput = document.getElementById("user-fname");
-    const lnameInput = document.getElementById("user-lname");
-    const phoneInput = document.getElementById("user-phone");
-    const editForm = document.querySelector("#modal-account-edit form");
+function setText(id, v) { const el = $(id); if (el) el.textContent = v ?? ""; }
+function setHeaderAvatar(url) {
+    const btn = $("dropdownAccountOptions");
+    if (!btn) return;
+    btn.style.backgroundImage = `url(${url || DEFAULT_AVATAR})`;
+    btn.textContent = "";
+    btn.classList.remove("fw-bold", "small");
+}
 
-    // ===== Email change modal fields (Settings page) =====
-    const newEmailInput = document.getElementById("user-newemail");
-    const emailPassInput = document.getElementById("user-emailpassconfirm");
+// Resize to a small avatar and return dataURL
+function fileToDataURLResized(file, maxSide = 256, mime = "image/jpeg", quality = 0.85) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = () => {
+            const img = new Image();
+            img.onload = () => {
+                const scale = Math.min(maxSide / img.width, maxSide / img.height, 1);
+                const w = Math.round(img.width * scale);
+                const h = Math.round(img.height * scale);
+                const canvas = document.createElement("canvas");
+                canvas.width = w; canvas.height = h;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, w, h);
+                try { resolve(canvas.toDataURL(mime, quality)); }
+                catch (e) { reject(e); }
+            };
+            img.onerror = reject;
+            img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
 
-    // Optional: link to profile page (if present in dropdown or elsewhere)
-    const profileLink = document.getElementById("profile-link"); // if you add <a id="profile-link" href="profile.html">
+async function loadProfile(user) {
+    const snap = await get(dbRef(db, `users/${user.uid}`));
+    const data = snap.exists() ? snap.val() : {};
+    const name = data.name || user.displayName || "—";
+    const phone = data.phone || "";
+    const role = data.role || "—";
+    const photoURL = data.photoURL || user.photoURL || DEFAULT_AVATAR;
 
-    // Helper: set avatar initials if no photo
-    const setAvatar = (btn, name, photoURL) => {
-        if (!btn) return;
-        if (photoURL) {
-            btn.style.backgroundImage = `url(${photoURL})`;
-            btn.textContent = "";
-            btn.classList.remove("fw-bold", "small");
-        } else {
-            const initials = (name || "U")
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .toUpperCase();
-            btn.style.backgroundImage = "";
-            btn.textContent = initials || "U";
-            btn.classList.add("fw-bold", "small");
+    setText("profile-name", name);
+    setText("profile-role", role);
+    setText("account-name", `Name: ${name}`);
+    setText("account-phone", `Phone: ${phone || "—"}`);
+    setText("current-email", user.email || "—");
+
+    setText("user-name", name);
+    setText("user-email", user.email || "—");
+    setRolePill(role); // ADDED
+
+    const preview = $("avatarPreview");
+    if (preview) preview.src = photoURL;
+    setHeaderAvatar(photoURL);
+
+    const dd = $("account-dropdown");
+    if (dd) dd.style.display = "block";
+
+
+    function setRolePill(roleValue) {
+        const roleText = (roleValue || "user").toString();
+        let roleElem = document.getElementById("user-role");
+        if (!roleElem) {
+            roleElem = document.createElement("span");
+            roleElem.id = "user-role";
+            roleElem.className = "d-block smaller fw-medium text-truncate";
+            const emailSpan = document.getElementById("user-email");
+            if (emailSpan) emailSpan.insertAdjacentElement("afterend", roleElem);
         }
-    };
+        roleElem.textContent = `Role: ${roleText}`;
+    }
+    // preload inputs (your IDs are swapped: user-lname = First, user-fname = Last)
+    const firstInput = $("user-lname");
+    const lastInput = $("user-fname");
+    const ph = $("user-phone");
 
-    onAuthStateChanged(auth, async (user) => {
-        if (!user) {
-            // Not logged in — nothing to populate
+    const parts = (name || "").trim().split(/\s+/);
+    const firstGuess = parts.length > 1 ? parts.slice(0, -1).join(" ") : name;
+    const lastGuess = parts.length > 1 ? parts.slice(-1).join(" ") : "";
+
+    if (firstInput) firstInput.value = firstGuess;
+    if (lastInput) lastInput.value = lastGuess;
+    if (ph) ph.value = phone;
+}
+
+function wireAccountForm(user) {
+    const form = document.querySelector("#modal-account-edit form");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const first = $("user-lname")?.value.trim() || ""; // First name
+        const last = $("user-fname")?.value.trim() || ""; // Last name
+        const phone = $("user-phone")?.value.trim() || "";
+
+        const fullName = [first, last].filter(Boolean).join(" ").trim() || user.displayName || user.email;
+
+        try {
+            await update(dbRef(db, `users/${user.uid}`), { name: fullName, phone });
+            try { await updateProfile(user, { displayName: fullName }); } catch { }
+
+            setText("profile-name", fullName);
+            setText("account-name", `Name: ${fullName}`);
+            setText("account-phone", `Phone: ${phone || "—"}`);
+
+            const modalEl = document.getElementById("modal-account-edit");
+            if (modalEl && window.bootstrap) {
+                const inst = window.bootstrap.Modal.getInstance(modalEl) || new window.bootstrap.Modal(modalEl);
+                inst.hide();
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Could not save profile. Please try again.");
+        }
+    }, { once: true });
+}
+
+function wireEmailForm(user) {
+    const form = document.querySelector("#modal-email-edit form");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const newEmail = $("user-newemail")?.value.trim();
+        const pass = $("user-emailpassconfirm")?.value.trim();
+        if (!newEmail || !pass) return alert("Enter email & password.");
+
+        try {
+            const cred = EmailAuthProvider.credential(user.email, pass);
+            await reauthenticateWithCredential(user, cred);
+            await updateEmail(user, newEmail);
+            await update(dbRef(db, `users/${user.uid}`), { email: newEmail });
+            await sendEmailVerification(user);
+
+            setText("current-email", newEmail);
+            setText("user-email", newEmail);
+
+            const modalEl = document.getElementById("modal-email-edit");
+            if (modalEl && window.bootstrap) {
+                const inst = window.bootstrap.Modal.getInstance(modalEl) || new window.bootstrap.Modal(modalEl);
+                inst.hide();
+            }
+            alert("Email updated. Verification sent.");
+        } catch (err) {
+            console.error(err);
+            alert(err?.message || "Email update failed.");
+        }
+    }, { once: true });
+}
+
+function wireAvatar(user) {
+    const file = $("avatarFile");
+    const save = $("avatarSaveBtn");
+    const preview = $("avatarPreview");
+    const pbWrap = $("avatarProgressWrap");
+    const pb = $("avatarProgress");
+    const status = $("avatarStatus");
+
+    const setStatus = (m, ok = true) => {
+        if (!status) return;
+        status.textContent = m || "";
+        status.classList.toggle("text-danger", !ok);
+    };
+    const setProgress = (pct) => {
+        if (!pbWrap || !pb) return;
+        pbWrap.classList.remove("d-none");
+        pb.style.width = `${pct}%`;
+        if (pct >= 100) setTimeout(() => pbWrap.classList.add("d-none"), 500);
+    };
+    const enableSave = (flag) => { if (save) save.disabled = !flag; };
+
+    if (!file || !preview) return;
+
+    file.addEventListener("change", () => {
+        const f = file.files?.[0];
+        if (!f) return enableSave(false);
+        if (!/^image\//.test(f.type)) { setStatus("Unsupported file type.", false); return enableSave(false); }
+        if (f.size > 5 * 1024 * 1024) { setStatus("Max size 5 MB.", false); return enableSave(false); }
+
+        const r = new FileReader();
+        r.onload = () => { preview.src = r.result; };
+        r.readAsDataURL(f);
+        setStatus("");
+        enableSave(true);
+    });
+
+    // Save to RTDB as a small data URL
+    save?.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const f = file.files?.[0];
+        if (!f) return;
+
+        try {
+            enableSave(false);
+            setStatus("Saving…");
+            setProgress(30);
+
+            const dataURL = await fileToDataURLResized(f, 256, "image/jpeg", 0.85);
+            setProgress(80);
+
+            await update(dbRef(db, `users/${user.uid}`), { photoURL: dataURL });
+            try { await updateProfile(user, { photoURL: dataURL }); } catch { }
+
+            preview.src = dataURL;
+            setHeaderAvatar(dataURL);
+            setProgress(100);
+            setStatus("Saved!");
+        } catch (err) {
+            console.error(err);
+            setStatus(`Save failed: ${err?.message || "Unknown error"}`, false);
+            enableSave(true);
+        }
+    });
+}
+
+/* boot */
+onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "index.html"; return; } // ADDED
+    try { await loadProfile(user); } catch (e) { console.warn(e); }
+    wireAccountForm(user);
+    wireEmailForm(user);
+    wireAvatar(user);
+
+    const lastLoginElem = document.getElementById("last-login") || document.getElementById("profile-last-login");
+    if (lastLoginElem && user.metadata?.lastSignInTime) {
+        lastLoginElem.textContent = new Date(user.metadata.lastSignInTime).toLocaleString();
+    }
+});
+
+
+
+// Password change
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("#modal-passwd-edit form");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const currentPassword = document.getElementById("user-currpass-new").value.trim();
+        const newPassword = document.getElementById("user-newpass").value.trim();
+
+        if (!currentPassword || !newPassword) {
+            alert("❌ Please fill both fields.");
             return;
         }
 
-        const uid = user.uid;
-        const userRef = ref(db, `users/${uid}`);
+        const user = auth.currentUser;
+
+        if (!user || !user.email) {
+            alert("❌ No user logged in.");
+            return;
+        }
 
         try {
-            const snap = await get(userRef);
-            if (!snap.exists()) {
-                console.warn("User profile not found in DB");
-                // Still show basic data from Firebase Auth where possible
-            }
+            // Step 1: Re-authenticate the user
+            const credential = EmailAuthProvider.credential(user.email, currentPassword);
+            await reauthenticateWithCredential(user, credential);
 
-            const data = snap.exists() ? snap.val() : {};
-            const fullName = data?.name || user.displayName || "No Name";
-            const email = user.email || "No Email";
-            const role = data?.role || "No Role";
-            const phone = data?.phone || "Not provided";
-            const photoURL = data?.photoURL || user.photoURL || null;
+            // Step 2: Update password
+            await updatePassword(user, newPassword);
 
-            // last login: prefer auth metadata if available
-            const lastLoginRaw =
-                user.metadata?.lastSignInTime || data?.logins?.lastLogin || null;
-            const lastLoginFormatted = lastLoginRaw
-                ? new Date(lastLoginRaw).toLocaleString("en-US", {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                })
-                : "Unknown";
-
-            // ----- HEADER DROPDOWN (account.js functionality) -----
-            if (nameElem) nameElem.textContent = fullName;
-            if (emailElem) {
-                emailElem.textContent = email;
-
-                // Insert or update a role line under email using #user-role id
-                let roleElem = document.getElementById("user-role");
-                if (!roleElem) {
-                    roleElem = document.createElement("span");
-                    roleElem.id = "user-role";
-                    roleElem.className = "d-block smaller fw-medium text-truncate";
-                    emailElem.insertAdjacentElement("afterend", roleElem);
-                }
-                roleElem.textContent = `Role: ${role}`;
-            }
-            if (lastLoginElem) lastLoginElem.textContent = lastLoginFormatted;
-
-            setAvatar(avatarBtn, fullName, photoURL);
-
-            if (accountDropdown) accountDropdown.style.display = "block";
-
-            // ----- PROFILE DISPLAY (profile_setting.js display part) -----
-            if (profileNameEl) profileNameEl.textContent = fullName;
-            if (profileRoleEl) profileRoleEl.textContent = `Role: ${role}`;
-            if (profileLastLoginEl)
-                profileLastLoginEl.textContent = lastLoginFormatted;
-            if (profileLocationEl && data.location) {
-                const { lat, lng, city } = data.location;
-                // If you later store {city} in DB, prefer it; otherwise show lat/lng
-                profileLocationEl.textContent =
-                    city?.trim() ? `📍 ${city}` :
-                        (lat && lng ? `📍 ${lat.toFixed(5)}, ${lng.toFixed(5)}` : "Location: Unknown");
-            }
-            if (currentEmailElem) currentEmailElem.textContent = email;
-            if (accountPhoneElem) accountPhoneElem.textContent = phone;
-
-            // ----- SETTINGS: prefill modal inputs -----
-            if (nameCard) nameCard.textContent = fullName;
-            if (accountName) accountName.textContent = `Name: ${fullName}`;
-
-            // Split name into first/last using DB if available
-            const firstName = data?.account?.first || fullName.split(" ")[0] || "";
-            const lastName =
-                data?.account?.last || fullName.split(" ").slice(1).join(" ") || "";
-
-            if (fnameInput) fnameInput.value = lastName; // Note: original settings.html had fname/lname swapped
-            if (lnameInput) lnameInput.value = firstName;
-            if (phoneInput) phoneInput.value = phone;
-
-            // ----- SETTINGS: handle profile update submit -----
-            if (editForm) {
-                // Avoid duplicate listeners if auth state fires again
-                editForm.addEventListener(
-                    "submit",
-                    async (e) => {
-                        e.preventDefault();
-
-                        const first =
-                            (fnameInput?.value || "").trim(); // original ids are swapped in HTML
-                        const last = (lnameInput?.value || "").trim();
-                        const newPhone = (phoneInput?.value || "").trim();
-
-                        // If your HTML had first/last reversed, keep using the same pattern users already expect visually
-                        const newFullName = `${last} ${first}`.trim();
-
-                        try {
-                            // Update in Realtime DB
-                            await update(userRef, {
-                                name: newFullName,
-                                phone: newPhone,
-                                account: {
-                                    first: last,
-                                    last: first,
-                                },
-                            });
-
-                            // Update Firebase Auth profile name too
-                            await updateProfile(auth.currentUser, { displayName: newFullName });
-
-                            // Reflect in UI
-                            if (nameCard) nameCard.textContent = newFullName;
-                            if (accountName) accountName.textContent = `Name: ${newFullName}`;
-                            if (profileNameEl) profileNameEl.textContent = newFullName;
-                            if (accountPhoneElem) accountPhoneElem.textContent = newPhone;
-                            if (nameElem) nameElem.textContent = newFullName;
-                            setAvatar(avatarBtn, newFullName, photoURL);
-
-                            // If email change fields present and user wrote a new email, process it
-                            const newEmail = newEmailInput?.value.trim();
-                            const pass = emailPassInput?.value.trim();
-
-                            if (newEmail && newEmail !== user.email) {
-                                if (!user.emailVerified) {
-                                    await sendEmailVerification(user);
-                                    alert("📩 Please verify your current email first.");
-                                } else {
-                                    if (!pass) {
-                                        alert("Please enter your account password to change email.");
-                                    } else {
-                                        const cred = EmailAuthProvider.credential(user.email, pass);
-                                        await reauthenticateWithCredential(user, cred);
-                                        await updateEmail(user, newEmail);
-                                        await sendEmailVerification(user);
-                                        alert("📩 Verification sent to the new email. Click it to confirm.");
-                                    }
-                                }
-                            }
-
-                            // Close the modal if Bootstrap available
-                            try {
-                                const modalEl = document.getElementById("modal-account-edit");
-                                // v5
-                                const modal = bootstrap?.Modal?.getInstance?.(modalEl) || new bootstrap.Modal(modalEl);
-                                modal?.hide();
-                            } catch (_) { }
-
-                            alert("✅ Profile updated.");
-                        } catch (err) {
-                            console.error("❌ Error updating account info:", err);
-                            alert("⚠️ Failed to update profile. Please check your inputs.");
-                        }
-                    },
-                    { once: true } // prevent double-binding
-                );
-            }
-
-            // Optional: if you want avatar click to go directly to profile.html on pages with no dropdown
-            if (profileLink && avatarBtn) {
-                avatarBtn.addEventListener("click", (e) => {
-                    // If your UI should open dropdown, comment the next two lines
-                    // e.preventDefault();
-                    // window.location.href = "profile.html";
-                });
-            }
+            alert("✅ Password updated successfully.");
+            form.reset();
+            const modal = bootstrap.Modal.getInstance(document.getElementById("modal-passwd-edit"));
+            modal.hide();
         } catch (error) {
-            console.error("Error fetching user profile:", error);
+            console.error("Error:", error.code, error.message);
+            if (error.code === "auth/wrong-password") {
+                alert("❌ Incorrect current password.");
+            } else if (error.code === "auth/weak-password") {
+                alert("❌ New password is too weak. Use at least 6 characters.");
+            } else {
+                alert("❌ Failed to update password. Please try again.");
+            }
+        }
+    });
+});
+
+
+//email change
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("#modal-email-edit form");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const newEmail = document.getElementById("user-newemail").value.trim();
+        const password = document.getElementById("user-emailpassconfirm").value.trim();
+        const user = auth.currentUser;
+
+        if (!user || !user.email) {
+            alert("❌ No user is logged in.");
+            return;
+        }
+
+        if (!newEmail) {
+            alert("❌ Please enter a new email.");
+            return;
+        }
+
+        // ✅ Step 1: Check if current email is verified
+        if (!user.emailVerified) {
+            try {
+                await sendEmailVerification(user);
+                alert("📩 Please verify your current email before changing it. A verification link has been sent.");
+                return;
+            } catch (error) {
+                console.error("❌ Failed to send verification email:", error);
+                alert("❌ Unable to send verification email. Try again later.");
+                return;
+            }
+        }
+
+        // ✅ Step 2: Reauthenticate
+        try {
+            const credential = EmailAuthProvider.credential(user.email, password);
+            await reauthenticateWithCredential(user, credential);
+            console.log("✅ Reauthenticated.");
+        } catch (error) {
+            console.error("❌ Reauthentication failed:", error.code);
+            alert("❌ Incorrect password. Please try again.");
+            return;
+        }
+
+        // ✅ Step 3: Send verification to new email
+        try {
+            await verifyBeforeUpdateEmail(user, newEmail);
+            alert("📩 A verification link has been sent to your new email. Click it to confirm the change.");
+            form.reset();
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById("modal-email-edit"));
+            modal.hide();
+        } catch (error) {
+            console.error("❌ verifyBeforeUpdateEmail failed:", error.code);
+
+            switch (error.code) {
+                case "auth/invalid-email":
+                    alert("❌ Invalid email format.");
+                    break;
+                case "auth/email-already-in-use":
+                    alert("❌ This email is already in use.");
+                    break;
+                case "auth/requires-recent-login":
+                    alert("🔒 Session expired. Please log in again.");
+                    await signOut(auth);
+                    window.location.href = "index.html";
+                    break;
+                case "auth/user-not-verified":
+                    alert("📩 Please verify your current email first.");
+                    break;
+                default:
+                    alert("❌ Email change is disabled or failed. Check Firebase settings.");
+            }
         }
     });
 });

@@ -1,13 +1,18 @@
 // js/users.js
 import { auth, db } from "./firebase-config.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import { getApp, getApps, initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+    onAuthStateChanged,
+    getAuth,
+    createUserWithEmailAndPassword,
+    sendEmailVerification,
+    signOut as signOutSecondary
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
 import { ref, onValue, get, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js";
 
-const functions = getFunctions(undefined, "us-central1");
-const createUserAccountFn = httpsCallable(functions, "createUserAccount");
-
-// DOM
+// ---------- DOM ----------
 const tbody = document.getElementById("usersTbody");
 const searchInput = document.getElementById("searchInput");
 const roleFilter = document.getElementById("roleFilter");
@@ -18,19 +23,25 @@ const nextBtn = document.getElementById("nextPage");
 const PAGE_SIZE = 12;
 
 const addUserBtn = document.getElementById("addUserBtn");
+const addUserWrap = document.querySelector(".add-user-wrap");
 const addUserForm = document.getElementById("addUserForm");
 const addUserStatus = document.getElementById("addUserStatus");
 const addUserEmailEl = document.getElementById("addUserEmail");
 const addUserNameEl = document.getElementById("addUserName");
 const addUserRoleEl = document.getElementById("addUserRole");
+const addUserPasswordEl = document.getElementById("addUserPassword");
+const addUserSubmit = document.getElementById("addUserSubmit");
+const addUserCancel = document.getElementById("addUserCancel");
+const addUserClose = document.getElementById("addUserClose");
+const togglePwBtn = document.getElementById("togglePw");
 
-// State
+// ---------- State ----------
 let currentUserRole = "unknown";
 let rawUsers = [];
 let filtered = [];
 let page = 0;
 
-// Helpers
+// ---------- Helpers ----------
 const badgeClass = (role) => {
     const r = String(role || "unknown").toLowerCase();
     if (r === "admin") return "role-badge role-admin";
@@ -43,21 +54,15 @@ function fmtTime(ts) {
     if (!ts) return "";
     try {
         const d = new Date(ts);
-        if (!isNaN(d.getTime())) {
-            return d.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
-        }
+        if (!isNaN(d.getTime())) return d.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
         const d2 = new Date(String(ts));
-        if (!isNaN(d2.getTime())) {
-            return d2.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
-        }
+        if (!isNaN(d2.getTime())) return d2.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
     } catch { }
     return "";
 }
 
 function escapeHtml(str) {
-    return String(str).replace(/[&<>"']/g, (m) => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-    }[m]));
+    return String(str).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
 }
 
 function toArrayFromUsersNode(obj) {
@@ -79,7 +84,13 @@ function setAddUserStatus(message, type = "muted") {
     addUserStatus.textContent = message;
 }
 
-// Filtering + Rendering
+function setLoading(isLoading) {
+    if (!addUserSubmit) return;
+    addUserSubmit.disabled = isLoading;
+    addUserSubmit.textContent = isLoading ? "Creating..." : "Create user";
+}
+
+// ---------- Filtering + Rendering ----------
 function applyFilters() {
     const q = (searchInput?.value || "").trim().toLowerCase();
     const role = (roleFilter?.value || "").trim().toLowerCase();
@@ -100,10 +111,10 @@ function render() {
     if (!tbody) return;
 
     if (!filtered.length) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-muted small">No users found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="text-muted small">No users found.</td></tr>`;
         countLabel && (countLabel.textContent = "0 users");
-        prevBtn.disabled = true;
-        nextBtn.disabled = true;
+        prevBtn && (prevBtn.disabled = true);
+        nextBtn && (nextBtn.disabled = true);
         return;
     }
 
@@ -132,18 +143,19 @@ function render() {
         <td><span class="${badgeClass(role)}">${escapeHtml(role)}</span></td>
         <td class="small text-muted">${fmtTime(lastLogin)}</td>
         <td>${statusCell}</td>
+        <td><!-- actions --></td>
       </tr>`;
     }).join("");
 
-    countLabel.textContent = `${filtered.length} user${filtered.length === 1 ? "" : "s"}`;
-    prevBtn.disabled = page === 0;
-    nextBtn.disabled = (page + 1) * PAGE_SIZE >= filtered.length;
+    countLabel && (countLabel.textContent = `${filtered.length} user${filtered.length === 1 ? "" : "s"}`);
+    prevBtn && (prevBtn.disabled = page === 0);
+    nextBtn && (nextBtn.disabled = (page + 1) * PAGE_SIZE >= filtered.length);
 }
 
-// Status Button Click
+// ---------- Status Button ----------
 document.addEventListener("click", async (e) => {
-    const btn = e.target;
-    if (!btn.classList?.contains("user-status-btn")) return;
+    const btn = e.target.closest?.(".user-status-btn");
+    if (!btn) return;
 
     const uid = btn.getAttribute("data-uid");
     if (!uid) return;
@@ -168,7 +180,25 @@ document.addEventListener("click", async (e) => {
     }
 });
 
-// Auth + Admin Gate
+// ---------- UI: toggle, cancel, close ----------
+addUserBtn?.addEventListener("click", () => addUserWrap?.classList.toggle("d-none"));
+addUserCancel?.addEventListener("click", () => {
+    addUserForm?.reset();
+    addUserStatus.textContent = "";
+});
+addUserClose?.addEventListener("click", () => {
+    addUserForm?.reset();
+    addUserStatus.textContent = "";
+    addUserWrap?.classList.add("d-none");
+});
+togglePwBtn?.addEventListener("click", () => {
+    if (!addUserPasswordEl) return;
+    const isPw = addUserPasswordEl.type === "password";
+    addUserPasswordEl.type = isPw ? "text" : "password";
+    togglePwBtn.textContent = isPw ? "Hide" : "Show";
+});
+
+// ---------- Auth + Admin Gate ----------
 onAuthStateChanged(auth, async (user) => {
     if (!user) {
         window.location.href = "index.html";
@@ -192,8 +222,8 @@ onAuthStateChanged(auth, async (user) => {
 
         if (currentUserRole !== "admin") return;
 
-        if (addUserBtn) addUserBtn.style.display = "";
-        if (addUserForm) addUserForm.closest?.(".add-user-wrap")?.classList?.remove("d-none");
+        addUserBtn && (addUserBtn.style.display = "inline-block");
+        addUserWrap?.classList.add("d-none");
 
         onValue(ref(db, "users"), (snap) => {
             rawUsers = snap.exists() ? toArrayFromUsersNode(snap.val()) : [];
@@ -204,46 +234,89 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-// Filters & Pagination
+// ---------- Filters & Pagination ----------
 searchInput?.addEventListener("input", applyFilters);
 roleFilter?.addEventListener("change", applyFilters);
 prevBtn?.addEventListener("click", () => { if (page > 0) { page--; render(); } });
 nextBtn?.addEventListener("click", () => { if ((page + 1) * PAGE_SIZE < filtered.length) { page++; render(); } });
 
-// Add User
-addUserBtn?.addEventListener("click", () => {
-    const wrap = addUserForm?.closest?.(".add-user-wrap");
-    if (wrap) wrap.classList.toggle("d-none");
-});
-
+// ---------- Add User Submit ----------
 if (addUserForm) {
     addUserForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        if (currentUserRole !== "admin") return;
 
-        setAddUserStatus("Creating user...", "muted");
+        if (currentUserRole !== "admin") {
+            setAddUserStatus("Only admins can create users.", "danger");
+            return;
+        }
+
+        if (!addUserForm.checkValidity()) {
+            addUserForm.classList.add("was-validated");
+            setAddUserStatus("Please fix the highlighted fields.", "danger");
+            return;
+        }
 
         const email = (addUserEmailEl?.value || "").trim().toLowerCase();
         const name = (addUserNameEl?.value || "").trim();
         const role = (addUserRoleEl?.value || "operator").trim().toLowerCase();
+        const pass = (addUserPasswordEl?.value || "").trim();
 
-        if (!email) return setAddUserStatus("Please enter an email.", "danger");
         if (!["admin", "operator", "student"].includes(role)) {
-            return setAddUserStatus("Invalid role. Choose admin, operator, or student.", "danger");
+            setAddUserStatus("Invalid role. Choose admin, operator, or student.", "danger");
+            return;
+        }
+        if (pass.length < 6) {
+            setAddUserStatus("Password must be at least 6 characters.", "danger");
+            return;
         }
 
         try {
-            const res = await createUserAccountFn({ email, name, role });
-            const data = res?.data || {};
-            if (data?.ok) {
-                setAddUserStatus("✅ User created.", "success");
-                addUserForm.reset();
-            } else {
-                setAddUserStatus("Failed to create user. Check logs.", "danger");
-            }
+            setLoading(true);
+            setAddUserStatus("Creating user...", "muted");
+
+            // Use a SECONDARY app so the admin stays signed in
+            const defaultApp = getApp();
+            const secondary =
+                getApps().find(a => a.name === "adminSecondary") ||
+                initializeApp(defaultApp.options, "adminSecondary");
+
+            const secondaryAuth = getAuth(secondary);
+            const cred = await createUserWithEmailAndPassword(secondaryAuth, email, pass);
+            const newUid = cred.user.uid;
+
+            try { await sendEmailVerification(cred.user); } catch { }
+
+            // Sign out secondary session immediately
+            try { await signOutSecondary(secondaryAuth); } catch { }
+
+            // Write profile + role via main session
+            await update(ref(db, `users/${newUid}`), {
+                email,
+                name: name || "",
+                role,
+                enabled: true,
+                createdAt: Date.now(),
+                createdBy: auth.currentUser?.uid || null,
+                lastLogin: null,
+                logins: {}
+            });
+
+            setAddUserStatus("✅ User created.", "success");
+            addUserForm.reset();
+            // addUserWrap?.classList.add("d-none"); // optional: close after success
         } catch (err) {
-            console.error(err);
-            setAddUserStatus(`Error: ${err?.message || err}`, "danger");
+            console.error("Add user failed:", err);
+            const code = err?.code || "";
+            let msg = err?.message || "Could not create user.";
+
+            if (code === "auth/email-already-in-use") msg = "That email is already registered.";
+            else if (code === "auth/invalid-email") msg = "Invalid email address.";
+            else if (code === "auth/operation-not-allowed") msg = "Email/password sign-in is disabled in this project.";
+            else if (/PERMISSION_DENIED/i.test(msg)) msg = "Database write blocked by rules for admins.";
+
+            setAddUserStatus(msg, "danger");
+        } finally {
+            setLoading(false);
         }
     });
 }

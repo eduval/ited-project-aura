@@ -53,18 +53,30 @@ get(menuRef).then(snapshot => {
             .filter(([_, item]) => item.enable)
             .sort(([, a], [, b]) => (a.id || 0) - (b.id || 0));
 
+
         const menuHTML = sortedMenuEntries
             .map(([key, item]) => {
                 const apiCanvasKeys = ["999999999", "anotherCanvasApiKey"];
-                const insertDivider = apiCanvasKeys.includes(key);
+                const settingsKeys = ["settingsCriteria", "anotherSettingsKey"]; // Add other settings keys if needed
 
                 let dividerHTML = '';
-                if (insertDivider) {
+
+                // Add API AREA divider
+                if (apiCanvasKeys.includes(key)) {
                     dividerHTML = `
 <li class="nav-title mt-3">
   <h6 class="mb-0 smaller text-muted text-uppercase">API AREA</h6>
 </li>`;
                 }
+
+                // Add Settings divider (check if it's the first settings item)
+                if (settingsKeys.includes(key) && !sortedMenuEntries.some(([k, _]) => settingsKeys.includes(k) && k < key)) {
+                    dividerHTML += `
+<li class="nav-title mt-3">
+  <h6 class="mb-0 smaller text-muted text-uppercase">Settings</h6>
+</li>`;
+                }
+
                 return dividerHTML + renderMenuItem(key, item, currentPath);
             })
             .join('');
