@@ -95,27 +95,7 @@
                     <!-- options -->
                     <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
 
-                        <!-- notifications -->
-                        <li class="list-inline-item mx-1 dropdown">
 
-
-
-                            <div aria-labelledby="dropdownNotificationOptions"
-                                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
-                                <div class="dropdown-header p-4">... new notification</div>
-                                <div class="dropdown-divider"></div>
-                                <div class="max-vh-50 scrollable-vertical">
-                                    <div class="max-vh-50 scrollable-vertical" id="notifications-container">
-                                        <div class="py-5 text-gray-400 text-center" id="no-alerts-msg">Loading...</div>
-                                    </div>
-                                </div>
-                                <div class="dropdown-divider mb-0"></div>
-                                <a href="#"
-                                    class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore fw-medium py-3">
-                                    View all
-                                </a>
-                            </div>
-                        </li>
 
                         <!-- account -->
                         <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display: none;">
@@ -281,7 +261,7 @@
                                         <th>Role</th>
                                         <th style="width:130px;">Last Login</th>
                                         <th>Status</th>
-                                        <th>Actions</th>
+
                                     </tr>
                                 </thead>
                                 <tbody id="usersTbody">
@@ -336,10 +316,28 @@
         import "./js/auth.js";
         import "./js/menu.js";
         import "./js/account.js";
-        import "./js/alerts.js";
-        import "./js/processing-log-list.js";
         import "./js/users.js";
         import "./js/setting.js";
+    </script>
+
+    <script type="module">
+        import { auth } from "./js/firebase-config.js";
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "index.html";
+            } else {
+                document.getElementById("user-email").textContent = user.email;
+                document.getElementById("user-name").textContent = user.displayName || "Usuario";
+            }
+        });
+
+        document.getElementById("logout-btn").addEventListener("click", async (e) => {
+            e.preventDefault();
+            await signOut(auth);
+            window.location.href = "index.html";
+        });
     </script>
 </body>
 
