@@ -2,8 +2,8 @@ import { auth } from './firebase-config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- ELEMENT REFERENCES ---
-    const loadingIndicator = document.getElementById('loading-indicator');
+    // --- 1. SETUP & ELEMENT REFERENCES ---
+    const screenLock = document.getElementById('screen-lock'); // The new full-screen overlay
     const loadingMessage = document.getElementById('loading-message');
     const resultsCard = document.getElementById('results-card');
     const totalRiskCount = document.getElementById('total-risk-count');
@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let masterCourseData = [];
 
-    // --- RUN STUDENT ANALYSIS ---
+    // --- 2. THE MAIN API CALL FUNCTION ---
     async function runStudentAnalysis(userId) {
-        loadingIndicator.classList.remove('d-none');
-        resultsCard.classList.add('d-none');
+        // Show the full-screen loading overlay
+        screenLock.style.display = 'flex'; 
 
         const messages = [
             "Initializing risk assessment models...",
@@ -26,51 +26,51 @@ document.addEventListener('DOMContentLoaded', () => {
             "Almost there, finalizing report..."
         ];
         let messageIndex = 0;
+        // Set the initial message immediately
+        loadingMessage.textContent = messages[0];
         const loadingInterval = setInterval(() => {
-            loadingMessage.textContent = messages[messageIndex % messages.length];
             messageIndex++;
-        }, 3000);
+            loadingMessage.textContent = messages[messageIndex % messages.length];
+        }, 30000); // Change message every 30 seconds
 
         try {
-            const apiUrl = `http://ited.org.ec/aura/canvas_api/student_risk_analysis.php?user_uid=${userId}`;
+            const apiUrl = `http://ited.org.ec/aura/canvas_api/student_risk_analysis.py?userID=${userId}`;
             const response = await fetch(apiUrl);
-
+            
             if (!response.ok) {
                 throw new Error(`Server returned an error: ${response.statusText}`);
             }
-
+            
             const data = await response.json();
-            masterCourseData = Array.isArray(data) ? data : [data]; // wrap object in array
-
+            
+            if (!Array.isArray(data)) {
+                 throw new Error("API did not return the expected data format.");
+            }
+            
+            masterCourseData = data;
             render(masterCourseData);
 
         } catch (error) {
             console.error("Error during student risk analysis:", error);
             analysisTbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">An error occurred: ${error.message}</td></tr>`;
         } finally {
+            // Clean up and hide the overlay
             clearInterval(loadingInterval);
-            loadingIndicator.classList.add('d-none');
-            resultsCard.classList.remove('d-none');
+            screenLock.style.display = 'none';
         }
     }
-
-    // --- RENDER COURSES ---
+    
+    // --- 3. RENDERING AND EVENT HANDLING (Unchanged from your working version) ---
     function render(coursesToRender) {
         analysisTbody.innerHTML = "";
         let totalRisk = 0;
-
-        if (!coursesToRender || coursesToRender.length === 0) {
-            noResultsMessage.classList.remove('d-none');
-            totalRiskCount.textContent = totalRisk;
-            return;
-        } else {
-            noResultsMessage.classList.add('d-none');
-        }
+        
+        noResultsMessage.classList.toggle('d-none', coursesToRender.length > 0);
 
         coursesToRender.forEach(course => {
             const atRiskStudents = course.students_at_risk || [];
             totalRisk += atRiskStudents.length;
-
+            
             const courseRow = document.createElement('tr');
             courseRow.innerHTML = `
                 <td>${course.course_name || 'N/A'}</td>
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const detailsRow = document.createElement('tr');
             detailsRow.classList.add('d-none');
             detailsRow.innerHTML = `<td colspan="4">${renderStudentDetails(atRiskStudents)}</td>`;
-
+            
             analysisTbody.appendChild(courseRow);
             analysisTbody.appendChild(detailsRow);
         });
@@ -109,13 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
         table += '</tbody></table>';
         return table;
     }
-
-    // --- SEARCH FILTER ---
+    
     searchInput.addEventListener('input', () => {
         const searchTerm = searchInput.value.toLowerCase();
         const filteredData = masterCourseData.filter(course => {
             const courseNameMatch = (course.course_name || '').toLowerCase().includes(searchTerm);
-            const studentMatch = (course.students_at_risk || []).some(student =>
+            const studentMatch = (course.students_at_risk || []).some(student => 
                 (student.student_name || '').toLowerCase().includes(searchTerm) ||
                 (student.program_name || '').toLowerCase().includes(searchTerm)
             );
@@ -124,20 +123,19 @@ document.addEventListener('DOMContentLoaded', () => {
         render(filteredData);
     });
 
-    // --- EXPAND BUTTON ---
     analysisTbody.addEventListener('click', (event) => {
         const expandBtn = event.target.closest('.expand-btn');
         if (expandBtn) {
             const icon = expandBtn.querySelector('.expand-icon');
             const mainRow = expandBtn.closest('tr');
             const detailsRow = mainRow.nextElementSibling;
-
+            
             icon.classList.toggle('rotated');
             detailsRow.classList.toggle('d-none');
         }
     });
 
-    // --- AUTH & INITIALIZATION ---
+    // --- 4. INITIALIZATION ---
     auth.onAuthStateChanged((user) => {
         if (user) {
             runStudentAnalysis(user.uid);
@@ -148,3 +146,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+

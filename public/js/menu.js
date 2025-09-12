@@ -123,6 +123,18 @@ get(menuRef).then(snapshot => {
             });
         }, 0);
 
+        //start
+         // 1. Find the link that currently points to "student_analysis.html".
+        //    We find it by its 'href' attribute, which is reliable.
+        const analysisLink = document.querySelector('a[href="student_analysis.html"]');
+        
+        // 2. If that link was found...
+        if (analysisLink) {
+            // 3. ...change its destination to our new confirmation page.
+            analysisLink.href = 'run_analysis.html';
+        }
+//end
+
     } else {
         dynamicMenu.innerHTML = `
           <li class="text-center py-3 text-muted">No menu data found</li>
