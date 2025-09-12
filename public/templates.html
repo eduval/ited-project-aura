@@ -1,424 +1,311 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
-    <meta charset="UTF-8" />
-    <title>AURA - Templates</title>
-    <meta name="description" content="AURA" />
-    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <title>AURA - Templates</title>
+  <meta name="description" content="AURA" />
+  <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
 
-    <!-- perf -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com/" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com/" />
-    <link rel="preconnect" href="https://fonts.googleapis.com/" />
-    <link rel="preconnect" href="https://fonts.gstatic.com/" />
-    <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin />
+  <!-- perf -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com/" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin />
 
-    <link rel="stylesheet" href="assets/css/core.min.css" />
-    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="assets/css/core.min.css" />
+  <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" />
+  <link rel="shortcut icon" href="favicon.ico" />
 
-    <link rel="shortcut icon" href="favicon.ico" />
-
-    <style>
-        .page-wrap {
-            max-width: none;
-            margin: 0 auto
-        }
-
-        .section {
-            padding: 1.5rem 2rem
-        }
-
-        .template-card .card-header {
-            background: #f8f9fb
-        }
-
-        .file-row {
-            padding: .5rem 0;
-            border-bottom: 1px solid #eceff3
-        }
-
-        .file-row:last-child {
-            border-bottom: 0
-        }
-
-        .file-name {
-            font-weight: 600;
-            word-break: break-word
-        }
-
-        .file-meta {
-            color: #6c757d;
-            font-size: .85rem
-        }
-
-        .active-badge {
-            font-size: .7rem
-        }
-
-        .status-line {
-            min-height: 1.25rem
-        }
-
-        .progress {
-            height: 8px
-        }
-
-        .btn-upload {
-            min-width: 120px
-        }
-
-        /* full-screen lock overlay (optional) */
-        #screen-lock {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(255, 255, 255, .7);
-            align-items: center;
-            justify-content: center;
-            z-index: 9999
-        }
-    </style>
+  <style>
+    .page-wrap { max-width: none; margin: 0 auto }
+    .section { padding: 1.5rem 2rem }
+    .template-card .card-header { background: #f8f9fb }
+    .file-row { padding:.5rem 0; border-bottom:1px solid #eceff3 }
+    .file-row:last-child { border-bottom:0 }
+    .file-name { font-weight:600; word-break:break-word }
+    .file-meta { color:#6c757d; font-size:.85rem }
+    .active-badge { font-size:.7rem }
+    .status-line { min-height:1.25rem }
+    .progress { height:8px }
+    .btn-upload { min-width:120px }
+    /* full-screen lock overlay (optional) */
+    #screen-lock { display:none; position:fixed; inset:0; background:rgba(255,255,255,.7); align-items:center; justify-content:center; z-index:9999 }
+  </style>
 </head>
 
 <body class="layout-admin layout-padded aside-sticky">
-    <div id="screen-lock">
-        <div class="spinner-border text-primary" role="status"></div>
-    </div>
+  <div id="screen-lock"><div class="spinner-border text-primary" role="status"></div></div>
 
-    <div id="wrapper" class="d-flex align-items-stretch flex-column">
-        <!-- header -->
-        <header id="header" class="d-flex align-items-center bg-transparent">
+  <div id="wrapper" class="d-flex align-items-stretch flex-column">
+    <!-- header -->
+    <header id="header" class="d-flex align-items-center bg-transparent">
+      <div class="px-3 px-lg-0 w-100 position-relative">
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
+          <div class="align-items-start">
+            <a href="#aside-main" class="btn-sidebar-toggle h-100 d-inline-block d-lg-none justify-content-center align-items-center p-2">
+              <span>
+                <svg width="25" height="25" viewBox="0 0 20 20">
+                  <path d="M 19.9876 1.998 L -0.0108 1.998 L -0.0108 -0.0019 L 19.9876 -0.0019 L 19.9876 1.998 Z"></path>
+                  <path d="M 19.9876 7.9979 L -0.0108 7.9979 L -0.0108 5.9979 L 19.9876 5.9979 L 19.9876 7.9979 Z"></path>
+                  <path d="M 19.9876 13.9977 L -0.0108 13.9977 L -0.0108 11.9978 L 19.9876 11.9978 L 19.9876 13.9977 Z"></path>
+                  <path d="M 19.9876 19.9976 L -0.0108 19.9976 L -0.0108 17.9976 L 19.9876 17.9976 L 19.9876 19.9976 Z"></path>
+                </svg>
+              </span>
+            </a>
+            <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
+              <img data-org-logo src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA">
+            </a>
+          </div>
 
-            <!-- Navbar -->
-            <div class="px-3 px-lg-0 w-100 position-relative">
-                <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
+          <!-- account -->
+          <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
+            <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display:none;">
+              <a href="#" id="dropdownAccountOptions"
+                 class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
+                 style="background-image:url(assets/images/users_img/user.jpg)"
+                 data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                 aria-haspopup="true" aria-label="Account options"></a>
 
-                    <!-- logo, navigation toggler -->
-                    <div class="align-items-start">
-
-                        <!-- sidebar toggler -->
-                        <a href="#aside-main"
-                            class="btn-sidebar-toggle h-100 d-inline-block d-lg-none justify-content-center align-items-center p-2">
-                            <span>
-                                <svg width="25" height="25" viewBox="0 0 20 20">
-                                    <path
-                                        d="M 19.9876 1.998 L -0.0108 1.998 L -0.0108 -0.0019 L 19.9876 -0.0019 L 19.9876 1.998 Z">
-                                    </path>
-                                    <path
-                                        d="M 19.9876 7.9979 L -0.0108 7.9979 L -0.0108 5.9979 L 19.9876 5.9979 L 19.9876 7.9979 Z">
-                                    </path>
-                                    <path
-                                        d="M 19.9876 13.9977 L -0.0108 13.9977 L -0.0108 11.9978 L 19.9876 11.9978 L 19.9876 13.9977 Z">
-                                    </path>
-                                    <path
-                                        d="M 19.9876 19.9976 L -0.0108 19.9976 L -0.0108 17.9976 L 19.9876 17.9976 L 19.9876 19.9976 Z">
-                                    </path>
-                                </svg>
-                            </span>
-                        </a>
-
-                        <!-- logo : mobile only -->
-                        <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
-                            <img data-org-logo src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA">
-                        </a>
-                    </div>
-
-                    <!-- options -->
-                    <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
-
-
-                        <!-- account -->
-                        <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display: none;">
-
-                            <!-- has avatar -->
-                            <a href="#" id="dropdownAccountOptions"
-                                class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
-                                style="background-image:url(assets/images/users_img/user.jpg)" data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
-                                aria-label="Account options"></a>
-
-
-
-                            <div aria-labelledby="dropdownAccountOptions"
-                                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
-
-                                <!-- user detail -->
-                                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4"
-                                    style="cursor: pointer;" onclick="window.location.href='profile.html'">
-                                    <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
-                                    <span id="user-email"
-                                        class="d-block smaller fw-medium text-truncate">Cargando...</span>
-                                    <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
-                                </div>
-
-
-
-                                <div class="dropdown-divider mb-3"></div>
-
-                                <a href="#" class="dropdown-item text-truncate">
-                                    <small class="badge bg-success-soft float-end">10 new</small>
-                                    <span class="fw-medium">My Alerts</span>
-                                    <small class="d-block text-muted smaller">inbox, projects, tasts</small>
-                                </a>
-
-                                <div class="dropdown-divider mb-0 mt-3"></div>
-                                <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
-                                    <i class="fi fi-power float-start"></i> Log Out
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                    <!-- /options -->
-
-                </nav>
-            </div>
-            <!-- /Navbar -->
-        </header>
-        <!-- /Header -->
-
-        <!-- content -->
-        <div id="wrapper_content" class="d-flex flex-fill">
-
-            <!-- Sidebar -->
-            <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
-                <div class="py-2 px-3 mb-3 mt-3">
-                    <a href="dashboard.html">
-                        <img data-org-logo src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="...">
-                    </a>
-                    <span data-org-name class="small text-muted d-block mt-1"></span>
+              <div aria-labelledby="dropdownAccountOptions"
+                   class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
+                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4"
+                     style="cursor:pointer;" onclick="window.location.href='profile.html'">
+                  <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
+                  <span id="user-email" class="d-block smaller fw-medium text-truncate">Cargando...</span>
+                  <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
                 </div>
 
-                <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
-                    <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
-                        <ul id="dynamicMenu" class="nav flex-column"></ul>
-                    </nav>
-                </div>
-            </aside>
-            <!-- /Sidebar -->
+                <div class="dropdown-divider mb-3"></div>
+                <a href="#" class="dropdown-item text-truncate">
+                  <small class="badge bg-success-soft float-end">10 new</small>
+                  <span class="fw-medium">My Alerts</span>
+                  <small class="d-block text-muted smaller">inbox, projects, tasks</small>
+                </a>
 
-            <!-- Main -->
-            <main id="middle" class="flex-fill mx-auto">
-                <div class="container-fluid">
-                    <div class="page-wrap">
-                        <header class="mb-4">
-                            <h1 style="font-size:1.6rem;font-weight:500;margin-bottom:.25rem;">Templates</h1>
-                            <p class="text-muted mb-0">Templates</p>
-                        </header>
+                <div class="dropdown-divider mb-0 mt-3"></div>
+                <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
+                  <i class="fi fi-power float-start"></i> Log Out
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- /header -->
 
-                        <div class="section p-xl-4">
-
-                            <!-- Row 1 -->
-                            <div class="row g-4">
-                                <!-- Course Failure -->
-                                <div class="col-12 col-lg-6">
-                                    <div class="card template-card shadow-sm">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h2 class="h6 mb-0">Course Failure</h2>
-                                                <div class="file-meta">Section key: <code>coursefailure</code></div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <button id="uploadBtn-coursefailure"
-                                                    class="btn btn-sm btn-primary btn-upload"
-                                                    data-type="coursefailure">Upload</button>
-                                                <input id="file-coursefailure" type="file" accept=".doc,.docx"
-                                                    class="d-none" />
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="status-line mb-2" id="status-coursefailure"></div>
-                                            <div class="progress mb-3 d-none" id="progress-coursefailure">
-                                                <div class="progress-bar" id="progressbar-coursefailure"
-                                                    style="width:0%">0%</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2 mb-3">
-                                                <div class="spinner-border spinner-border-sm text-primary d-none"
-                                                    id="spinner-coursefailure"></div>
-                                                <small class="text-muted">Uploaded templates</small>
-                                            </div>
-                                            <div id="list-coursefailure"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Low Attendance -->
-                                <div class="col-12 col-lg-6">
-                                    <div class="card template-card shadow-sm">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h2 class="h6 mb-0">Low Attendance</h2>
-                                                <div class="file-meta">Section key: <code>lowattendance</code></div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <button id="uploadBtn-lowattendance"
-                                                    class="btn btn-sm btn-primary btn-upload"
-                                                    data-type="lowattendance">Upload</button>
-                                                <input id="file-lowattendance" type="file" accept=".doc,.docx"
-                                                    class="d-none" />
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="status-line mb-2" id="status-lowattendance"></div>
-                                            <div class="progress mb-3 d-none" id="progress-lowattendance">
-                                                <div class="progress-bar" id="progressbar-lowattendance"
-                                                    style="width:0%">0%</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2 mb-3">
-                                                <div class="spinner-border spinner-border-sm text-primary d-none"
-                                                    id="spinner-lowattendance"></div>
-                                                <small class="text-muted">Uploaded templates</small>
-                                            </div>
-                                            <div id="list-lowattendance"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Row 2 -->
-                            <div class="row g-4 mt-1">
-                                <!-- At-Risk Status -->
-                                <div class="col-12 col-lg-6">
-                                    <div class="card template-card shadow-sm">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h2 class="h6 mb-0">At-Risk Status</h2>
-                                                <div class="file-meta">Section key: <code>atriskstatus</code></div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <button id="uploadBtn-atriskstatus"
-                                                    class="btn btn-sm btn-primary btn-upload"
-                                                    data-type="atriskstatus">Upload</button>
-                                                <input id="file-atriskstatus" type="file" accept=".doc,.docx"
-                                                    class="d-none" />
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="status-line mb-2" id="status-atriskstatus"></div>
-                                            <div class="progress mb-3 d-none" id="progress-atriskstatus">
-                                                <div class="progress-bar" id="progressbar-atriskstatus"
-                                                    style="width:0%">0%</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2 mb-3">
-                                                <div class="spinner-border spinner-border-sm text-primary d-none"
-                                                    id="spinner-atriskstatus"></div>
-                                                <small class="text-muted">Uploaded templates</small>
-                                            </div>
-                                            <div id="list-atriskstatus"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Low Term Average -->
-                                <div class="col-12 col-lg-6">
-                                    <div class="card template-card shadow-sm">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h2 class="h6 mb-0">Low Term Average</h2>
-                                                <div class="file-meta">Section key: <code>lowtermaverage</code></div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <button id="uploadBtn-lowtermaverage"
-                                                    class="btn btn-sm btn-primary btn-upload"
-                                                    data-type="lowtermaverage">Upload</button>
-                                                <input id="file-lowtermaverage" type="file" accept=".doc,.docx"
-                                                    class="d-none" />
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="status-line mb-2" id="status-lowtermaverage"></div>
-                                            <div class="progress mb-3 d-none" id="progress-lowtermaverage">
-                                                <div class="progress-bar" id="progressbar-lowtermaverage"
-                                                    style="width:0%">0%</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2 mb-3">
-                                                <div class="spinner-border spinner-border-sm text-primary d-none"
-                                                    id="spinner-lowtermaverage"></div>
-                                                <small class="text-muted">Uploaded templates</small>
-                                            </div>
-                                            <div id="list-lowtermaverage"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div><!-- /.section -->
-                    </div><!-- /.page-wrap -->
-                </div><!-- /.container-fluid -->
-            </main>
+    <!-- content -->
+    <div id="wrapper_content" class="d-flex flex-fill">
+      <!-- Sidebar -->
+      <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
+        <div class="py-2 px-3 mb-3 mt-3">
+          <a href="dashboard.html">
+            <img data-org-logo src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="...">
+          </a>
+          <span data-org-name class="small text-muted d-block mt-1"></span>
         </div>
+        <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
+          <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
+            <ul id="dynamicMenu" class="nav flex-column"></ul>
+          </nav>
+        </div>
+      </aside>
+      <!-- /Sidebar -->
 
-        <!-- footer -->
-        <footer id="footer">
-            <div class="p-3 bg-white shadow-sm rounded">
-                <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
+      <!-- Main -->
+      <main id="middle" class="flex-fill mx-auto">
+        <div class="container-fluid">
+          <div class="page-wrap">
+            <header class="mb-4">
+              <h1 style="font-size:1.6rem;font-weight:500;margin-bottom:.25rem;">Templates</h1>
+              <p class="text-muted mb-0">Templates</p>
+            </header>
 
-                <div class="d-inline-block float-end dropdown">
-                    <ul class="list-inline m-0">
-                        <!-- LANGUAGE -->
-                        <li class="dropdown list-inline-item m-0">
-                            <a id="topDDLanguage" href="#" class="d-inline-block" data-bs-toggle="dropdown"
-                                aria-expanded="false" aria-haspopup="true">
-                                <i class="flag flag-us"></i>
-                                <span class="small px-2">English</span>
-                            </a>
-                        </li>
-                        <!-- /LANGUAGE -->
-                    </ul>
+            <!-- ONE section wrapper for all cards -->
+            <div class="section p-xl-4">
+
+              <!-- Course Failure -->
+              <div class="card template-card shadow-sm mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <div>
+                    <h2 class="h6 mb-0">Course Failure</h2>
+                    <div class="file-meta">Section key: <code>coursefailure</code></div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <button id="uploadBtn-coursefailure" class="btn btn-sm btn-primary btn-upload" data-type="coursefailure">Upload</button>
+                    <input id="file-coursefailure" type="file" accept=".doc,.docx" class="d-none" />
+                  </div>
                 </div>
-            </div>
-        </footer>
-        <!-- /footer -->
-    </div>
+                <div class="card-body">
+                  <div class="status-line mb-2" id="status-coursefailure"></div>
+                  <div class="progress mb-3 d-none" id="progress-coursefailure">
+                    <div class="progress-bar" id="progressbar-coursefailure" style="width:0%">0%</div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <div class="spinner-border spinner-border-sm text-primary d-none" id="spinner-coursefailure"></div>
+                    <small class="text-muted">Uploaded templates</small>
+                  </div>
+                  <div id="list-coursefailure"></div>
+                </div>
+              </div>
 
-    <!-- core -->
-    <script src="assets/js/core.min.js"></script>
-    <script src="assets/js/vendor_bundle.min.js"></script>
+              <!-- Low Attendance -->
+              <div class="card template-card shadow-sm mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <div>
+                    <h2 class="h6 mb-0">Low Attendance</h2>
+                    <div class="file-meta">Section key: <code>lowattendance</code></div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <button id="uploadBtn-lowattendance" class="btn btn-sm btn-primary btn-upload" data-type="lowattendance">Upload</button>
+                    <input id="file-lowattendance" type="file" accept=".doc,.docx" class="d-none" />
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="status-line mb-2" id="status-lowattendance"></div>
+                  <div class="progress mb-3 d-none" id="progress-lowattendance">
+                    <div class="progress-bar" id="progressbar-lowattendance" style="width:0%">0%</div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <div class="spinner-border spinner-border-sm text-primary d-none" id="spinner-lowattendance"></div>
+                    <small class="text-muted">Uploaded templates</small>
+                  </div>
+                  <div id="list-lowattendance"></div>
+                </div>
+              </div>
 
-    <!-- app modules -->
-    <script type="module">
-        import "./js/firebase-config.js";
-        import "./js/auth.js";
-        import "./js/menu.js";
-        import "./js/account.js";
+              <!-- At-Risk Status -->
+              <div class="card template-card shadow-sm mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <div>
+                    <h2 class="h6 mb-0">At-Risk Status</h2>
+                    <div class="file-meta">Section key: <code>atriskstatus</code></div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <button id="uploadBtn-atriskstatus" class="btn btn-sm btn-primary btn-upload" data-type="atriskstatus">Upload</button>
+                    <input id="file-atriskstatus" type="file" accept=".doc,.docx" class="d-none" />
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="status-line mb-2" id="status-atriskstatus"></div>
+                  <div class="progress mb-3 d-none" id="progress-atriskstatus">
+                    <div class="progress-bar" id="progressbar-atriskstatus" style="width:0%">0%</div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <div class="spinner-border spinner-border-sm text-primary d-none" id="spinner-atriskstatus"></div>
+                    <small class="text-muted">Uploaded templates</small>
+                  </div>
+                  <div id="list-atriskstatus"></div>
+                </div>
+              </div>
 
-        // Populate account dropdown
-        import { auth } from "./js/firebase-config.js";
-        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        onAuthStateChanged(auth, (user) => {
-            if (!user) { window.location.href = "index.html"; }
-            else {
-                const emailEl = document.getElementById("user-email");
-                const nameEl = document.getElementById("user-name");
-                const acc = document.getElementById("account-dropdown");
-                if (emailEl) emailEl.textContent = user.email || "";
-                if (nameEl) nameEl.textContent = user.displayName || "Usuario";
-                if (acc) acc.style.display = "";
-            }
-        });
-        const logoutBtn = document.getElementById("logout-btn");
-        if (logoutBtn) {
-            logoutBtn.addEventListener("click", async (e) => {
-                e.preventDefault();
-                try { await signOut(auth); } finally { window.location.href = "index.html"; }
-            });
-        }
-    </script>
+              <!-- Low Term Average -->
+              <div class="card template-card shadow-sm mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <div>
+                    <h2 class="h6 mb-0">Low Term Average</h2>
+                    <div class="file-meta">Section key: <code>lowtermaverage</code></div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <button id="uploadBtn-lowtermaverage" class="btn btn-sm btn-primary btn-upload" data-type="lowtermaverage">Upload</button>
+                    <input id="file-lowtermaverage" type="file" accept=".doc,.docx" class="d-none" />
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="status-line mb-2" id="status-lowtermaverage"></div>
+                  <div class="progress mb-3 d-none" id="progress-lowtermaverage">
+                    <div class="progress-bar" id="progressbar-lowtermaverage" style="width:0%">0%</div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <div class="spinner-border spinner-border-sm text-primary d-none" id="spinner-lowtermaverage"></div>
+                    <small class="text-muted">Uploaded templates</small>
+                  </div>
+                  <div id="list-lowtermaverage"></div>
+                </div>
+              </div>
 
-    <script type="module">
-        import "./js/firebase-config.js";
-        import "./js/auth.js";
-        import "./js/menu.js";
-        import "./js/account.js";
-        import "./js/setting.js";
+              <!-- Alert Template -->
+              <div class="card template-card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <div>
+                    <h2 class="h6 mb-0">Alert Template</h2>
+                    <div class="file-meta">Section key: <code>alerttemplate</code></div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <button id="uploadBtn-alerttemplate" class="btn btn-sm btn-primary btn-upload" data-type="alerttemplate">Upload</button>
+                    <input id="file-alerttemplate" type="file" accept=".doc,.docx" class="d-none" />
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="status-line mb-2" id="status-alerttemplate"></div>
+                  <div class="progress mb-3 d-none" id="progress-alerttemplate">
+                    <div class="progress-bar" id="progressbar-alerttemplate" style="width:0%">0%</div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <div class="spinner-border spinner-border-sm text-primary d-none" id="spinner-alerttemplate"></div>
+                    <small class="text-muted">Uploaded templates</small>
+                  </div>
+                  <div id="list-alerttemplate"></div>
+                </div>
+              </div>
 
-    </script>
+            </div><!-- /.section -->
+          </div><!-- /.page-wrap -->
+        </div><!-- /.container-fluid -->
+      </main>
+    </div><!-- /content -->
 
-    <!-- your page logic -->
-    <script type="module" src="js/templates_readonly.js"></script>
-    <script type="module" src="js/upload_templates.js"></script>
-    <script type="module" src="js/template_after_upload_push.js"></script>
+    <!-- footer -->
+    <footer id="footer">
+      <div class="p-3 bg-white shadow-sm rounded">
+        <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
+      </div>
+    </footer>
+    <!-- /footer -->
+  </div>
+
+  <!-- core -->
+  <script src="assets/js/core.min.js"></script>
+  <script src="assets/js/vendor_bundle.min.js"></script>
+
+  <!-- auth + chrome (load once) -->
+  <script type="module">
+    import "./js/firebase-config.js";
+    import { auth } from "./js/firebase-config.js";
+    import "./js/auth.js";
+    import "./js/menu.js";
+    import "./js/account.js";
+    import "./js/setting.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    onAuthStateChanged(auth, (user) => {
+      if (!user) { window.location.href = "index.html"; }
+      else {
+        const emailEl = document.getElementById("user-email");
+        const nameEl = document.getElementById("user-name");
+        const acc = document.getElementById("account-dropdown");
+        if (emailEl) emailEl.textContent = user.email || "";
+        if (nameEl) nameEl.textContent = user.displayName || "Usuario";
+        if (acc) acc.style.display = "";
+      }
+    });
+
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try { await signOut(auth); } finally { window.location.href = "index.html"; }
+      });
+    }
+  </script>
+
+  <!-- settings (if this page needs it) -->
+  <script type="module" src="js/setting.js"></script>
+
+  <!-- page logic -->
+  <script type="module" src="js/templates_readonly.js"></script>
+  <script type="module" src="js/upload_templates.js"></script>
+  <script type="module" src="js/template_after_upload_push.js"></script>
 </body>
-
 </html>
