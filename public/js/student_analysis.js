@@ -40,13 +40,35 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await response.json();
-            masterCourseData = Array.isArray(data) ? data : [data]; // wrap object in array
+
+            if (!data.success) {
+                analysisTbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">${data.error || "Unknown error"}</td></tr>`;
+                masterCourseData = [];
+                return;
+            }
+
+            if (Array.isArray(data.courses)) {
+                // Map PHP structure to expected JS structure
+                masterCourseData = data.courses.map(c => ({
+                    course_name: c.course.name,
+                    total_students: c.course.total_students,
+                    students_at_risk: (c.students_with_problems || []).map(s => ({
+                        student_id: s.student_id,
+                        student_name: s.student_name,
+                        program_name: s.program || 'N/A',
+                        problem: (s.problems || []).map(p => p.type).join(", ")
+                    }))
+                }));
+            } else {
+                masterCourseData = [];
+            }
 
             render(masterCourseData);
 
         } catch (error) {
             console.error("Error during student risk analysis:", error);
             analysisTbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">An error occurred: ${error.message}</td></tr>`;
+            masterCourseData = [];
         } finally {
             clearInterval(loadingInterval);
             loadingIndicator.classList.add('d-none');
