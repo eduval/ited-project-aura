@@ -45,25 +45,35 @@ if (loginForm) {
       const userRef = ref(db, `users/${uid}`);
 
       // Ensure/refresh RTDB record (do NOT re-enable here)
-      const snap = await get(userRef);
-      if (snap.exists()) {
-        await update(userRef, {
-          email: email,
-          // never set enabled here—respect admin decision
-          "logins/lastLogin": Date.now(),
-          // lightweight history marker (optional)
-          "logins/history": push(ref(db, `users/${uid}/logins/history`)).key ? Date.now() : Date.now(),
-        });
-      } else {
-        await set(userRef, {
-          email: email,
-          name: userCred.user.displayName || "Unknown",
-          role: "operator",      // default role; adjust as needed
-          enabled: true,         // new users start enabled
-          createdAt: Date.now(),
-          logins: { lastLogin: Date.now() },
-        });
-      }
+const snap = await get(userRef);
+const now = Date.now();
+
+if (snap.exists()) {
+  // 1) Append one entry under users/<uid>/logins/history/<autoId>
+  const historyRef = push(ref(db, `users/${uid}/logins/history`));
+  await set(historyRef, now);
+
+  // 2) Keep a denormalized lastLogin for fast UI
+  await update(userRef, {
+    email: email,
+    "logins/lastLogin": now
+  });
+} else {
+  // First login for this user in RTDB
+  await set(userRef, {
+    email: email,
+    name: userCred.user.displayName || "Unknown",
+    role: "operator",      // default role; adjust as needed
+    enabled: true,
+    createdAt: now,
+    logins: { lastLogin: now }
+  });
+
+  // Also seed history with the first entry
+  const historyRef = push(ref(db, `users/${uid}/logins/history`));
+  await set(historyRef, now);
+}
+
 
       // Gate by enabled flag
       const enabledSnap = await get(ref(db, `users/${uid}/enabled`));
