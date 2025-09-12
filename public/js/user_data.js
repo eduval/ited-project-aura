@@ -43,5 +43,6 @@ function updateUserHeader() {
     });
 }
 
+
 // Wait a bit in case auth takes a moment to populate
 setTimeout(updateUserHeader, 500);

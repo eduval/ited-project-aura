@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8" />
     <title>AURA - Student Risk Analysis</title>
@@ -10,22 +11,33 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" />
     <link rel="shortcut icon" href="favicon.ico" />
     <style>
-        .d-none { display: none !important; }
-        .expand-icon { transition: transform 0.3s ease; }
-        .expand-icon.rotated { transform: rotate(180deg); }
+        .d-none {
+            display: none !important;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .expand-icon.rotated {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 
 <body class="layout-admin layout-padded aside-sticky">
-    <div id="wrapper" class="d-flex align--items-stretch flex-column">
+    <div id="wrapper" class="d-flex align-items-stretch flex-column">
 
         <header id="header" class="d-flex align-items-center bg-transparent"></header>
 
         <div id="wrapper_content" class="d-flex flex-fill">
             <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
-                <div class="py-2 px-3 mb-3 mt-3"><a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="..."></a></div>
+                <div class="py-2 px-3 mb-3 mt-3"><a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png"
+                            width="100" height="50" alt="..."></a></div>
                 <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
-                    <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified"><ul id="dynamicMenu" class="nav flex-column"></ul></nav>
+                    <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
+                        <ul id="dynamicMenu" class="nav flex-column"></ul>
+                    </nav>
                 </div>
             </aside>
 
@@ -38,12 +50,27 @@
 
                     <!-- Main Content Section -->
                     <div class="section p-xl-4">
-                        <!-- Results Card (Now visible by default, will be hidden by JS if loading) -->
-                        <div id="results-card" class="card shadow-sm">
+                        <!-- Loading Indicator -->
+                        <div id="loading-indicator" class="card shadow-sm d-none">
+                            <div class="card-body text-center p-5">
+                                <div class="spinner-border text-primary mb-3" role="status"></div>
+                                <h5 class="mb-2">Processing Student Data...</h5>
+                                <p class="text-muted mb-0" id="loading-message">Starting analysis. This may take several
+                                    minutes.</p>
+                            </div>
+                        </div>
+
+                        <!-- Results Card -->
+                        <div id="results-card" class="card shadow-sm d-none">
                             <div class="card-body">
+                                <!-- Toolbar (Search and At-Risk Count) -->
                                 <div class="row g-2 align-items-center mb-3">
                                     <div class="col-md-8">
-                                        <div class="input-group"><span class="input-group-text"><i class="fi fi-search"></i></span><input id="course-search" type="text" class="form-control" placeholder="Search by course name, student name, or program..." /></div>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fi fi-search"></i></span>
+                                            <input id="course-search" type="text" class="form-control"
+                                                placeholder="Search by course name, student name, or program..." />
+                                        </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="section p-3 bg-soft-danger rounded text-center">
@@ -52,6 +79,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Course Table -->
                                 <div class="table-responsive">
                                     <table class="table table-hover align-middle">
                                         <thead class="small text-muted">
@@ -62,13 +91,12 @@
                                                 <th class="text-end" style="width:130px;">EXPAND</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="analysis-tbody">
-                                            <!-- Placeholder for initial state -->
-                                            <tr><td colspan="4" class="text-center p-5 text-muted">Awaiting analysis to start...</td></tr>
-                                        </tbody>
+                                        <tbody id="analysis-tbody"></tbody>
                                     </table>
                                 </div>
-                                <div id="no-results-message" class="text-center text-muted border border-dashed rounded p-5 d-none">
+
+                                <div id="no-results-message"
+                                    class="text-center text-muted border border-dashed rounded p-5 d-none">
                                     <div class="mb-2">😕 No results found for your search.</div>
                                     <div class="small">Try a different search term.</div>
                                 </div>
@@ -79,15 +107,9 @@
             </main>
         </div>
 
-        <footer id="footer"><div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div></footer>
-    </div>
-
-    <!-- ** NEW: FULL SCREEN LOADING OVERLAY ** -->
-    <div id="screen-lock" style="display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(4px); justify-content: center; align-items: center;">
-        <div class="text-center">
-            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
-            <div id="loading-message" class="mt-3 fw-bold">Please wait... Processing your file</div>
-        </div>
+        <footer id="footer">
+             <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
+        </footer>
     </div>
 
     <!-- Core & Vendor JS -->
@@ -101,7 +123,9 @@
         import "./js/menu.js";
         import "./js/alerts.js";
         import "./js/account.js";
+        import"./js/account.js";
         import "./js/student_analysis.js"; 
     </script>
 </body>
+
 </html>

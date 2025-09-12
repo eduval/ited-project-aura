@@ -2,8 +2,8 @@ import { auth } from './firebase-config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. SETUP & ELEMENT REFERENCES ---
-    const screenLock = document.getElementById('screen-lock'); // The new full-screen overlay
+    // --- ELEMENT REFERENCES ---
+    const loadingIndicator = document.getElementById('loading-indicator');
     const loadingMessage = document.getElementById('loading-message');
     const resultsCard = document.getElementById('results-card');
     const totalRiskCount = document.getElementById('total-risk-count');
@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let masterCourseData = [];
 
-    // --- 2. THE MAIN API CALL FUNCTION ---
+    // --- RUN STUDENT ANALYSIS ---
     async function runStudentAnalysis(userId) {
-        // Show the full-screen loading overlay
-        screenLock.style.display = 'flex'; 
+        loadingIndicator.classList.remove('d-none');
+        resultsCard.classList.add('d-none');
 
         const messages = [
             "Initializing risk assessment models...",
@@ -26,51 +26,73 @@ document.addEventListener('DOMContentLoaded', () => {
             "Almost there, finalizing report..."
         ];
         let messageIndex = 0;
-        // Set the initial message immediately
-        loadingMessage.textContent = messages[0];
         const loadingInterval = setInterval(() => {
-            messageIndex++;
             loadingMessage.textContent = messages[messageIndex % messages.length];
-        }, 30000); // Change message every 30 seconds
+            messageIndex++;
+        }, 3000);
 
         try {
-            const apiUrl = `http://ited.org.ec/aura/canvas_api/student_risk_analysis.py?userID=${userId}`;
+            const apiUrl = `https://ited.org.ec/aura/canvas_api/student_risk_analysis.php?user_uid=${userId}`;
             const response = await fetch(apiUrl);
-            
+
             if (!response.ok) {
                 throw new Error(`Server returned an error: ${response.statusText}`);
             }
-            
+
             const data = await response.json();
-            
-            if (!Array.isArray(data)) {
-                 throw new Error("API did not return the expected data format.");
+
+            if (!data.success) {
+                analysisTbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">${data.error || "Unknown error"}</td></tr>`;
+                masterCourseData = [];
+                return;
             }
-            
-            masterCourseData = data;
+
+            if (Array.isArray(data.courses)) {
+                // Map PHP structure to expected JS structure
+                masterCourseData = data.courses.map(c => ({
+                    course_name: c.course.name,
+                    total_students: c.course.total_students,
+                    students_at_risk: (c.students_with_problems || []).map(s => ({
+                        student_id: s.student_id,
+                        student_name: s.student_name,
+                        program_name: s.program || 'N/A',
+                        problem: (s.problems || []).map(p => p.type).join(", ")
+                    }))
+                }));
+            } else {
+                masterCourseData = [];
+            }
+
             render(masterCourseData);
 
         } catch (error) {
             console.error("Error during student risk analysis:", error);
             analysisTbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">An error occurred: ${error.message}</td></tr>`;
+            masterCourseData = [];
         } finally {
-            // Clean up and hide the overlay
             clearInterval(loadingInterval);
-            screenLock.style.display = 'none';
+            loadingIndicator.classList.add('d-none');
+            resultsCard.classList.remove('d-none');
         }
     }
-    
-    // --- 3. RENDERING AND EVENT HANDLING (Unchanged from your working version) ---
+
+    // --- RENDER COURSES ---
     function render(coursesToRender) {
         analysisTbody.innerHTML = "";
         let totalRisk = 0;
-        
-        noResultsMessage.classList.toggle('d-none', coursesToRender.length > 0);
+
+        if (!coursesToRender || coursesToRender.length === 0) {
+            noResultsMessage.classList.remove('d-none');
+            totalRiskCount.textContent = totalRisk;
+            return;
+        } else {
+            noResultsMessage.classList.add('d-none');
+        }
 
         coursesToRender.forEach(course => {
             const atRiskStudents = course.students_at_risk || [];
             totalRisk += atRiskStudents.length;
-            
+
             const courseRow = document.createElement('tr');
             courseRow.innerHTML = `
                 <td>${course.course_name || 'N/A'}</td>
@@ -86,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const detailsRow = document.createElement('tr');
             detailsRow.classList.add('d-none');
             detailsRow.innerHTML = `<td colspan="4">${renderStudentDetails(atRiskStudents)}</td>`;
-            
+
             analysisTbody.appendChild(courseRow);
             analysisTbody.appendChild(detailsRow);
         });
@@ -109,12 +131,13 @@ document.addEventListener('DOMContentLoaded', () => {
         table += '</tbody></table>';
         return table;
     }
-    
+
+    // --- SEARCH FILTER ---
     searchInput.addEventListener('input', () => {
         const searchTerm = searchInput.value.toLowerCase();
         const filteredData = masterCourseData.filter(course => {
             const courseNameMatch = (course.course_name || '').toLowerCase().includes(searchTerm);
-            const studentMatch = (course.students_at_risk || []).some(student => 
+            const studentMatch = (course.students_at_risk || []).some(student =>
                 (student.student_name || '').toLowerCase().includes(searchTerm) ||
                 (student.program_name || '').toLowerCase().includes(searchTerm)
             );
@@ -123,19 +146,20 @@ document.addEventListener('DOMContentLoaded', () => {
         render(filteredData);
     });
 
+    // --- EXPAND BUTTON ---
     analysisTbody.addEventListener('click', (event) => {
         const expandBtn = event.target.closest('.expand-btn');
         if (expandBtn) {
             const icon = expandBtn.querySelector('.expand-icon');
             const mainRow = expandBtn.closest('tr');
             const detailsRow = mainRow.nextElementSibling;
-            
+
             icon.classList.toggle('rotated');
             detailsRow.classList.toggle('d-none');
         }
     });
 
-    // --- 4. INITIALIZATION ---
+    // --- AUTH & INITIALIZATION ---
     auth.onAuthStateChanged((user) => {
         if (user) {
             runStudentAnalysis(user.uid);
@@ -146,4 +170,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
-

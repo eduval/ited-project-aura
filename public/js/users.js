@@ -32,7 +32,6 @@ const addUserRoleEl = document.getElementById("addUserRole");
 const addUserPasswordEl = document.getElementById("addUserPassword");
 const addUserSubmit = document.getElementById("addUserSubmit");
 const addUserCancel = document.getElementById("addUserCancel");
-const addUserClose = document.getElementById("addUserClose");
 const togglePwBtn = document.getElementById("togglePw");
 
 // ---------- State ----------
@@ -143,7 +142,6 @@ function render() {
         <td><span class="${badgeClass(role)}">${escapeHtml(role)}</span></td>
         <td class="small text-muted">${fmtTime(lastLogin)}</td>
         <td>${statusCell}</td>
-        <td><!-- actions --></td>
       </tr>`;
     }).join("");
 
@@ -180,13 +178,9 @@ document.addEventListener("click", async (e) => {
     }
 });
 
-// ---------- UI: toggle, cancel, close ----------
+// ---------- UI: toggle, cancel, ----------
 addUserBtn?.addEventListener("click", () => addUserWrap?.classList.toggle("d-none"));
 addUserCancel?.addEventListener("click", () => {
-    addUserForm?.reset();
-    addUserStatus.textContent = "";
-});
-addUserClose?.addEventListener("click", () => {
     addUserForm?.reset();
     addUserStatus.textContent = "";
     addUserWrap?.classList.add("d-none");

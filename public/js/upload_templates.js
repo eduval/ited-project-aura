@@ -5,7 +5,7 @@
     // ===== Endpoint =====
     // If your page is served over https:// then this URL must also be https://
     // (otherwise the browser will block it as mixed content).
-    const UPLOAD_ENDPOINT = "http://127.0.0.1:8000/upload_templates.php";
+    const UPLOAD_ENDPOINT = "https://ited.org.ec/aura/excelfiles_upload/upload.php";
 
     // Section map: key === Firebase section key and also used in element IDs
     const SECTIONS = [
@@ -13,6 +13,7 @@
         "lowattendance",
         "atriskstatus",
         "lowtermaverage",
+        "alerttemplate",
     ];
 
     // Allowed Word types

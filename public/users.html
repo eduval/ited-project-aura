@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>AURA – Users</title>
+    <title>AURA </title>
     <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
 
     <link rel="stylesheet" href="assets/css/core.min.css" />
@@ -44,11 +44,7 @@
             gap: .5rem
         }
 
-        .action-btns {
-            display: flex;
-            flex-direction: column;
-            gap: 4px
-        }
+
     </style>
 </head>
 
@@ -183,7 +179,6 @@
                         <div class="card shadow-sm">
                             <div class="card-header d-flex align-items-center justify-content-between">
                                 <h6 class="mb-0">Add User</h6>
-                                <button type="button" class="btn btn-sm btn-light" id="addUserClose">Close</button>
                             </div>
 
                             <div class="card-body">
@@ -199,7 +194,7 @@
                                     <div class="col-md-4">
                                         <label for="addUserName" class="form-label">Full name</label>
                                         <input id="addUserName" type="text" class="form-control"
-                                            placeholder="(James Bahadur" />
+                                            placeholder="James Bahadur" />
                                     </div>
 
                                     <div class="col-md-3">
@@ -207,7 +202,6 @@
                                         <select id="addUserRole" class="form-select">
                                             <option value="operator">Operator</option>
                                             <option value="admin">Admin</option>
-                                            <option value="student">Student</option>
                                         </select>
                                     </div>
 
@@ -216,7 +210,7 @@
                                         <label for="addUserPassword" class="form-label">Set password (min 6)</label>
                                         <div class="input-group">
                                             <input id="addUserPassword" type="password" class="form-control"
-                                                minlength="6" autocomplete="new-password" />
+                                                minlength="6" required autocomplete="new-password" />
                                             <button class="btn btn-outline-secondary" type="button"
                                                 id="togglePw">Show</button>
                                         </div>
@@ -226,7 +220,7 @@
                                     <div class="col-12 d-flex align-items-center gap-2">
                                         <button type="submit" class="btn btn-primary" id="addUserSubmit">Create
                                             user</button>
-                                        <button type="button" class="btn btn-light" id="addUserCancel">Cancel</button>
+                                        <button type="button" class="btn btn-sm btn-light" id="addUserCancel">Cancel</button>
                                         <span id="addUserStatus" class="small text-muted"></span>
                                     </div>
                                 </form>
@@ -243,7 +237,7 @@
                                 <option value="">All roles</option>
                                 <option value="admin">Admin</option>
                                 <option value="operator">Operator</option>
-                                <option value="student">Student</option>
+
                             </select>
                             <span id="countLabel" class="small text-muted ms-auto"></span>
                         </div>
@@ -266,7 +260,7 @@
                                 </thead>
                                 <tbody id="usersTbody">
                                     <tr>
-                                        <td colspan="7" class="text-muted small">Loading...</td>
+                                        <td colspan="6" class="text-muted small">Loading...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -284,28 +278,13 @@
             </main>
         </div>
     </div>
-
     <!-- footer -->
     <footer id="footer">
-        <div class="p-3 bg-white shadow-sm rounded">
-            <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
-
-            <div class="d-inline-block float-end dropdown">
-                <ul class="list-inline m-0">
-                    <!-- LANGUAGE -->
-                    <li class="dropdown list-inline-item m-0">
-                        <a id="topDDLanguage" href="#" class="d-inline-block" data-bs-toggle="dropdown"
-                            aria-expanded="false" aria-haspopup="true">
-                            <i class="flag flag-us"></i>
-                            <span class="small px-2">English</span>
-                        </a>
-                    </li>
-                    <!-- /LANGUAGE -->
-                </ul>
-            </div>
-        </div>
+      <div class="p-3 bg-white shadow-sm rounded">
+        <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
+      </div>
     </footer>
-    <!-- /footer -->
+    <!-- footer -->
 
 
     <script src="assets/js/core.min.js"></script>
