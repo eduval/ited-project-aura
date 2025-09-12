@@ -8,7 +8,7 @@ import {
     set,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const SECTIONS = ["coursefailure", "lowattendance", "atriskstatus", "lowtermaverage"];
+const SECTIONS = ["coursefailure", "lowattendance", "atriskstatus", "lowtermaverage","alerttemplate"];
 
 // helpers to get elements by section key
 const elList = (s) => document.querySelector(`#list-${s}`);

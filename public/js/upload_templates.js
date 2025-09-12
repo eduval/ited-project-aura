@@ -13,6 +13,7 @@
         "lowattendance",
         "atriskstatus",
         "lowtermaverage",
+        "alerttemplate",
     ];
 
     // Allowed Word types
