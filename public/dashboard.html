@@ -36,6 +36,8 @@
       display: none !important;
     }
   </style>
+  <!-- ✅ Add Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <!--
@@ -219,102 +221,38 @@
         </header>
 
         <!-- Primary -->
+        <!-- ✅ New Charts Section -->
         <div class="section rounded mb-3">
+          <h2 class="h5 mb-0">Students with Problems</h2>
+          <small class="small text-muted">Grades, Attendance, and Both</small>
 
-          <div class="d-flex align-items-center justify-content-between border-bottom pb-4 my-2">
-            <div class="w-100">
-              <h2 class="h5 mb-0">Monthly Processing Activity</h2>
-              <small class="small text-muted">Files uploaded and processed by operators</small>
-            </div>
-
-            <!-- save image -->
-            <a href="#" data-chartjs-id="visitsvsorders" data-file-name="visitsvsorders"
-              class="chartjs-save btn btn-sm btn-light text-primary-hover rounded-circle float-end m-0"
-              data-bs-toggle="tooltip" title="Save Chart" aria-label="Save Chart">
-              <i class="fi fi-arrow-download m-0"></i>
-            </a>
-          </div>
-
-          <div class="row g-4">
-
-            <div class="col-12 col-lg-7 col-xl-9 order-1 order-xl-2">
-              <div class="position-relative h-100" style="min-height:250px; max-height:500px">
-                <canvas id="visitsvsorders" class="chartjs" data-chartjs-dots="false" data-chartjs-legend="false"
-                  data-chartjs-grid="true" data-chartjs-tooltip="true" data-chartjs-title="" data-chartjs-xaxes-label=""
-                  data-chartjs-yaxes-label="" data-chartjs-line-width="5" data-chartjs-type="polarArea"
-                  data-chartjs-labels='["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]'
-                  data-chartjs-datasets='[{
-                    "label": "Processed Files",
-                    "data": [24, 32, 45, 38, 52, 60, 55, 62, 40, 50, 33, 28],
-                    "fill": true,
-                    "backgroundColor": "rgba(87, 79, 236, 0.4)"
-                  }, {
-                    "label": "Failed Jobs",
-                    "data": [1, 3, 2, 4, 5, 2, 1, 3, 2, 1, 0, 2],
-                    "fill": false,
-                    "borderColor": "#ff4d4f"
-                  }]'>
-                </canvas>
+          <div class="row g-4 mt-3">
+            <!-- Line Chart -->
+            <div class="col-lg-8">
+              <div class="card h-100">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Monthly Trend</h5>
+                </div>
+                <div class="card-body">
+                  <canvas id="problemsLineChart"></canvas>
+                </div>
               </div>
             </div>
 
-            <div class="col-12 col-lg-5 col-xl-3 order-2 order-xl-1">
-
-              <!-- reveal on hover container -->
-              <div class="position-relative animate-reveal-up-item">
-
-                <!-- card rating -->
-                <div
-                  class="position-relative reveal-item bg-white shadow-lg-hover rounded-xl p-5 p-md-3 py-xl-5 p-4-xs z-index-2">
-                  <h6 class="text-muted text-center">SUCCESS RATE</h6>
-
-                  <div class="text-center mt-5">
-
-                    <!-- chart -->
-                    <div class="h--120 easypie d-inline-block position-relative z-index-1" data-bar-color="#574fec"
-                      data-track-color="#eaeaea" data-scale-color="#cccccc" data-scale-length="0" data-line-width="10"
-                      data-line-cap="round" data-size="120" data-percent="61">
-                      <div class="absolute-full d-middle pt-0 pb-2">
-                        <div class="flex-none text-center">
-                          <span class="d-block">94%</span>
-                          <small class="d-block text-muted">Processed</small>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- /chart -->
-
-                    <p class="text-muted mt-4 mb-2">Files this month</p>
-                    <p class="lead fw-medium mb-0 text-primary">
-                      <span data-toggle="count" data-count-to="144" data-count-duration="2500">0</span> files
-                    </p>
-
-                    <!-- 2 cols -->
-                    <div class="d-flex mt-4 fs--15">
-                      <p class="text-gray-500 m-0">Uploads</p>
-                      <p class="text-gray-600 m-0 fw-medium">621 files</p>
-
-                      <p class="text-gray-500 m-0">Operators</p>
-                      <p class="text-gray-600 m-0 fw-medium">12 users</p>
-                    </div>
-                  </div>
+            <!-- Donut Chart -->
+            <div class="col-lg-4">
+              <div class="card h-100">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Problem Breakdown</h5>
                 </div>
-                <!-- /card rating -->
-
-                <!-- link under -->
-                <div class="fs--16 position-absolute left-0 right-0 bottom-0 z-index-1 pt-3 px-2">
-                  <div class="clearfix bg-light p-1 row-pill">
-                    <a href="#!" class="btn btn-pill btn-sm btn-success py-1 mb-0 float-start transition-hover-end"
-                      title="Detailed Logs" aria-label="Detailed Logs">View Logs</a>
-                    <span class="d-block pt-1 pl-2 pr-2 text-muted text-truncate">activity & errors</span>
-                  </div>
+                <div class="card-body">
+                  <canvas id="problemsDonutChart"></canvas>
                 </div>
-
               </div>
-              <!-- /reveal on hover container -->
-
             </div>
           </div>
         </div>
+        <!-- /New Charts Section -->
         <!-- /Primary -->
 
         <!-- imports -->
@@ -403,6 +341,9 @@
   <script type="module">
     import { auth } from "./js/firebase-config.js";
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { db } from "./js/firebase-config.js";  // your existing config
+    import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
 
     onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -418,7 +359,77 @@
       await signOut(auth);
       window.location.href = "index.html";
     });
+
+    async function fetchLatestNightlyReport() {
+      try {
+        const reportsRef = ref(db, 'nightly_reports');
+        const snapshot = await get(reportsRef);
+        if (!snapshot.exists()) return null;
+
+        const reports = snapshot.val();
+        // Get latest key (date)
+        const latestDate = Object.keys(reports).sort().pop();
+        return reports[latestDate];
+      } catch (error) {
+        console.error("Error fetching nightly report:", error);
+        return null;
+      }
+    }
+
+
+    async function renderCharts() {
+      const report = await fetchLatestNightlyReport();
+      if (!report) return;
+
+      // --- Line Chart ---
+      const lineCtx = document.getElementById('problemsLineChart').getContext('2d');
+      new Chart(lineCtx, {
+        type: 'line',
+        data: {
+          labels: report.line_chart.labels,
+          datasets: [{
+            label: "Students with Problems",
+            data: report.line_chart.data,
+            borderColor: "rgba(255, 99, 132, 1)",
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'top' } }
+        }
+      });
+
+      // --- Donut Chart ---
+      const donutCtx = document.getElementById('problemsDonutChart').getContext('2d');
+      new Chart(donutCtx, {
+        type: 'doughnut',
+        data: {
+          labels: report.donut_chart.labels,
+          datasets: [{
+            data: report.donut_chart.data,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.6)",
+              "rgba(54, 162, 235, 0.6)",
+              "rgba(255, 206, 86, 0.6)"
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
+    }
+
+    // Call it
+    renderCharts();
+
   </script>
+
 
   <div id="screen-lock" style="
     display: none;
