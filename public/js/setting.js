@@ -247,11 +247,24 @@ function setStatus(msg, ok = true) {
 onAuthStateChanged(auth, async (user) => {
     if (!user) return;
 
+
+
     try {
         // ⬅️ use dbRef here (not raw ref)
         const roleSnap = await get(dbRef(db, `users/${user.uid}/role`));
         const role = roleSnap.exists() ? roleSnap.val() : "unknown";
-        const canEdit = role === "admin" || role === "operator";
+        //const canEdit = role === "admin" || role === "operator";
+
+
+        const currentPage = window.location.pathname.split("/").pop();
+        if (currentPage === "settings.html" && role !== "admin") {
+            window.location.href = "dashboard.html";
+            return;
+        }
+
+        if (role !== "admin") return;
+
+        const canEdit = role === "admin";
 
         if (!canEdit && form) {
             Array.from(form.elements).forEach(el => (el.disabled = true));
@@ -264,7 +277,7 @@ onAuthStateChanged(auth, async (user) => {
 
         const defaults = {
             minGrade: 50,
-            minAttendance: 75,
+            minAttendance: 60,
             minGPA: 2.0,
             passingCredits: 12,
             graceAssignments: 1,
