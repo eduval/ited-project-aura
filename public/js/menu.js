@@ -209,3 +209,4 @@ function renderMenuItem(key, item, currentPath) {
 `;
     }
 }
+
