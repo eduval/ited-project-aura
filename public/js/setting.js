@@ -300,11 +300,11 @@ onAuthStateChanged(auth, async (user) => {
             if (!canEdit) return;
 
             const payload = {
-                minGrade: Number(fields.minGrade?.value || 0),
-                minAttendance: Number(fields.minAttendance?.value || 0),
-                minGPA: Number(fields.minGPA?.value || 0),
-                passingCredits: Number(fields.passingCredits?.value || 0),
-                graceAssignments: Number(fields.graceAssignments?.value || 0),
+                minGrade: Math.max(Number(fields.minGrade?.value || 50), 1),
+                minAttendance: Math.max(Number(fields.minAttendance?.value || 60), 1),
+                minGPA: Number(fields.minGPA?.value || 2.0),
+                passingCredits: Number(fields.passingCredits?.value || 12),
+                graceAssignments: Number(fields.graceAssignments?.value || 1),
                 policyNotes: String(fields.policyNotes?.value || ""),
                 updatedBy: user.uid,
                 updatedAt: Date.now(),

@@ -224,9 +224,10 @@
         <!-- ✅ New Charts Section -->
         <div class="section rounded mb-3">
           <h2 class="h5 mb-0">Students with Problems</h2>
-          <small class="small text-muted">Grades, Attendance, and Both &mdash; <span class="text-danger"><strong>
-                processed
-                daily at 8:30 AM</strong></span></small>
+          <small class="small text-muted">
+            Grades, Attendance, and Both &mdash;
+            <span id="lastProcessed" class="text-danger"><strong>Loading...</strong></span>
+          </small>
 
           <div class="row g-4 mt-3">
             <!-- Line Chart -->
@@ -383,6 +384,20 @@
       const report = await fetchLatestNightlyReport();
       if (!report) return;
 
+      // ✅ Update "last processed" text
+      const lastProcessedEl = document.getElementById("lastProcessed");
+      if (report.last_processed) {
+        // Convert to nicer format
+        const dateObj = new Date(report.last_processed);
+        const options = {
+          year: "numeric", month: "short", day: "2-digit",
+          hour: "2-digit", minute: "2-digit"
+        };
+        lastProcessedEl.textContent =
+          "Processed at: " + dateObj.toLocaleString("en-US", options);
+      } else {
+        lastProcessedEl.textContent = "Processed time unavailable";
+      }
       // --- Line Chart ---
       const lineCtx = document.getElementById('problemsLineChart').getContext('2d');
       new Chart(lineCtx, {
@@ -400,7 +415,20 @@
         },
         options: {
           responsive: true,
-          plugins: { legend: { position: 'top' } }
+          plugins: { legend: { position: 'top' } },
+          onClick: (evt, elements) => {
+            if (elements.length > 0) {
+              const index = elements[0].index;
+              const monthLabel = report.line_chart.labels[index];
+
+              // Redirect with query param ?month=Sep%202025
+              // window.location.href = `/details.html?month=${encodeURIComponent(monthLabel)}`;
+
+              const url = `/details.html?month=${encodeURIComponent(monthLabel)}`;
+              showScreenLockAndRedirect(url, "Redirecting and working... please wait...");
+
+            }
+          }
         }
       });
 
@@ -422,13 +450,40 @@
         },
         options: {
           responsive: true,
-          plugins: { legend: { position: 'bottom' } }
+          plugins: { legend: { position: 'bottom' } },
+          onClick: (evt, elements) => {
+            if (elements.length > 0) {
+              const index = elements[0].index;
+              const problemType = report.donut_chart.labels[index];
+
+              // Redirect with query param ?problem=Low%20Grade
+              //window.location.href = `/details.html?problem=${encodeURIComponent(problemType)}`;
+              const url = `/details.html?problem=${encodeURIComponent(problemType)}`;
+              showScreenLockAndRedirect(url, "Redirecting and working... please wait...");
+
+            }
+          }
         }
       });
     }
 
     // Call it
     renderCharts();
+
+
+    function showScreenLockAndRedirect(url, message = "Redirecting and working... please wait...") {
+      const overlay = document.getElementById("screen-lock");
+      const msgEl = document.getElementById("screen-lock-message");
+
+      if (msgEl) msgEl.textContent = message;
+
+      overlay.style.display = "flex";
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1000);
+    }
+
 
   </script>
 
