@@ -89,7 +89,8 @@ function resolveFetchableUrl(u) {
     } catch { return ''; }
 }
 async function fetchDocxBytes(url) {
-    const res = await fetch(url, { credentials: 'omit' });
+    const res = await fetch(url);
+
     if (!res.ok) throw new Error(`Template HTTP error ${res.status} ${res.statusText} (${url})`);
     const buf = await res.arrayBuffer();
     const u8 = new Uint8Array(buf);
