@@ -266,46 +266,59 @@
     <!-- /footer -->
   </div>
 
-  <!-- core -->
-  <script src="assets/js/core.min.js"></script>
-  <script src="assets/js/vendor_bundle.min.js"></script>
+<!-- auth + role-gated page loader -->
+<script type="module">
+  import "./js/firebase-config.js";
+  import { auth, db } from "./js/firebase-config.js";
+  import "./js/auth.js";
+  import "./js/menu.js";
+  import "./js/account.js";
+  import "./js/setting.js";
+  import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { ref as dbRef, get as dbGet } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-  <!-- auth + chrome (load once) -->
-  <script type="module">
-    import "./js/firebase-config.js";
-    import { auth } from "./js/firebase-config.js";
-    import "./js/auth.js";
-    import "./js/menu.js";
-    import "./js/account.js";
-    import "./js/setting.js";
-    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    onAuthStateChanged(auth, (user) => {
-      if (!user) { window.location.href = "index.html"; }
-      else {
-        const emailEl = document.getElementById("user-email");
-        const nameEl = document.getElementById("user-name");
-        const acc = document.getElementById("account-dropdown");
-        if (emailEl) emailEl.textContent = user.email || "";
-        if (nameEl) nameEl.textContent = user.displayName || "Usuario";
-        if (acc) acc.style.display = "";
-      }
-    });
+  function showAccountChrome(user) {
+    const emailEl = document.getElementById("user-email");
+    const nameEl  = document.getElementById("user-name");
+    const acc     = document.getElementById("account-dropdown");
+    if (emailEl) emailEl.textContent = user?.email || "";
+    if (nameEl)  nameEl.textContent  = user?.displayName || "Usuario";
+    if (acc)     acc.style.display   = "";
+  }
 
-    const logoutBtn = document.getElementById("logout-btn");
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", async (e) => {
-        e.preventDefault();
-        try { await signOut(auth); } finally { window.location.href = "index.html"; }
-      });
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "index.html";
+      return;
     }
-  </script>
 
-  <!-- settings (if this page needs it) -->
-  <script type="module" src="js/setting.js"></script>
+    const roleSnap = await dbGet(dbRef(db, `users/${user.uid}/role`));
+    const role = roleSnap.exists() ? roleSnap.val() : null;
 
-  <!-- page logic -->
+    if (role !== "admin") {
+      window.location.href = "dashboard.html";
+      return;
+    }
+
+    // Admin confirmed
+    showAccountChrome(user);
+
+  });
+
+  // Logout
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try { await signOut(auth); }
+      finally { window.location.href = "index.html"; }
+    });
+  }
+</script>
   <script type="module" src="js/templates_readonly.js"></script>
   <script type="module" src="js/upload_templates.js"></script>
   <script type="module" src="js/template_after_upload_push.js"></script>
+
+
 </body>
 </html>
