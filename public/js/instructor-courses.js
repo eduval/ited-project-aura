@@ -105,17 +105,17 @@ function renderCoursesTable(courses) {
                 ${ungradedBadge}
                 ${problemsBadge}
             </td>
-            <td>
+            <!-- <td>
                 <div class="flex-none ms-2 small text-muted text-align-end dropdown">
                     <a href="#" class="dropdown-toggle btn btn-sm btn-light px-2 py-1 mt-n1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="options">
                         <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16"><path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path></svg>
                     </a>
-                    <div class="dropdown-menu mt-2">
+                   <div class="dropdown-menu mt-2">
                         <a href="#" class="dropdown-item">View Details</a>
                         <a href="#" class="dropdown-item">Students</a>
-                    </div>
+                    </div> 
                 </div>
-            </td>
+            </td> -->
         `;
         tbody.appendChild(row);
     });

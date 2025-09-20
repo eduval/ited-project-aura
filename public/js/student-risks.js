@@ -287,7 +287,7 @@ async function loadCourseAndStudentData(instructorId, userUid) {
         const arr = Array.isArray(data.students_with_problems) ? data.students_with_problems : [];
 
         if (!arr.length) {
-            tbody.innerHTML = `<tr><td colspan="4" class="text-center text-success">No students with problems 🎉</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center text-success">No students with problems.</td></tr>`;
             hideLoading();
             await hydrateActiveStates();
             return;
@@ -299,7 +299,8 @@ async function loadCourseAndStudentData(instructorId, userUid) {
                 studentId: stu.student_id,
                 studentName: stu.student_name,
                 program: stu.program || 'Unknown Program',
-                problems: stu.problems || []
+                problems: stu.problems || [],
+                term: course.term || 'Unknown Term'   // <— ADD THIS
             }));
         }
 
@@ -405,6 +406,7 @@ function renderStudentRiskRow(student) {
       <td>${escapeHtml(student.studentId ?? 'Unknown ID')}</td>
       <td>${escapeHtml(student.studentName ?? 'Unknown Name')}</td>
       <td>${escapeHtml(student.program ?? 'Unknown Program')}</td>
+      <td>${escapeHtml(student.term ?? '—')}</td>
       <td>
         <div class="d-flex justify-content-between align-items-start">
           <div>${problemsHtml}</div>
@@ -528,7 +530,7 @@ function _debugCtxFrom(btn, extras) {
         attendance: btn.dataset.attendance !== '' ? cleanNum(btn.dataset.attendance) : '',
         current_date: extras.today,
     };
-    console.log('[DOC DEBUG] ctx →', ctx);
+    //console.log('[DOC DEBUG] ctx →', ctx);
     window._lastCtx = ctx;
     return ctx;
 }
