@@ -389,10 +389,18 @@
       if (report.last_processed) {
         // Convert to nicer format
         const dateObj = new Date(report.last_processed);
+
+        // Subtract 2 hours
+        dateObj.setHours(dateObj.getHours() - 2);
+
         const options = {
-          year: "numeric", month: "short", day: "2-digit",
-          hour: "2-digit", minute: "2-digit"
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
         };
+
         lastProcessedEl.textContent =
           "Processed at: " + dateObj.toLocaleString("en-US", options);
       } else {
