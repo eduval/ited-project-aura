@@ -15,6 +15,7 @@ window.addEventListener("template:uploaded", async (e) => {
     const filesRef = dbRef(db, `templates/${section}/files`);
     const newRef = push(filesRef);
 
+    // Trust server-provided uploadedAt if present; otherwise use now (seconds)
     const uploadedAt =
       meta.uploadedAt && String(meta.uploadedAt).length <= 10
         ? meta.uploadedAt
@@ -27,6 +28,7 @@ window.addEventListener("template:uploaded", async (e) => {
       uploadedAt,
     });
 
+    // Always set "active" to the newest file by uploadedAt
     const snap = await get(filesRef);
     let newestId = newRef.key;
     let newestAt = uploadedAt;
@@ -54,13 +56,7 @@ window.addEventListener("template:uploaded", async (e) => {
 
 
 export async function resolveTemplateUrl(section) {
-  const activeId = await getActiveIdFromRTDB(section);
-  const url = await getFileUrlFromRTDB(section, activeId);
-  return { url, source: "active", name: "" };
-}
-
-
-export async function resolveTemplateUrl(section) {
+  // Use the enforced "active" (latest) from RTDB
   const activeId = await getActiveIdFromRTDB(section);
   const url = await getFileUrlFromRTDB(section, activeId);
   return { url, source: "active", name: "" };
