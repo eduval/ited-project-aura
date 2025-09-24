@@ -1,4 +1,4 @@
-// js/run_analysis.js  (admin-only + shared-flag lock, dynamic Proceed button)
+// js/run_analysis.js  (admin-only + shared-flag lock)
 import { db } from "./firebase-config.js";
 import {
   ref as dbRef,
@@ -38,8 +38,7 @@ try { console.info("[run_analysis] FLAG url:", FLAG_REF.toString()); } catch {}
 // ===== Guard then init =====
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    // LOGIN_URL is usually defined by your auth.js
-    location.replace(`${typeof LOGIN_URL !== "undefined" ? LOGIN_URL : "login.html"}?reason=auth_required`);
+    location.replace(`${LOGIN_URL}?reason=auth_required`);
     return;
   }
   try {
@@ -53,22 +52,15 @@ onAuthStateChanged(auth, async (user) => {
     document.documentElement.classList.remove("guard");
     init();
   } catch (e) {
-    location.replace(`${typeof LOGIN_URL !== "undefined" ? LOGIN_URL : "login.html"}?reason=role_check_failed`);
+    location.replace(`${LOGIN_URL}?reason=role_check_failed`);
   }
 });
 
 // ===== App logic (only runs for admins) =====
 function init() {
-  // DOM targets
-  const statusMsg = document.getElementById("status-message");
-  const goBackBtn = document.getElementById("go-back-btn");
-
-  // Find a safe container to place our dynamic Proceed button
-  const actionsWrap = goBackBtn?.parentElement || document.body;
-
-  // If HTML shipped with a static proceed button, remove it so everything is JS-driven
-  const staleProceed = document.getElementById("proceed-btn");
-  if (staleProceed) staleProceed.remove();
+  // DOM
+  const proceedBtn = document.getElementById("proceed-btn");
+  const statusMsg  = document.getElementById("status-message");
 
   // Overlay (only for the clicker)
   const overlay = document.createElement("div");
@@ -87,78 +79,59 @@ function init() {
     </div>`;
   document.body.appendChild(overlay);
 
-  // Helpers
+  function showOverlay(sub = "") {
+    overlay.classList.remove("d-none");
+    const el = document.getElementById("lock-subtext");
+    if (el) el.textContent = sub;
+    hideProceed();
+  }
+  function hideOverlay() { overlay.classList.add("d-none"); }
   function setStatus(type, text) {
     if (!statusMsg) return;
     statusMsg.className = `alert alert-${type} mb-4`;
     statusMsg.textContent = text;
   }
-  function showOverlay(sub = "") {
-    overlay.classList.remove("d-none");
-    const el = document.getElementById("lock-subtext");
-    if (el) el.textContent = sub;
-    disableProceed();
+  function hideProceed() {
+    if (!proceedBtn) return;
+    proceedBtn.classList.add("d-none");
+    proceedBtn.setAttribute("disabled", "true");
   }
-  function hideOverlay() { overlay.classList.add("d-none"); }
-
-  // Dynamic Proceed button
-  let proceedBtn = null;
-  function ensureProceed() {
-    if (!proceedBtn) {
-      proceedBtn = document.createElement("button");
-      proceedBtn.type = "button";
-      proceedBtn.id = "proceed-btn"; // created by JS, not present in HTML
-      proceedBtn.className = "btn btn-primary btn-lg";
-      proceedBtn.innerHTML = `Proceed with Analysis <i class="fi fi-arrow-right"></i>`;
-      // keep layout consistent beside the Go Back button if present
-      if (actionsWrap) actionsWrap.appendChild(proceedBtn);
-      // attach click handler once
-      proceedBtn.addEventListener("click", onProceedClick, { once: false });
-    }
+  function showProceed() {
+    if (!proceedBtn) return;
     proceedBtn.classList.remove("d-none");
     proceedBtn.removeAttribute("disabled");
   }
-  function disableProceed() {
-    if (proceedBtn) {
-      proceedBtn.setAttribute("disabled", "true");
-      proceedBtn.classList.add("d-none");
-    }
-  }
 
-  // Auto-release failsafe
   let releaseTimer = null;
   function startAutoRelease() {
     clearTimeout(releaseTimer);
     releaseTimer = setTimeout(() => { set(FLAG_REF, false).catch(() => {}); }, AUTO_RELEASE_MS);
   }
 
-  // Live UI: show/hide dynamic button based on the shared flag
+  // Live UI
   onValue(
     FLAG_REF,
     (snap) => {
       const running = !!snap.val();
       if (running) {
-        disableProceed();
-        showOverlay();
+        hideProceed();
         setStatus("warning", "Processing is in progress. Please come back later.");
       } else {
+        showProceed();
         hideOverlay();
-        ensureProceed();
         setStatus("info", "Idle — you can start a new analysis.");
       }
     },
     (err) => {
       console.warn("[run_analysis] read failed:", err?.code, err?.message);
       setStatus("danger", "Cannot read status. Check database rules.");
-      // Hide the button if we can’t verify state
-      disableProceed();
     }
   );
 
-  // Click handler (same transaction/metadata logic you had)
-  async function onProceedClick() {
+  // Click
+  proceedBtn?.addEventListener("click", async () => {
     try {
-      disableProceed();
+      hideProceed();
       setStatus("info", "Starting…");
       showOverlay("Starting…");
 
@@ -171,7 +144,7 @@ function init() {
         );
       } catch (e) {
         console.error("[run_analysis] transaction error:", e?.code, e?.message);
-        hideOverlay();
+        hideOverlay(); showProceed();
         const msg = (e?.code || e?.message || "").toString().toLowerCase();
         if (msg.includes("permission") || msg.includes("denied")) {
           setStatus(
@@ -196,11 +169,11 @@ function init() {
       setStatus("warning", "Processing started. Keep this tab open.");
       startAutoRelease();
 
-      // When your backend finishes early, call: await set(FLAG_REF, false);
+      // TODO: when done early, call: await set(FLAG_REF, false);
     } catch (e) {
       console.error("[run_analysis] start failed:", e);
-      hideOverlay();
+      hideOverlay(); showProceed();
       setStatus("danger", e?.message || "Failed to start.");
     }
-  }
+  });
 }
