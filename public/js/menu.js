@@ -28,13 +28,12 @@ dynamicMenu.innerHTML = `
 // Helpers
 // ----------------------------
 function safeIconSvg(item) {
-  const svg = item?.iconSvg || item?.iconsvg; // accept either key
+  const svg = item?.iconSvg || item?.iconsvg; 
   return svg
     ? `<span class="nav-link-icon" style="margin-right:12px;display:inline-flex;align-items:center;">${svg}</span>`
     : '';
 }
 
-// roles can be string | array | object; absence means “everyone”
 function userCanSee(item, role) {
   const r = item?.roles;
   if (!r) return true;
@@ -45,8 +44,6 @@ function userCanSee(item, role) {
   return false;
 }
 
-// Resolve current user role. Prefer /users/{uid}/role; fallback to match by email.
-// NOTE: Security rules should still rely on the UID path.
 async function getCurrentUserRole() {
   return new Promise(resolve => {
     const unsub = auth.onAuthStateChanged(async user => {
@@ -54,11 +51,9 @@ async function getCurrentUserRole() {
       if (!user) return resolve('guest');
 
       try {
-        // 1) UID path
         const uidSnap = await get(ref(db, `users/${user.uid}/role`));
         if (uidSnap.exists()) return resolve(String(uidSnap.val()).toLowerCase());
 
-        // 2) Email fallback (for legacy schemas)
         if (user.email) {
           const q = query(ref(db, 'users'), orderByChild('email'), equalTo(user.email));
           const byEmail = await get(q);
@@ -76,7 +71,6 @@ async function getCurrentUserRole() {
   });
 }
 
-// Is the item or any child active for current page?
 function isActiveForPath(item) {
   const own = item?.link && item.link.split('/').pop() === currentPath;
   if (own) return true;
@@ -104,14 +98,12 @@ onValue(alertsRef, snapshot => {
     const group = alerts[uploadKey];
     for (const alertKey in group) {
       const alert = group[alertKey];
-      // Count only explicit unread. Change to "!alert.read" if you want undefined to count as unread.
       if (alert && alert.read === false) unread++;
     }
   }
 
   unreadAlertCount = unread;
 
-  // Update existing badge (scope to dynamicMenu)
   const badgeEl = dynamicMenu.querySelector('.notification-count-alerts');
   if (badgeEl) {
     badgeEl.textContent = unreadAlertCount;
@@ -189,7 +181,6 @@ function renderMenuItem(key, item, role) {
 
     const menu = snap.val();
 
-    // Debug what will be visible
     console.table(
       Object.entries(menu).map(([k, it]) => ({
         key: k,
@@ -204,7 +195,6 @@ function renderMenuItem(key, item, role) {
       .filter(([, it]) => it && it.enable && userCanSee(it, role))
       .sort(([, a], [, b]) => (a.id || 0) - (b.id || 0));
 
-    // Optional dividers (use simple flags, not key comparisons)
     const apiCanvasKeys = ["999999999", "anotherCanvasApiKey"];
     const settingsKeys  = ["settingsCriteria", "anotherSettingsKey"];
     let settingsDividerAdded = false;

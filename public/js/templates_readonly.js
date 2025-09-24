@@ -1,41 +1,3 @@
-// js/templates_readonly.js
-
-// ===== One-time override (no new file) =====
-const OV_KEY = (section) => `AURA_ONE_TIME_TEMPLATE_${section}`;
-
-function setOneTimeOverride(section, payload) {
-  // payload: { id, url, name, expiresAt?:unix }
-  const data = {
-    id: payload.id,
-    url: payload.url,
-    name: payload.name || "template.docx",
-    // expire in 1h by default
-    expiresAt:
-      typeof payload.expiresAt === "number"
-        ? payload.expiresAt
-        : Math.floor(Date.now() / 1000) + 3600,
-  };
-  try { sessionStorage.setItem(OV_KEY(section), JSON.stringify(data)); } catch {}
-}
-
-// Call this in your generator BEFORE reading the DB "active" template.
-// Example:
-//   const once = consumeOneTimeOverride(section);
-//   const url = once?.url ?? await resolveActiveUrlFromDB(section);
-export function consumeOneTimeOverride(section) {
-  try {
-    const raw = sessionStorage.getItem(OV_KEY(section));
-    if (!raw) return null;
-    sessionStorage.removeItem(OV_KEY(section)); // one-time
-    const obj = JSON.parse(raw);
-    const now = Math.floor(Date.now() / 1000);
-    if (obj?.expiresAt && obj.expiresAt < now) return null;
-    return obj;
-  } catch {
-    return null;
-  }
-}
-
 // ===== Firebase list/render logic =====
 import { db } from "./firebase-config.js";
 import {
@@ -111,17 +73,11 @@ function renderList(section, filesObj = {}, activeId = null) {
     return `
       <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
         <div class="me-3">
-          <div class="fw-medium">
-            ${safeName} ${latestBadge}
-          </div>
+          <div class="fw-medium">${safeName} ${latestBadge}</div>
           <div class="text-muted small">${size} · ${when}</div>
         </div>
         <div class="d-flex align-items-center gap-2">
           <a class="btn btn-light btn-sm" href="${url}" target="_blank" rel="noopener">Download</a>
-          <button class="btn btn-outline-secondary btn-sm use-once"
-                  data-id="${id}" data-url="${url}" data-name="${safeName}">
-            Use once
-          </button>
           <label class="small m-0 d-flex align-items-center gap-2" title="Set this template as the default until changed">
             <input type="radio" name="active-${section}" value="${id}" ${checked} />
             Active
@@ -141,17 +97,6 @@ function renderList(section, filesObj = {}, activeId = null) {
         console.error("[templates_readonly] set active failed", err);
         alert("Failed to set active template. Check database rules.");
       }
-    });
-  });
-
-  // "Use once" = one-time override (no DB writes)
-  list.querySelectorAll(".use-once").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-id");
-      const url = btn.getAttribute("data-url");
-      const name = btn.getAttribute("data-name") || "template.docx";
-      setOneTimeOverride(section, { id, url, name });
-      alert(`“${name}” will be used ONCE for ${section}.\n(Default Active remains whatever you selected.)`);
     });
   });
 }
