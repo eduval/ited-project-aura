@@ -255,8 +255,6 @@
             </div>
           </div>
         </div>
-        <!-- /New Charts Section -->
-        <!-- /Primary -->
 
         <!-- imports -->
         <div class="col-12 col-xl-12">
@@ -389,10 +387,18 @@
       if (report.last_processed) {
         // Convert to nicer format
         const dateObj = new Date(report.last_processed);
+
+        // Subtract 2 hours
+        dateObj.setHours(dateObj.getHours() - 2);
+
         const options = {
-          year: "numeric", month: "short", day: "2-digit",
-          hour: "2-digit", minute: "2-digit"
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
         };
+
         lastProcessedEl.textContent =
           "Processed at: " + dateObj.toLocaleString("en-US", options);
       } else {
@@ -424,7 +430,7 @@
               // Redirect with query param ?month=Sep%202025
               // window.location.href = `/details.html?month=${encodeURIComponent(monthLabel)}`;
 
-              const url = `/details.html?month=${encodeURIComponent(monthLabel)}`;
+              const url = `./dashboard.html?month=${encodeURIComponent(monthLabel)}`;
               showScreenLockAndRedirect(url, "Redirecting and working... please wait...");
 
             }
@@ -458,7 +464,7 @@
 
               // Redirect with query param ?problem=Low%20Grade
               //window.location.href = `/details.html?problem=${encodeURIComponent(problemType)}`;
-              const url = `/details.html?problem=${encodeURIComponent(problemType)}`;
+              const url = `./dashboard.html?problem=${encodeURIComponent(problemType)}`;
               showScreenLockAndRedirect(url, "Redirecting and working... please wait...");
 
             }
