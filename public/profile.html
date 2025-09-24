@@ -68,11 +68,12 @@
     <div id="wrapper" class="d-flex align-items-stretch flex-column">
 
 
-        <!-- header -->
+        <!--  header -->
         <header id="header" class="d-flex align-items-center bg-transparent">
 
             <!-- Navbar -->
             <div class="px-3 px-lg-0 w-100 position-relative">
+
                 <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
 
                     <!-- logo, navigation toggler -->
@@ -101,12 +102,35 @@
 
                         <!-- logo : mobile only -->
                         <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
-                            <img data-org-logo src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA">
+                            <img src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA">
                         </a>
+
                     </div>
 
                     <!-- options -->
                     <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
+
+                        <!-- notifications -->
+                        <li class="list-inline-item mx-1 dropdown">
+
+
+
+                            <div aria-labelledby="dropdownNotificationOptions"
+                                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
+                                <div class="dropdown-header p-4">1 new notification</div>
+                                <div class="dropdown-divider"></div>
+                                <div class="max-vh-50 scrollable-vertical">
+
+
+
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+
 
 
                         <!-- account -->
@@ -119,7 +143,12 @@
                                 data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
                                 aria-label="Account options"></a>
 
-
+                            <!-- no avatar -->
+                            <!--
+                <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                  <span class="small fw-bold">JD</span>
+                </a>
+                -->
 
                             <div aria-labelledby="dropdownAccountOptions"
                                 class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
@@ -129,13 +158,14 @@
                                     style="cursor: pointer;" onclick="window.location.href='profile.html'">
                                     <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
                                     <span id="user-email"
-                                        class="d-block smaller fw-medium text-truncate">...</span>
+                                        class="d-block smaller fw-medium text-truncate">Cargando...</span>
                                     <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
                                 </div>
 
 
-
                                 <div class="dropdown-divider mb-3"></div>
+
+
 
                                 <a href="#" class="dropdown-item text-truncate">
                                     <small class="badge bg-success-soft float-end">10 new</small>
@@ -143,18 +173,30 @@
                                     <small class="d-block text-muted smaller">inbox, projects, tasts</small>
                                 </a>
 
+
+
+
+
+
+
                                 <div class="dropdown-divider mb-0 mt-3"></div>
+
                                 <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
                                     <i class="fi fi-power float-start"></i> Log Out
                                 </a>
+
                             </div>
+
                         </li>
+
                     </ul>
                     <!-- /options -->
 
                 </nav>
+
             </div>
             <!-- /Navbar -->
+
         </header>
         <!-- /Header -->
 
@@ -556,6 +598,7 @@
         import "./js/menu.js";
         import "./js/setting.js";
         import "./js/profile_setting.js";
+        import "./js/alerts.js";
 
     </script>
 

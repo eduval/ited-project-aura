@@ -1,272 +1,136 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Student Risks - AURA</title>
-    <meta name="description" content="AURA">
-    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>Student Risks - AURA</title>
+  <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
+  <link rel="stylesheet" href="assets/css/core.min.css" />
+  <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
+  <link rel="shortcut icon" href="favicon.ico" />
 
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/">
-    <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin>
-
-    <link rel="stylesheet" href="assets/css/core.min.css">
-    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
-    <link rel="shortcut icon" href="favicon.ico">
-
-    <!-- === Buttons & legend styles (Option A) === -->
-    <style>
-        .legend {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            font-size: 12px;
-            color: #6b7280;
-            margin: -6px 0 14px 0;
-        }
-
-        .legend .dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 3px;
-            border: 2px solid currentColor;
-            margin-right: 6px;
-            vertical-align: -1px;
-        }
-
-        .actions {
-            display: flex;
-            gap: .5rem;
-        }
-
-        .docbtn {
-            width: 56px;
-            min-width: 56px;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            background: #fff;
-            padding: .35rem .4rem;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
-            transition: transform .07s ease, box-shadow .2s ease, border-color .2s;
-        }
-
-        .docbtn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .08);
-        }
-
-        .docbtn[disabled] {
-            opacity: .45;
-            cursor: not-allowed;
-            background: #f8fafc;
-        }
-
-        .docbtn .icon {
-            width: 28px;
-            height: 28px;
-            margin: 0 auto 4px;
-            display: grid;
-            place-items: center;
-            border-radius: 8px;
-            border: 2px solid currentColor;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        .docbtn .label {
-            font-size: 11px;
-            line-height: 1;
-            color: #374151;
-            white-space: nowrap
-        }
-
-        /* Consistent color coding by type */
-        .risk {
-            color: #7c3aed
-        }
-
-        /* At-Risk      - purple  */
-        .attn {
-            color: #f59e0b
-        }
-
-        /* Attendance   - amber   */
-        .fail {
-            color: #ef4444
-        }
-
-        /* Failure      - red     */
-        .avg {
-            color: #3b82f6
-        }
-
-        /* Low Term Avg - blue    */
-
-        /* Tweak table alignment on small screens */
-        @media (max-width: 600px) {
-            .actions {
-                gap: .35rem
-            }
-
-            .docbtn {
-                width: 52px;
-                min-width: 52px
-            }
-
-            .docbtn .icon {
-                width: 26px;
-                height: 26px
-            }
-
-            .docbtn .label {
-                font-size: 10px
-            }
-        }
-    </style>
+  <style>
+    .legend{display:flex;gap:12px;align-items:center;font-size:12px;color:#6b7280;margin:-6px 0 14px 0}
+    .legend .dot{display:inline-block;width:10px;height:10px;border-radius:3px;border:2px solid currentColor;margin-right:6px;vertical-align:-1px}
+    .actions{display:flex;gap:.5rem}
+    .docbtn{width:56px;min-width:56px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;padding:.35rem .4rem;text-align:center;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:transform .07s ease,box-shadow .2s ease,border-color .2s}
+    .docbtn:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.08)}
+    .docbtn[disabled]{opacity:.45;cursor:not-allowed;background:#f8fafc}
+    .docbtn .icon{width:28px;height:28px;margin:0 auto 4px;display:grid;place-items:center;border-radius:8px;border:2px solid currentColor;font-weight:700;line-height:1}
+    .docbtn .label{font-size:11px;line-height:1;color:#374151;white-space:nowrap}
+    .risk{color:#7c3aed} .attn{color:#f59e0b} .fail{color:#ef4444} .avg{color:#3b82f6}
+    .hint{font-size:12px;color:#6b7280;margin-top:8px}
+    @media (max-width:600px){.actions{gap:.35rem}.docbtn{width:52px;min-width:52px}.docbtn .icon{width:26px;height:26px}.docbtn .label{font-size:10px}}
+  </style>
 </head>
 
-<body class="layout-admin layout-padded aside-sticky">
-    <div id="wrapper" class="d-flex align-items-stretch flex-column">
+<body class="layout-admin layout-padded aside-sticky" data-semester="">
+  <div id="wrapper" class="d-flex align-items-stretch flex-column">
+    <header id="header" class="d-flex align-items-center bg-transparent"></header>
 
-        <!-- Header -->
-        <header id="header" class="d-flex align-items-center bg-transparent">
-            <!-- populated by JS -->
+    <div id="wrapper_content" class="d-flex flex-fill">
+      <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
+        <div class="py-2 px-3 mb-3 mt-3">
+          <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="..." /></a>
+        </div>
+        <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
+          <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
+            <ul id="dynamicMenu" class="nav flex-column"></ul>
+          </nav>
+        </div>
+      </aside>
+
+      <main id="middle" class="flex-fill mx-auto">
+        <header>
+          <div class="row g-1 align-items-center">
+            <div class="col">
+              <h1 class="h4">Student Risks</h1>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb small">
+                  <li class="breadcrumb-item"><a href="teacher-list.html">Instructor Directory</a></li>
+                  <li class="breadcrumb-item" id="instructor_name_title" aria-current="page"></li>
+                  <li class="breadcrumb-item text-muted active" aria-current="page">Student Risks</li>
+                </ol>
+              </nav>
+              <div class="hint">
+                Templates must use Docxtemplater tags like <code>{{student_name}}</code>, <code>{{student_id}}</code>, <code>{{attendance}}</code>, etc.
+              </div>
+            </div>
+          </div>
         </header>
 
-        <!-- Content -->
-        <div id="wrapper_content" class="d-flex flex-fill">
-
-            <!-- Sidebar -->
-            <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
-                <div class="py-2 px-3 mb-3 mt-3">
-                    <a href="dashboard.html">
-                        <img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="...">
-                    </a>
-                </div>
-                <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
-                    <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
-                        <ul id="dynamicMenu" class="nav flex-column"></ul>
-                    </nav>
-                </div>
-            </aside>
-
-            <!-- Main -->
-            <main id="middle" class="flex-fill mx-auto">
-
-                <!-- Page Title -->
-                <header>
-                    <div class="row g-1 align-items-center">
-                        <div class="col">
-                            <h1 class="h4">Student Risks</h1>
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb small">
-                                    <li class="breadcrumb-item"><a href="teacher-list.html">Instructor Directory</a>
-                                    </li>
-                                    <li class="breadcrumb-item" id="instructor_name_title" aria-current="page"></li>
-                                    <li class="breadcrumb-item text-muted active" aria-current="page">Student Risks</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </header>
-
-                <!-- Info Boxes -->
-                <div class="row g-4 mb-4">
-                    <div class="col-md-4">
-                        <div class="section p-3">
-                            <h2 class="h6 text-muted mb-2">Course Name</h2>
-                            <span class="fs-6 fw-bold" id="course-name-display">Loading...</span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="section p-3">
-                            <h2 class="h6 text-success mb-2">Total <br>Students</h2>
-                            <span class="fs-4 fw-bold text-success" id="total-students-display">0</span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="section p-3">
-                            <h2 class="h6 text-danger mb-2">Students with <br>Problems</h2>
-                            <span class="fs-4 fw-bold text-danger" id="problems-count-display">0</span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="section p-3">
-                            <h2 class="h6 text-primary mb-2">Minimum <br>Grade (%)</h2>
-                            <span class="fs-4 fw-bold text-primary" id="min-grade-display">0</span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="section p-3">
-                            <h2 class="h6 text-primary mb-2">Minimum <br>Attendance (%)</h2>
-                            <span class="fs-4 fw-bold text-primary" id="min-attendance-display">0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <h2 class="mb-2 fw-bold" id="instructor-heading">Instructor</h2>
-
-                <!-- Icon legend -->
-                <div class="legend">
-                    <span><i class="dot risk"></i>At-Risk</span>
-                    <span><i class="dot attn"></i>Low Attendance</span>
-                    <span><i class="dot fail"></i>Course Failure</span>
-                    <span><i class="dot avg"></i>Low Term Avg</span>
-                </div>
-
-                <!-- Student Risk Table -->
-                <div class="section p-0">
-                    <div class="card-body">
-                        <div id="loading-spinner" class="text-center py-4">
-                            <div class="spinner-border text-primary" role="status"></div>
-                        </div>
-
-                        <div id="risk-table-wrapper" class="table-responsive-md d-none">
-                            <table class="table table-align-middle">
-                                <thead>
-                                    <tr>
-                                        <th class="small text-muted" style="width:10%">STUDENT ID</th>
-                                        <th class="small text-muted" style="width:15%">NAME</th>
-                                        <th class="small text-muted" style="width:25%">PROGRAM</th>
-                                        <th class="small text-muted" style="width:50%">PROBLEM & ACTIONS</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="student-risk-list"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </main>
+        <div class="row g-4 mb-4">
+          <div class="col-md-4"><div class="section p-3">
+            <h2 class="h6 text-muted mb-2">Course Name</h2>
+            <span class="fs-6 fw-bold" id="course-name-display">Loading...</span>
+          </div></div>
+          <div class="col-md-2"><div class="section p-3">
+            <h2 class="h6 text-success mb-2">Total <br>Students</h2>
+            <span class="fs-4 fw-bold text-success" id="total-students-display">0</span>
+          </div></div>
+          <div class="col-md-2"><div class="section p-3">
+            <h2 class="h6 text-danger mb-2">Students with <br>Problems</h2>
+            <span class="fs-4 fw-bold text-danger" id="problems-count-display">0</span>
+          </div></div>
+          <div class="col-md-2"><div class="section p-3">
+            <h2 class="h6 text-primary mb-2">Minimum <br>Grade (%)</h2>
+            <span class="fs-4 fw-bold text-primary" id="min-grade-display">0</span>
+          </div></div>
+          <div class="col-md-2"><div class="section p-3">
+            <h2 class="h6 text-primary mb-2">Minimum <br>Attendance (%)</h2>
+            <span class="fs-4 fw-bold text-primary" id="min-attendance-display">0</span>
+          </div></div>
         </div>
 
-        <!-- Footer -->
-        <footer id="footer">
-             <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
-        </footer>
+        <h2 class="mb-2 fw-bold" id="instructor-heading">Instructor</h2>
+
+        <div class="legend">
+          <span><i class="dot risk"></i>At-Risk</span>
+          <span><i class="dot attn"></i>Low Attendance</span>
+          <span><i class="dot fail"></i>Course Failure</span>
+          <span><i class="dot avg"></i>Low Term Avg</span>
+        </div>
+
+        <div class="section p-0">
+          <div class="card-body">
+            <div id="loading-spinner" class="text-center py-4"><div class="spinner-border text-primary" role="status"></div></div>
+            <div id="risk-table-wrapper" class="table-responsive-md d-none">
+              <table class="table table-align-middle">
+                <thead>
+                  <tr>
+                    <th id="student_id" class="small text-muted" style="width:10%">STUDENT ID</th>
+                    <th id="student_name" class="small text-muted" style="width:15%">NAME</th>
+                    <th id="PROGRAM" class="small text-muted" style="width:25%">PROGRAM</th>
+                    <th  class="small text-muted" style="width:50%">PROBLEM & ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="student-risk-list"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
 
-    <!-- Core Javascripts -->
-    <script src="assets/js/core.min.js"></script>
-    <script src="assets/js/vendor_bundle.min.js"></script>
+    <footer id="footer"><div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div></footer>
+  </div>
 
-    <!-- Page-specific Scripts -->
-    <script type="module" src="./js/student-risks.js"></script>
-    <script type="module">
-        import "./js/firebase-config.js";
-        import "./js/auth.js";
-        import "./js/menu.js";
-        import "./js/account.js";
-        import "./js/setting.js";
-        // student-risks.js is now a full module below
-    </script>
+  <!-- Core Javascripts -->
+  <script src="assets/js/core.min.js"></script>
+  <script src="assets/js/vendor_bundle.min.js"></script>
+
+  <!-- Docx templating libs -->
+  <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip-utils.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.46.0/build/docxtemplater.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+  <!-- Page modules -->
+  <script type="module" src="./js/student-risks.js"></script>
+  <script type="module">
+    import "./js/firebase-config.js";
+    import "./js/auth.js";
+    import "./js/menu.js";
+    import "./js/account.js";
+  </script>
 </body>
-
 </html>

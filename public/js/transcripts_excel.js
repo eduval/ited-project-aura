@@ -1,6 +1,4 @@
 // js/transcripts_excel.js
-// Grouped view: one row per batch (expand to see processed files inside).
-// Data from RTDB; file downloads are served by your web host (not Firebase Storage).
 
 import { db } from "./firebase-config.js";
 import { ref as dbRef, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
