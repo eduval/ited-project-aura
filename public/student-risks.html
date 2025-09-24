@@ -1,24 +1,14 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Student Risks - AURA</title>
-    <meta name="description" content="AURA">
-    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/core.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
 
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/">
-    <link rel="preload" href="assets/fonts/flaticon/Flaticon.woff2" as="font" type="font/woff2" crossorigin>
-
-    <link rel="stylesheet" href="assets/css/core.min.css">
-    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
-    <link rel="shortcut icon" href="favicon.ico">
-
-    <!-- === Buttons & legend styles (Option A) === -->
     <style>
         .legend {
             display: flex;
@@ -26,7 +16,7 @@
             align-items: center;
             font-size: 12px;
             color: #6b7280;
-            margin: -6px 0 14px 0;
+            margin: -6px 0 14px 0
         }
 
         .legend .dot {
@@ -36,12 +26,12 @@
             border-radius: 3px;
             border: 2px solid currentColor;
             margin-right: 6px;
-            vertical-align: -1px;
+            vertical-align: -1px
         }
 
         .actions {
             display: flex;
-            gap: .5rem;
+            gap: .5rem
         }
 
         .docbtn {
@@ -54,18 +44,18 @@
             text-align: center;
             cursor: pointer;
             box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
-            transition: transform .07s ease, box-shadow .2s ease, border-color .2s;
+            transition: transform .07s ease, box-shadow .2s ease, border-color .2s
         }
 
         .docbtn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .08);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .08)
         }
 
         .docbtn[disabled] {
             opacity: .45;
             cursor: not-allowed;
-            background: #f8fafc;
+            background: #f8fafc
         }
 
         .docbtn .icon {
@@ -77,7 +67,7 @@
             border-radius: 8px;
             border: 2px solid currentColor;
             font-weight: 700;
-            line-height: 1;
+            line-height: 1
         }
 
         .docbtn .label {
@@ -87,30 +77,29 @@
             white-space: nowrap
         }
 
-        /* Consistent color coding by type */
         .risk {
             color: #7c3aed
         }
 
-        /* At-Risk      - purple  */
         .attn {
             color: #f59e0b
         }
 
-        /* Attendance   - amber   */
         .fail {
             color: #ef4444
         }
 
-        /* Failure      - red     */
         .avg {
             color: #3b82f6
         }
 
-        /* Low Term Avg - blue    */
+        .hint {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 8px
+        }
 
-        /* Tweak table alignment on small screens */
-        @media (max-width: 600px) {
+        @media (max-width:600px) {
             .actions {
                 gap: .35rem
             }
@@ -132,35 +121,160 @@
     </style>
 </head>
 
-<body class="layout-admin layout-padded aside-sticky">
+<body class="layout-admin layout-padded aside-sticky" data-semester="">
     <div id="wrapper" class="d-flex align-items-stretch flex-column">
 
-        <!-- Header -->
+        <!--  header -->
         <header id="header" class="d-flex align-items-center bg-transparent">
-            <!-- populated by JS -->
+
+            <!-- Navbar -->
+            <div class="px-3 px-lg-0 w-100 position-relative">
+
+                <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
+
+                    <!-- logo, navigation toggler -->
+                    <div class="align-items-start">
+
+                        <!-- sidebar toggler -->
+                        <a href="#aside-main"
+                            class="btn-sidebar-toggle h-100 d-inline-block d-lg-none justify-content-center align-items-center p-2">
+                            <span>
+                                <svg width="25" height="25" viewBox="0 0 20 20">
+                                    <path
+                                        d="M 19.9876 1.998 L -0.0108 1.998 L -0.0108 -0.0019 L 19.9876 -0.0019 L 19.9876 1.998 Z">
+                                    </path>
+                                    <path
+                                        d="M 19.9876 7.9979 L -0.0108 7.9979 L -0.0108 5.9979 L 19.9876 5.9979 L 19.9876 7.9979 Z">
+                                    </path>
+                                    <path
+                                        d="M 19.9876 13.9977 L -0.0108 13.9977 L -0.0108 11.9978 L 19.9876 11.9978 L 19.9876 13.9977 Z">
+                                    </path>
+                                    <path
+                                        d="M 19.9876 19.9976 L -0.0108 19.9976 L -0.0108 17.9976 L 19.9876 17.9976 L 19.9876 19.9976 Z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </a>
+
+                        <!-- logo : mobile only -->
+                        <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
+                            <img src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA">
+                        </a>
+
+                    </div>
+
+                    <!-- options -->
+                    <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
+
+                        <!-- notifications -->
+                        <li class="list-inline-item mx-1 dropdown">
+
+
+
+                            <div aria-labelledby="dropdownNotificationOptions"
+                                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
+                                <div class="dropdown-header p-4">1 new notification</div>
+                                <div class="dropdown-divider"></div>
+                                <div class="max-vh-50 scrollable-vertical">
+
+
+
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+
+
+
+                        <!-- account -->
+                        <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display: none;">
+
+                            <!-- has avatar -->
+                            <a href="#" id="dropdownAccountOptions"
+                                class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
+                                style="background-image:url(assets/images/users_img/user.jpg)" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
+                                aria-label="Account options"></a>
+
+                            <!-- no avatar -->
+                            <!--
+                <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                  <span class="small fw-bold">JD</span>
+                </a>
+                -->
+
+                            <div aria-labelledby="dropdownAccountOptions"
+                                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
+
+                                <!-- user detail -->
+                                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4"
+                                    style="cursor: pointer;" onclick="window.location.href='profile.html'">
+                                    <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
+                                    <span id="user-email"
+                                        class="d-block smaller fw-medium text-truncate">Cargando...</span>
+                                    <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
+                                </div>
+
+
+                                <div class="dropdown-divider mb-3"></div>
+
+
+
+                                <a href="#" class="dropdown-item text-truncate">
+                                    <small class="badge bg-success-soft float-end">10 new</small>
+                                    <span class="fw-medium">My Alerts</span>
+                                    <small class="d-block text-muted smaller">inbox, projects, tasts</small>
+                                </a>
+
+
+
+
+
+
+
+                                <div class="dropdown-divider mb-0 mt-3"></div>
+
+                                <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
+                                    <i class="fi fi-power float-start"></i> Log Out
+                                </a>
+
+                            </div>
+
+                        </li>
+
+                    </ul>
+                    <!-- /options -->
+
+                </nav>
+
+            </div>
+            <!-- /Navbar -->
+
         </header>
+        <!-- /Header -->
 
-        <!-- Content -->
+
+
         <div id="wrapper_content" class="d-flex flex-fill">
-
-            <!-- Sidebar -->
             <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
                 <div class="py-2 px-3 mb-3 mt-3">
-                    <a href="dashboard.html">
-                        <img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="...">
-                    </a>
+                    <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50"
+                            alt="..." /></a>
                 </div>
                 <div class="aside-wrapper scrollable-vertical scrollable-styled-light align-self-baseline h-100 w-100">
                     <nav class="nav-deep nav-deep-sm nav-deep-light js-ajaxified">
-                        <ul id="dynamicMenu" class="nav flex-column"></ul>
+                        <ul id="dynamicMenu" class="nav flex-column">
+
+
+                        </ul>
                     </nav>
                 </div>
             </aside>
 
-            <!-- Main -->
             <main id="middle" class="flex-fill mx-auto">
-
-                <!-- Page Title -->
                 <header>
                     <div class="row g-1 align-items-center">
                         <div class="col">
@@ -177,7 +291,6 @@
                     </div>
                 </header>
 
-                <!-- Info Boxes -->
                 <div class="row g-4 mb-4">
                     <div class="col-md-4">
                         <div class="section p-3">
@@ -213,7 +326,6 @@
 
                 <h2 class="mb-2 fw-bold" id="instructor-heading">Instructor</h2>
 
-                <!-- Icon legend -->
                 <div class="legend">
                     <span><i class="dot risk"></i>At-Risk</span>
                     <span><i class="dot attn"></i>Low Attendance</span>
@@ -221,21 +333,20 @@
                     <span><i class="dot avg"></i>Low Term Avg</span>
                 </div>
 
-                <!-- Student Risk Table -->
                 <div class="section p-0">
                     <div class="card-body">
                         <div id="loading-spinner" class="text-center py-4">
                             <div class="spinner-border text-primary" role="status"></div>
                         </div>
-
                         <div id="risk-table-wrapper" class="table-responsive-md d-none">
                             <table class="table table-align-middle">
                                 <thead>
                                     <tr>
-                                        <th class="small text-muted" style="width:10%">STUDENT ID</th>
+                                        <th class="small text-muted" style="width:7%">STU. ID</th>
                                         <th class="small text-muted" style="width:15%">NAME</th>
-                                        <th class="small text-muted" style="width:25%">PROGRAM</th>
-                                        <th class="small text-muted" style="width:50%">PROBLEM & ACTIONS</th>
+                                        <th class="small text-muted" style="width:20%">PROGRAM</th>
+                                        <th class="small text-muted" style="width:16%">TERM</th>
+                                        <th class="small text-muted" style="width:66%">PROBLEMS</th>
                                     </tr>
                                 </thead>
                                 <tbody id="student-risk-list"></tbody>
@@ -243,13 +354,11 @@
                         </div>
                     </div>
                 </div>
-
             </main>
         </div>
 
-        <!-- Footer -->
         <footer id="footer">
-             <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
+            <div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div>
         </footer>
     </div>
 
@@ -257,15 +366,39 @@
     <script src="assets/js/core.min.js"></script>
     <script src="assets/js/vendor_bundle.min.js"></script>
 
-    <!-- Page-specific Scripts -->
+    <!-- Docx templating libs -->
+    <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip-utils.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.46.0/build/docxtemplater.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+    <!-- Page modules -->
     <script type="module" src="./js/student-risks.js"></script>
     <script type="module">
         import "./js/firebase-config.js";
         import "./js/auth.js";
         import "./js/menu.js";
         import "./js/account.js";
-        import "./js/setting.js";
-        // student-risks.js is now a full module below
+    </script>
+
+    <script type="module">
+        import { auth } from "./js/firebase-config.js";
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "index.html";
+            } else {
+                document.getElementById("user-email").textContent = user.email;
+                document.getElementById("user-name").textContent = user.displayName || "Usuario";
+            }
+        });
+
+        document.getElementById("logout-btn").addEventListener("click", async (e) => {
+            e.preventDefault();
+            await signOut(auth);
+            window.location.href = "index.html";
+        });
     </script>
 </body>
 

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <title>AURA - Confirm Analysis</title>
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
     <link rel="shortcut icon" href="favicon.ico">
 </head>
+
 <body>
 
     <div class="d-flex justify-content-center align-items-center p-4 position-absolute top-0 w-100">
@@ -22,14 +24,16 @@
                 <div class="mb-5"><i class="fi fi-warning text-warning" style="font-size: 3rem;"></i></div>
                 <h1 class="display-5 fw-bold text-primary">Confirm Process</h1>
                 <p class="lead mb-4">This is a deep analysis process that can take 5 to 10 minutes to complete.</p>
-                <p class="text-muted mb-5">During this time, the next page will be locked. Please do not close your browser tab.</p>
-                
+                <p class="text-muted mb-5">During this time, the next page will be locked. Please do not close your
+                    browser tab.</p>
+
                 <!-- Status message for when process is running -->
                 <div id="status-message" class="alert alert-warning d-none mb-4"></div>
 
                 <!-- Action Buttons -->
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="javascript:history.back()" id="go-back-btn" class="btn btn-secondary btn-lg"><i class="fi fi-arrow-left"></i> Go Back</a>
+                    <a href="javascript:history.back()" id="go-back-btn" class="btn btn-secondary btn-lg"><i
+                            class="fi fi-arrow-left"></i> Go Back</a>
                     <button type="button" id="proceed-btn" class="btn btn-primary btn-lg">
                         Proceed with Analysis <i class="fi fi-arrow-right"></i>
                     </button>
@@ -49,4 +53,5 @@
         import "./js/run_analysis.js"; 
     </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
   <meta charset="UTF-8" />
   <title>AURA - Templates</title>
@@ -19,24 +20,71 @@
   <link rel="shortcut icon" href="favicon.ico" />
 
   <style>
-    .page-wrap { max-width: none; margin: 0 auto }
-    .section { padding: 1.5rem 2rem }
-    .template-card .card-header { background: #f8f9fb }
-    .file-row { padding:.5rem 0; border-bottom:1px solid #eceff3 }
-    .file-row:last-child { border-bottom:0 }
-    .file-name { font-weight:600; word-break:break-word }
-    .file-meta { color:#6c757d; font-size:.85rem }
-    .active-badge { font-size:.7rem }
-    .status-line { min-height:1.25rem }
-    .progress { height:8px }
-    .btn-upload { min-width:120px }
+    .page-wrap {
+      max-width: none;
+      margin: 0 auto
+    }
+
+    .section {
+      padding: 1.5rem 2rem
+    }
+
+    .template-card .card-header {
+      background: #f8f9fb
+    }
+
+    .file-row {
+      padding: .5rem 0;
+      border-bottom: 1px solid #eceff3
+    }
+
+    .file-row:last-child {
+      border-bottom: 0
+    }
+
+    .file-name {
+      font-weight: 600;
+      word-break: break-word
+    }
+
+    .file-meta {
+      color: #6c757d;
+      font-size: .85rem
+    }
+
+    .active-badge {
+      font-size: .7rem
+    }
+
+    .status-line {
+      min-height: 1.25rem
+    }
+
+    .progress {
+      height: 8px
+    }
+
+    .btn-upload {
+      min-width: 120px
+    }
+
     /* full-screen lock overlay (optional) */
-    #screen-lock { display:none; position:fixed; inset:0; background:rgba(255,255,255,.7); align-items:center; justify-content:center; z-index:9999 }
+    #screen-lock {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, .7);
+      align-items: center;
+      justify-content: center;
+      z-index: 9999
+    }
   </style>
 </head>
 
 <body class="layout-admin layout-padded aside-sticky">
-  <div id="screen-lock"><div class="spinner-border text-primary" role="status"></div></div>
+  <div id="screen-lock">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
 
   <div id="wrapper" class="d-flex align-items-stretch flex-column">
     <!-- header -->
@@ -44,13 +92,18 @@
       <div class="px-3 px-lg-0 w-100 position-relative">
         <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
           <div class="align-items-start">
-            <a href="#aside-main" class="btn-sidebar-toggle h-100 d-inline-block d-lg-none justify-content-center align-items-center p-2">
+            <a href="#aside-main"
+              class="btn-sidebar-toggle h-100 d-inline-block d-lg-none justify-content-center align-items-center p-2">
               <span>
                 <svg width="25" height="25" viewBox="0 0 20 20">
-                  <path d="M 19.9876 1.998 L -0.0108 1.998 L -0.0108 -0.0019 L 19.9876 -0.0019 L 19.9876 1.998 Z"></path>
-                  <path d="M 19.9876 7.9979 L -0.0108 7.9979 L -0.0108 5.9979 L 19.9876 5.9979 L 19.9876 7.9979 Z"></path>
-                  <path d="M 19.9876 13.9977 L -0.0108 13.9977 L -0.0108 11.9978 L 19.9876 11.9978 L 19.9876 13.9977 Z"></path>
-                  <path d="M 19.9876 19.9976 L -0.0108 19.9976 L -0.0108 17.9976 L 19.9876 17.9976 L 19.9876 19.9976 Z"></path>
+                  <path d="M 19.9876 1.998 L -0.0108 1.998 L -0.0108 -0.0019 L 19.9876 -0.0019 L 19.9876 1.998 Z">
+                  </path>
+                  <path d="M 19.9876 7.9979 L -0.0108 7.9979 L -0.0108 5.9979 L 19.9876 5.9979 L 19.9876 7.9979 Z">
+                  </path>
+                  <path d="M 19.9876 13.9977 L -0.0108 13.9977 L -0.0108 11.9978 L 19.9876 11.9978 L 19.9876 13.9977 Z">
+                  </path>
+                  <path d="M 19.9876 19.9976 L -0.0108 19.9976 L -0.0108 17.9976 L 19.9876 17.9976 L 19.9876 19.9976 Z">
+                  </path>
                 </svg>
               </span>
             </a>
@@ -63,15 +116,15 @@
           <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
             <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display:none;">
               <a href="#" id="dropdownAccountOptions"
-                 class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
-                 style="background-image:url(assets/images/users_img/user.jpg)"
-                 data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
-                 aria-haspopup="true" aria-label="Account options"></a>
+                class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
+                style="background-image:url(assets/images/users_img/user.jpg)" data-bs-toggle="dropdown"
+                data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
+                aria-label="Account options"></a>
 
               <div aria-labelledby="dropdownAccountOptions"
-                   class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
+                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
                 <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4"
-                     style="cursor:pointer;" onclick="window.location.href='profile.html'">
+                  style="cursor:pointer;" onclick="window.location.href='profile.html'">
                   <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
                   <span id="user-email" class="d-block smaller fw-medium text-truncate">Cargando...</span>
                   <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
@@ -134,7 +187,8 @@
                     <div class="file-meta">Section key: <code>coursefailure</code></div>
                   </div>
                   <div class="d-flex align-items-center gap-2">
-                    <button id="uploadBtn-coursefailure" class="btn btn-sm btn-primary btn-upload" data-type="coursefailure">Upload</button>
+                    <button id="uploadBtn-coursefailure" class="btn btn-sm btn-primary btn-upload"
+                      data-type="coursefailure">Upload</button>
                     <input id="file-coursefailure" type="file" accept=".doc,.docx" class="d-none" />
                   </div>
                 </div>
@@ -159,7 +213,8 @@
                     <div class="file-meta">Section key: <code>lowattendance</code></div>
                   </div>
                   <div class="d-flex align-items-center gap-2">
-                    <button id="uploadBtn-lowattendance" class="btn btn-sm btn-primary btn-upload" data-type="lowattendance">Upload</button>
+                    <button id="uploadBtn-lowattendance" class="btn btn-sm btn-primary btn-upload"
+                      data-type="lowattendance">Upload</button>
                     <input id="file-lowattendance" type="file" accept=".doc,.docx" class="d-none" />
                   </div>
                 </div>
@@ -184,7 +239,8 @@
                     <div class="file-meta">Section key: <code>atriskstatus</code></div>
                   </div>
                   <div class="d-flex align-items-center gap-2">
-                    <button id="uploadBtn-atriskstatus" class="btn btn-sm btn-primary btn-upload" data-type="atriskstatus">Upload</button>
+                    <button id="uploadBtn-atriskstatus" class="btn btn-sm btn-primary btn-upload"
+                      data-type="atriskstatus">Upload</button>
                     <input id="file-atriskstatus" type="file" accept=".doc,.docx" class="d-none" />
                   </div>
                 </div>
@@ -209,7 +265,8 @@
                     <div class="file-meta">Section key: <code>lowtermaverage</code></div>
                   </div>
                   <div class="d-flex align-items-center gap-2">
-                    <button id="uploadBtn-lowtermaverage" class="btn btn-sm btn-primary btn-upload" data-type="lowtermaverage">Upload</button>
+                    <button id="uploadBtn-lowtermaverage" class="btn btn-sm btn-primary btn-upload"
+                      data-type="lowtermaverage">Upload</button>
                     <input id="file-lowtermaverage" type="file" accept=".doc,.docx" class="d-none" />
                   </div>
                 </div>
@@ -234,7 +291,8 @@
                     <div class="file-meta">Section key: <code>alerttemplate</code></div>
                   </div>
                   <div class="d-flex align-items-center gap-2">
-                    <button id="uploadBtn-alerttemplate" class="btn btn-sm btn-primary btn-upload" data-type="alerttemplate">Upload</button>
+                    <button id="uploadBtn-alerttemplate" class="btn btn-sm btn-primary btn-upload"
+                      data-type="alerttemplate">Upload</button>
                     <input id="file-alerttemplate" type="file" accept=".doc,.docx" class="d-none" />
                   </div>
                 </div>
@@ -266,46 +324,60 @@
     <!-- /footer -->
   </div>
 
-  <!-- core -->
-  <script src="assets/js/core.min.js"></script>
-  <script src="assets/js/vendor_bundle.min.js"></script>
-
-  <!-- auth + chrome (load once) -->
+  <!-- auth + role-gated page loader -->
   <script type="module">
     import "./js/firebase-config.js";
-    import { auth } from "./js/firebase-config.js";
+    import { auth, db } from "./js/firebase-config.js";
     import "./js/auth.js";
     import "./js/menu.js";
     import "./js/account.js";
     import "./js/setting.js";
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    onAuthStateChanged(auth, (user) => {
-      if (!user) { window.location.href = "index.html"; }
-      else {
-        const emailEl = document.getElementById("user-email");
-        const nameEl = document.getElementById("user-name");
-        const acc = document.getElementById("account-dropdown");
-        if (emailEl) emailEl.textContent = user.email || "";
-        if (nameEl) nameEl.textContent = user.displayName || "Usuario";
-        if (acc) acc.style.display = "";
+    import { ref as dbRef, get as dbGet } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    function showAccountChrome(user) {
+      const emailEl = document.getElementById("user-email");
+      const nameEl = document.getElementById("user-name");
+      const acc = document.getElementById("account-dropdown");
+      if (emailEl) emailEl.textContent = user?.email || "";
+      if (nameEl) nameEl.textContent = user?.displayName || "Usuario";
+      if (acc) acc.style.display = "";
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+        return;
       }
+
+      const roleSnap = await dbGet(dbRef(db, `users/${user.uid}/role`));
+      const role = roleSnap.exists() ? roleSnap.val() : null;
+
+      if (role !== "admin") {
+        window.location.href = "dashboard.html";
+        return;
+      }
+
+      // Admin confirmed
+      showAccountChrome(user);
+
     });
 
+    // Logout
     const logoutBtn = document.getElementById("logout-btn");
     if (logoutBtn) {
       logoutBtn.addEventListener("click", async (e) => {
         e.preventDefault();
-        try { await signOut(auth); } finally { window.location.href = "index.html"; }
+        try { await signOut(auth); }
+        finally { window.location.href = "index.html"; }
       });
     }
   </script>
-
-  <!-- settings (if this page needs it) -->
-  <script type="module" src="js/setting.js"></script>
-
-  <!-- page logic -->
   <script type="module" src="js/templates_readonly.js"></script>
   <script type="module" src="js/upload_templates.js"></script>
   <script type="module" src="js/template_after_upload_push.js"></script>
+
+
 </body>
+
 </html>

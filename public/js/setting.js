@@ -247,11 +247,24 @@ function setStatus(msg, ok = true) {
 onAuthStateChanged(auth, async (user) => {
     if (!user) return;
 
+
+
     try {
         // ⬅️ use dbRef here (not raw ref)
         const roleSnap = await get(dbRef(db, `users/${user.uid}/role`));
         const role = roleSnap.exists() ? roleSnap.val() : "unknown";
-        const canEdit = role === "admin" || role === "operator";
+        //const canEdit = role === "admin" || role === "operator";
+
+
+        const currentPage = window.location.pathname.split("/").pop();
+        if (currentPage === "settings.html" && role !== "admin") {
+            window.location.href = "dashboard.html";
+            return;
+        }
+
+        if (role !== "admin") return;
+
+        const canEdit = role === "admin";
 
         if (!canEdit && form) {
             Array.from(form.elements).forEach(el => (el.disabled = true));
@@ -264,7 +277,7 @@ onAuthStateChanged(auth, async (user) => {
 
         const defaults = {
             minGrade: 50,
-            minAttendance: 75,
+            minAttendance: 60,
             minGPA: 2.0,
             passingCredits: 12,
             graceAssignments: 1,
@@ -287,11 +300,11 @@ onAuthStateChanged(auth, async (user) => {
             if (!canEdit) return;
 
             const payload = {
-                minGrade: Number(fields.minGrade?.value || 0),
-                minAttendance: Number(fields.minAttendance?.value || 0),
-                minGPA: Number(fields.minGPA?.value || 0),
-                passingCredits: Number(fields.passingCredits?.value || 0),
-                graceAssignments: Number(fields.graceAssignments?.value || 0),
+                minGrade: Math.max(Number(fields.minGrade?.value || 50), 1),
+                minAttendance: Math.max(Number(fields.minAttendance?.value || 60), 1),
+                minGPA: Number(fields.minGPA?.value || 2.0),
+                passingCredits: Number(fields.passingCredits?.value || 12),
+                graceAssignments: Number(fields.graceAssignments?.value || 1),
                 policyNotes: String(fields.policyNotes?.value || ""),
                 updatedBy: user.uid,
                 updatedAt: Date.now(),
