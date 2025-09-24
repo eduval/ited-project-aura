@@ -58,3 +58,10 @@ export async function resolveTemplateUrl(section) {
   const url = await getFileUrlFromRTDB(section, activeId);
   return { url, source: "active", name: "" };
 }
+
+
+export async function resolveTemplateUrl(section) {
+  const activeId = await getActiveIdFromRTDB(section);
+  const url = await getFileUrlFromRTDB(section, activeId);
+  return { url, source: "active", name: "" };
+}
