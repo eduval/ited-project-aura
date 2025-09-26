@@ -1,13 +1,12 @@
 // ===== Firebase list/render logic =====
 import { db } from "./firebase-config.js";
-import {
-  ref as dbRef,
-  onValue,
-  set,
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { ref as dbRef, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 // Include all sections here
 const SECTIONS = ["coursefailure", "lowattendance", "atriskstatus", "lowtermaverage", "alerttemplate"];
+
+// NEW: sections that should show only the active file (no buttons)
+const SINGLE_VIEW_SECTIONS = new Set(["alerttemplate"]); // "Transcript Template" card
 
 const elList = (s) => document.querySelector(`#list-${s}`);
 const elSpinner = (s) => document.querySelector(`#spinner-${s}`);
@@ -61,6 +60,30 @@ function renderList(section, filesObj = {}, activeId = null) {
   entries.sort(([, a], [, b]) => (b.uploadedAt || 0) - (a.uploadedAt || 0));
   const newestId = entries[0][0];
 
+  // ===== SPECIAL CASE: transcript template ("alerttemplate") shows ONLY the active file, no buttons =====
+  if (SINGLE_VIEW_SECTIONS.has(section)) {
+    // If active is missing, fall back to newest (still no buttons)
+    const pickId = activeId || newestId;
+    const f = filesObj[pickId];
+    if (!f) { renderEmpty(section); return; }
+
+    const safeName = f?.name || "template.docx";
+    const size = formatSize(f?.size || 0);
+    const when = formatTime(f?.uploadedAt || 0);
+
+    list.innerHTML = `
+      <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
+        <div class="me-3">
+          <div class="fw-medium">${safeName} <span class="badge bg-primary-soft ms-2">Active</span></div>
+          <div class="text-muted small">${size} · ${when}</div>
+        </div>
+        <!-- intentionally no download button and no radio here -->
+      </div>
+    `;
+    return; // do not render anything else
+  }
+
+  // ===== DEFAULT RENDER: unchanged for all other sections =====
   list.innerHTML = entries.map(([id, f]) => {
     const safeName = f?.name || "template.docx";
     const url = f?.url || "#";
