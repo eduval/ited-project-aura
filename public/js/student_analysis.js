@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const processedCourses = [];
                 for (const courseId in allCourses) {
                     const course = allCourses[courseId];
-                    const atRiskStudents = studentsByCourse[course.id] || [];
+                    const atRiskStudents = (studentsByCourse[course.id] || []).filter(s => s.problems);
                     processedCourses.push({
                         course: course,
                         students_with_problems: atRiskStudents,
