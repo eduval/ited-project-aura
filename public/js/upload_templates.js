@@ -9,7 +9,7 @@
     "lowattendance",
     "atriskstatus",
     "lowtermaverage",
-    "alerttemplate",
+    "transcripttemplate",
   ];
 
   // Allowed Word types
@@ -147,9 +147,9 @@
       const extMatch = origName.match(/\.(docx?|DOCX?)$/);
       const ext = (extMatch ? extMatch[0] : ".docx").toLowerCase();
 
-      // Force a canonical name for the alert template; others keep original
+      // Force a canonical name for the transcript template; others keep original
       const forceName =
-        section === "alerttemplate" ? `Templates${ext}` : origName;
+        section === "transcripttemplate" ? `Templates${ext}` : origName;
 
       // Build form data
       const fd = new FormData();
@@ -213,7 +213,7 @@
         // (Optional: uncomment next line if your PHP performs async steps)
         // markProcessingUI(section);
 
-        const shownName = section === "alerttemplate" ? forceName : (resp.name || origName);
+        const shownName = section === "transcripttemplate" ? forceName : (resp.name || origName);
         markDoneUI(section);
         setStatus(section, `✅ Uploaded: ${shownName}`, "ok");
         input.value = "";
@@ -224,7 +224,7 @@
             detail: {
               section,
               meta: {
-                name: shownName, // ensure Firebase stores "Templates.docx" for alerttemplate
+                name: shownName, // ensure Firebase stores "Templates.docx" for transcripttemplate
                 url: resp.url,
                 size: resp.size || 0,
                 uploadedAt:

@@ -3,10 +3,10 @@ import { db } from "./firebase-config.js";
 import { ref as dbRef, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 // Include all sections here
-const SECTIONS = ["coursefailure", "lowattendance", "atriskstatus", "lowtermaverage", "alerttemplate"];
+const SECTIONS = ["coursefailure", "lowattendance", "atriskstatus", "lowtermaverage", "transcripttemplate"];
 
 // NEW: sections that should show only the active file (no buttons)
-const SINGLE_VIEW_SECTIONS = new Set(["alerttemplate"]); // "Transcript Template" card
+const SINGLE_VIEW_SECTIONS = new Set(["transcripttemplate"]); // "Transcript Template" card
 
 const elList = (s) => document.querySelector(`#list-${s}`);
 const elSpinner = (s) => document.querySelector(`#spinner-${s}`);
@@ -60,7 +60,7 @@ function renderList(section, filesObj = {}, activeId = null) {
   entries.sort(([, a], [, b]) => (b.uploadedAt || 0) - (a.uploadedAt || 0));
   const newestId = entries[0][0];
 
-  // ===== SPECIAL CASE: transcript template ("alerttemplate") shows ONLY the active file, no buttons =====
+  // ===== SPECIAL CASE: transcript template ("transcripttemplate") shows ONLY the active file, no buttons =====
   if (SINGLE_VIEW_SECTIONS.has(section)) {
     // If active is missing, fall back to newest (still no buttons)
     const pickId = activeId || newestId;
