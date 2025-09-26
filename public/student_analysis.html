@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8" />
@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="assets/css/vendor_bundle.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" />
     <link rel="shortcut icon" href="favicon.ico" />
+
+    <!-- Styles for the advanced buttons and layout -->
     <style>
         .d-none {
             display: none !important;
@@ -22,6 +24,84 @@
         .expand-icon.rotated {
             transform: rotate(180deg);
         }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .legend .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            border: 2px solid currentColor;
+            margin-right: 6px;
+            vertical-align: -1px;
+        }
+
+        .actions {
+            display: flex;
+            gap: .5rem;
+        }
+
+        .docbtn {
+            width: 60px;
+            min-width: 60px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fff;
+            padding: .35rem .4rem;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+            transition: all .2s ease;
+        }
+
+        .docbtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .08);
+        }
+
+        .docbtn .icon {
+            width: 28px;
+            height: 28px;
+            margin: 0 auto 4px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            border: 2px solid currentColor;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .docbtn .label {
+            font-size: 11px;
+            line-height: 1.2;
+            color: #374151;
+            white-space: nowrap;
+        }
+
+        .risk {
+            color: #7c3aed;
+        }
+
+        .attn {
+            color: #f59e0b;
+        }
+
+        .fail {
+            color: #ef4444;
+        }
+
+        .avg {
+            color: #3b82f6;
+        }
     </style>
 </head>
 
@@ -31,6 +111,7 @@
         <header id="header" class="d-flex align-items-center bg-transparent"></header>
 
         <div id="wrapper_content" class="d-flex flex-fill">
+
             <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2 h-auto">
                 <div class="py-2 px-3 mb-3 mt-3"><a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png"
                             width="100" height="50" alt="..."></a></div>
@@ -48,39 +129,43 @@
                         <p class="text-muted">Comprehensive analysis of at-risk students across all courses.</p>
                     </header>
 
-                    <!-- Main Content Section -->
                     <div class="section p-xl-4">
-                        <!-- Loading Indicator -->
-                        <div id="loading-indicator" class="card shadow-sm d-none">
-                            <div class="card-body text-center p-5">
-                                <div class="spinner-border text-primary mb-3" role="status"></div>
-                                <h5 class="mb-2">Processing Student Data...</h5>
-                                <p class="text-muted mb-0" id="loading-message">Starting analysis. This may take several
-                                    minutes.</p>
-                            </div>
+                        <div class="legend">
+                            <span><i class="dot risk"></i>At-Risk</span>
+                            <span><i class="dot attn"></i>Low Attendance</span>
+                            <span><i class="dot fail"></i>Course Failure</span>
+                            <span><i class="dot avg"></i>Low Term Avg</span>
                         </div>
 
-                        <!-- Results Card -->
-                        <div id="results-card" class="card shadow-sm d-none">
+                        <div id="results-card" class="card shadow-sm">
                             <div class="card-body">
-                                <!-- Toolbar (Search and At-Risk Count) -->
-                                <div class="row g-2 align-items-center mb-3">
-                                    <div class="col-md-8">
+                                <div class="row g-3 align-items-center mb-3">
+                                    <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fi fi-search"></i></span>
                                             <input id="course-search" type="text" class="form-control"
-                                                placeholder="Search by course name, student name, or program..." />
+                                                placeholder="Search..." />
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
+                                        <div class="section p-3 bg-soft-primary rounded text-center">
+                                            <h2 class="h6 text-primary mb-1">Min. Grade</h2><span
+                                                class="fs-4 fw-bold text-primary" id="min-grade-display">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="section p-3 bg-soft-primary rounded text-center">
+                                            <h2 class="h6 text-primary mb-1">Min. Attendance</h2><span
+                                                class="fs-4 fw-bold text-primary" id="min-attendance-display">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
                                         <div class="section p-3 bg-soft-danger rounded text-center">
-                                            <h2 class="h6 text-danger mb-1">Total At-Risk Students</h2>
-                                            <span class="fs-4 fw-bold text-danger" id="total-risk-count">0</span>
+                                            <h2 class="h6 text-danger mb-1">At-Risk Students</h2><span
+                                                class="fs-4 fw-bold text-danger" id="total-risk-count">0</span>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Course Table -->
                                 <div class="table-responsive">
                                     <table class="table table-hover align-middle">
                                         <thead class="small text-muted">
@@ -91,14 +176,18 @@
                                                 <th class="text-end" style="width:130px;">EXPAND</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="analysis-tbody"></tbody>
+                                        <tbody id="analysis-tbody">
+                                            <tr id="initial-loader">
+                                                <td colspan="4" class="text-center p-5">
+                                                    <div class="spinner-border text-primary" role="status"></div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
-
                                 <div id="no-results-message"
                                     class="text-center text-muted border border-dashed rounded p-5 d-none">
-                                    <div class="mb-2">😕 No results found for your search.</div>
-                                    <div class="small">Try a different search term.</div>
+                                    <div class="mb-2"></div>
                                 </div>
                             </div>
                         </div>
@@ -108,22 +197,28 @@
         </div>
 
         <footer id="footer">
-             <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
+            <div class="p-3 bg-white shadow-sm rounded"><span class="small fw-medium">&copy; AURA</span></div>
         </footer>
     </div>
 
-    <!-- Core & Vendor JS -->
+    <!-- ** THIS IS THE CRITICAL HTML THAT WAS MISSING OR INCORRECT ** -->
+    <div id="screen-lock"
+        style="display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(4px); justify-content: center; align-items: center;">
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+            <!-- ** THE SCRIPT IS LOOKING FOR THIS ID ** -->
+            <div id="loading-message" class="mt-3 fw-bold">Please wait...</div>
+        </div>
+    </div>
+
     <script src="assets/js/core.min.js"></script>
     <script src="assets/js/vendor_bundle.min.js"></script>
-
-    <!-- Page-specific Scripts -->
     <script type="module">
         import "./js/firebase-config.js";
         import "./js/auth.js";
         import "./js/menu.js";
         import "./js/alerts.js";
         import "./js/account.js";
-        import"./js/account.js";
         import "./js/student_analysis.js"; 
     </script>
 </body>

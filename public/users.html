@@ -51,11 +51,12 @@
 <body class="layout-admin layout-padded aside-sticky">
     <div id="wrapper" class="d-flex align-items-stretch flex-column">
 
-        <!-- header -->
+        <!--  header -->
         <header id="header" class="d-flex align-items-center bg-transparent">
 
             <!-- Navbar -->
             <div class="px-3 px-lg-0 w-100 position-relative">
+
                 <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
 
                     <!-- logo, navigation toggler -->
@@ -86,10 +87,32 @@
                         <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
                             <img src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA">
                         </a>
+
                     </div>
 
                     <!-- options -->
                     <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
+
+                        <!-- notifications -->
+                        <li class="list-inline-item mx-1 dropdown">
+
+
+
+                            <div aria-labelledby="dropdownNotificationOptions"
+                                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
+                                <div class="dropdown-header p-4">1 new notification</div>
+                                <div class="dropdown-divider"></div>
+                                <div class="max-vh-50 scrollable-vertical">
+
+
+
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
 
 
 
@@ -103,7 +126,12 @@
                                 data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
                                 aria-label="Account options"></a>
 
-
+                            <!-- no avatar -->
+                            <!--
+                <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                  <span class="small fw-bold">JD</span>
+                </a>
+                -->
 
                             <div aria-labelledby="dropdownAccountOptions"
                                 class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
@@ -118,8 +146,9 @@
                                 </div>
 
 
-
                                 <div class="dropdown-divider mb-3"></div>
+
+
 
                                 <a href="#" class="dropdown-item text-truncate">
                                     <small class="badge bg-success-soft float-end">10 new</small>
@@ -127,18 +156,30 @@
                                     <small class="d-block text-muted smaller">inbox, projects, tasts</small>
                                 </a>
 
+
+
+
+
+
+
                                 <div class="dropdown-divider mb-0 mt-3"></div>
+
                                 <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
                                     <i class="fi fi-power float-start"></i> Log Out
                                 </a>
+
                             </div>
+
                         </li>
+
                     </ul>
                     <!-- /options -->
 
                 </nav>
+
             </div>
             <!-- /Navbar -->
+
         </header>
         <!-- /Header -->
 
@@ -278,13 +319,14 @@
             </main>
         </div>
     </div>
-    <!-- footer -->
+<!-- footer -->
     <footer id="footer">
       <div class="p-3 bg-white shadow-sm rounded">
         <span class="small fw-medium">&copy; <span data-org-name>AURA</span></span>
       </div>
     </footer>
-    <!-- footer -->
+ <!-- /footer -->
+    
 
 
     <script src="assets/js/core.min.js"></script>
@@ -297,6 +339,8 @@
         import "./js/account.js";
         import "./js/users.js";
         import "./js/setting.js";
+        import "./js/alerts.js";
+
     </script>
 
     <script type="module">

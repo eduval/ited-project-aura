@@ -1,6 +1,5 @@
 // js/template_after_upload_push.js
 import { db } from "./firebase-config.js";
-import { consumeOneTimeOverride } from "./templates_readonly.js";
 import {
   ref as dbRef,
   push,
@@ -44,20 +43,6 @@ window.addEventListener("template:uploaded", async (e) => {
         }
       });
     }
-    // wherever you pick a template for a section:
-
-
-async function resolveTemplateUrl(section) {
-  // 1) One-time override (consumed & cleared)
-  const once = consumeOneTimeOverride(section);
-  if (once?.url) return { url: once.url, source: "override", name: once.name };
-
-  // 2) Otherwise use the enforced "active" (latest)
-  // --- your existing logic follows ---
-  const activeId = await getActiveIdFromRTDB(section);
-  const url = await getFileUrlFromRTDB(section, activeId);
-  return { url, source: "active", name: "" };
-}
 
     const activeRef = dbRef(db, `templates/${section}/active`);
     await set(activeRef, newestId);
@@ -68,3 +53,11 @@ async function resolveTemplateUrl(section) {
     );
   }
 });
+
+
+export async function resolveTemplateUrl(section) {
+  // Use the enforced "active" (latest) from RTDB
+  const activeId = await getActiveIdFromRTDB(section);
+  const url = await getFileUrlFromRTDB(section, activeId);
+  return { url, source: "active", name: "" };
+}

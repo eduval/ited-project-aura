@@ -87,6 +87,7 @@
   </div>
 
   <div id="wrapper" class="d-flex align-items-stretch flex-column">
+<<<<<<< HEAD
     <!-- header -->
     <header id="header" class="d-flex align-items-center bg-transparent">
       <div class="px-3 px-lg-0 w-100 position-relative">
@@ -129,25 +130,139 @@
                   <span id="user-email" class="d-block smaller fw-medium text-truncate">Cargando...</span>
                   <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
                 </div>
+=======
+      <!--  header -->
+        <header id="header" class="d-flex align-items-center bg-transparent">
 
-                <div class="dropdown-divider mb-3"></div>
-                <a href="#" class="dropdown-item text-truncate">
-                  <small class="badge bg-success-soft float-end">10 new</small>
-                  <span class="fw-medium">My Alerts</span>
-                  <small class="d-block text-muted smaller">inbox, projects, tasks</small>
-                </a>
+            <!-- Navbar -->
+            <div class="px-3 px-lg-0 w-100 position-relative">
 
-                <div class="dropdown-divider mb-0 mt-3"></div>
-                <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
-                  <i class="fi fi-power float-start"></i> Log Out
+                <nav class="navbar navbar-expand-lg navbar-light justify-content-between h-auto">
+>>>>>>> Ankit-Khatiwada
+
+                    <!-- logo, navigation toggler -->
+                    <div class="align-items-start">
+
+                        <!-- sidebar toggler -->
+                        <a href="#aside-main"
+                            class="btn-sidebar-toggle h-100 d-inline-block d-lg-none justify-content-center align-items-center p-2">
+                            <span>
+                                <svg width="25" height="25" viewBox="0 0 20 20">
+                                    <path
+                                        d="M 19.9876 1.998 L -0.0108 1.998 L -0.0108 -0.0019 L 19.9876 -0.0019 L 19.9876 1.998 Z">
+                                    </path>
+                                    <path
+                                        d="M 19.9876 7.9979 L -0.0108 7.9979 L -0.0108 5.9979 L 19.9876 5.9979 L 19.9876 7.9979 Z">
+                                    </path>
+                                    <path
+                                        d="M 19.9876 13.9977 L -0.0108 13.9977 L -0.0108 11.9978 L 19.9876 11.9978 L 19.9876 13.9977 Z">
+                                    </path>
+                                    <path
+                                        d="M 19.9876 19.9976 L -0.0108 19.9976 L -0.0108 17.9976 L 19.9876 17.9976 L 19.9876 19.9976 Z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </a>
+
+                        <!-- logo : mobile only -->
+                        <a class="navbar-brand d-inline-block d-lg-none mx-2" href="dashboard.html">
+                            <img src="https://ited.org.ec/img/ited.png" width="68" height="38" alt="AURA">
+                        </a>
+
+                    </div>
+
+                    <!-- options -->
+                    <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
+
+                        <!-- notifications -->
+                        <li class="list-inline-item mx-1 dropdown">
+
+
+
+                            <div aria-labelledby="dropdownNotificationOptions"
+                                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-fadeindown end-0 p-0 mt-2 w-300">
+                                <div class="dropdown-header p-4">1 new notification</div>
+                                <div class="dropdown-divider"></div>
+                                <div class="max-vh-50 scrollable-vertical">
+
+
+
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+
+
+
+                        <!-- account -->
+                        <li class="list-inline-item mx-1 dropdown" id="account-dropdown" style="display: none;">
+
+                            <!-- has avatar -->
+                            <a href="#" id="dropdownAccountOptions"
+                                class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover"
+                                style="background-image:url(assets/images/users_img/user.jpg)" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="true"
+                                aria-label="Account options"></a>
+
+                            <!-- no avatar -->
+                            <!--
+                <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                  <span class="small fw-bold">JD</span>
                 </a>
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-    <!-- /header -->
+                -->
+
+                            <div aria-labelledby="dropdownAccountOptions"
+                                class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert dropdown-fadeindown p-0 mt-2 w-300">
+
+                                <!-- user detail -->
+                                <div class="dropdown-header bg-primary bg-gradient rounded rounded-bottom-0 text-white small p-4"
+                                    style="cursor: pointer;" onclick="window.location.href='profile.html'">
+                                    <span id="user-name" class="d-block fw-medium text-truncate">Cargando...</span>
+                                    <span id="user-email"
+                                        class="d-block smaller fw-medium text-truncate">Cargando...</span>
+                                    <span class="d-block smaller"><b>Last Login:</b> 2019-09-03 01:48</span>
+                                </div>
+
+
+                                <div class="dropdown-divider mb-3"></div>
+
+
+
+                                <a href="#" class="dropdown-item text-truncate">
+                                    <small class="badge bg-success-soft float-end">10 new</small>
+                                    <span class="fw-medium">My Alerts</span>
+                                    <small class="d-block text-muted smaller">inbox, projects, tasts</small>
+                                </a>
+
+
+
+
+
+
+
+                                <div class="dropdown-divider mb-0 mt-3"></div>
+
+                                <a href="#" id="logout-btn" class="dropdown-item text-danger fw-bold">
+                                    <i class="fi fi-power float-start"></i> Log Out
+                                </a>
+
+                            </div>
+
+                        </li>
+
+                    </ul>
+                    <!-- /options -->
+
+                </nav>
+
+            </div>
+            <!-- /Navbar -->
+
+        </header>
+        <!-- /Header -->
 
     <!-- content -->
     <div id="wrapper_content" class="d-flex flex-fill">
@@ -283,29 +398,35 @@
                 </div>
               </div>
 
-              <!-- Alert Template -->
+              <!-- Transcript Template -->
               <div class="card template-card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <div>
-                    <h2 class="h6 mb-0">Alert Template</h2>
-                    <div class="file-meta">Section key: <code>alerttemplate</code></div>
+                    <h2 class="h6 mb-0">Transcript Template</h2>
+                    <div class="file-meta">Section key: <code>transcripttemplate</code></div>
                   </div>
                   <div class="d-flex align-items-center gap-2">
+<<<<<<< HEAD
                     <button id="uploadBtn-alerttemplate" class="btn btn-sm btn-primary btn-upload"
                       data-type="alerttemplate">Upload</button>
                     <input id="file-alerttemplate" type="file" accept=".doc,.docx" class="d-none" />
+=======
+                    <button id="uploadBtn-transcripttemplate" class="btn btn-sm btn-primary btn-upload"
+                      data-type="transcripttemplate">Upload</button>
+                    <input id="file-transcripttemplate" type="file" accept=".doc,.docx" class="d-none" />
+>>>>>>> Ankit-Khatiwada
                   </div>
                 </div>
                 <div class="card-body">
-                  <div class="status-line mb-2" id="status-alerttemplate"></div>
-                  <div class="progress mb-3 d-none" id="progress-alerttemplate">
-                    <div class="progress-bar" id="progressbar-alerttemplate" style="width:0%">0%</div>
+                  <div class="status-line mb-2" id="status-transcripttemplate"></div>
+                  <div class="progress mb-3 d-none" id="progress-transcripttemplate">
+                    <div class="progress-bar" id="progressbar-transcripttemplate" style="width:0%">0%</div>
                   </div>
                   <div class="d-flex align-items-center gap-2 mb-3">
-                    <div class="spinner-border spinner-border-sm text-primary d-none" id="spinner-alerttemplate"></div>
+                    <div class="spinner-border spinner-border-sm text-primary d-none" id="spinner-transcripttemplate"></div>
                     <small class="text-muted">Uploaded templates</small>
                   </div>
-                  <div id="list-alerttemplate"></div>
+                  <div id="list-transcripttemplate"></div>
                 </div>
               </div>
 
@@ -324,7 +445,11 @@
     <!-- /footer -->
   </div>
 
+<<<<<<< HEAD
   <!-- auth + role-gated page loader -->
+=======
+
+>>>>>>> Ankit-Khatiwada
   <script type="module">
     import "./js/firebase-config.js";
     import { auth, db } from "./js/firebase-config.js";
@@ -332,6 +457,7 @@
     import "./js/menu.js";
     import "./js/account.js";
     import "./js/setting.js";
+    import "./js/alerts.js";
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { ref as dbRef, get as dbGet } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
@@ -371,8 +497,18 @@
         try { await signOut(auth); }
         finally { window.location.href = "index.html"; }
       });
-    }
+    } 
+
+
+  
+
+
   </script>
+<<<<<<< HEAD
+=======
+  <script src="assets/js/core.min.js"></script>
+  <script src="assets/js/vendor_bundle.min.js"></script>
+>>>>>>> Ankit-Khatiwada
   <script type="module" src="js/templates_readonly.js"></script>
   <script type="module" src="js/upload_templates.js"></script>
   <script type="module" src="js/template_after_upload_push.js"></script>
@@ -380,4 +516,8 @@
 
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> Ankit-Khatiwada

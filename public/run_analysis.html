@@ -2,6 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <title>AURA - Confirm Analysis</title>
     <meta name="description" content="Confirm Student Risk Analysis">
@@ -10,10 +11,33 @@
     <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
     <link rel="shortcut icon" href="favicon.ico">
+=======
+  <meta charset="UTF-8">
+  <title>AURA - Confirm Analysis</title>
+  <meta name="description" content="Confirm Student Risk Analysis">
+  <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/core.min.css">
+  <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <!-- Logo adjustments -->
+  <style>
+    /* push the logo bar down a bit */
+    .brand-bar { top: 190px; }          /* adjust this value to taste */
+    /* make the logo a little bigger, keep aspect ratio */
+    .brand-logo { height: 90px; width: auto; }  /* was ~50px */
+    @media (max-width: 576px) {
+      .brand-bar { top: 14px; }
+      .brand-logo { height: 56px; }
+    }
+  </style>
+>>>>>>> Ankit-Khatiwada
 </head>
 
 <body>
 
+<<<<<<< HEAD
     <div class="d-flex justify-content-center align-items-center p-4 position-absolute top-0 w-100">
         <a href="dashboard.html"><img src="https://ited.org.ec/img/ited.png" width="100" height="50" alt="AURA"></a>
     </div>
@@ -55,3 +79,51 @@
 </body>
 
 </html>
+=======
+  <!-- Top Logo Bar -->
+  <div class="brand-bar d-flex justify-content-center align-items-center position-absolute w-100">
+    <a href="dashboard.html">
+      <img class="brand-logo" src="https://ited.org.ec/img/ited.png" alt="AURA">
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="row g-0 min-vh-100 align-items-center">
+      <div class="col-md-7 mx-auto py-6 text-center">
+        <div class="mb-5">
+          <i class="fi fi-warning text-warning" style="font-size: 3rem;"></i>
+        </div>
+        <h1 class="display-5 fw-bold text-primary">Confirm Process</h1>
+        <p class="lead mb-4">
+          This is a deep analysis process that can take 5 to 10 minutes to complete.
+        </p>
+        <p class="text-muted mb-5">
+          During this time, this page will be locked. Please do not close your browser tab.
+        </p>
+
+        <div id="status-message" class="alert alert-info mb-4">
+          Idle — you can start a new analysis.
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+          <a href="javascript:history.back()" id="go-back-btn" class="btn btn-secondary btn-lg">
+            <i class="fi fi-arrow-left"></i> Go Back
+          </a>
+          <button type="button" id="proceed-btn" class="btn btn-primary btn-lg">
+            Proceed with Analysis <i class="fi fi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Javascripts -->
+  <script src="assets/js/core.min.js"></script>
+  <script src="assets/js/vendor_bundle.min.js"></script>
+
+  <!-- Page-specific Script -->
+  <script type="module" src="./js/run_analysis.js?v=logo1"></script>
+  <script type="module" src="./js/auth.js"></script>
+</body>
+</html>
+>>>>>>> Ankit-Khatiwada

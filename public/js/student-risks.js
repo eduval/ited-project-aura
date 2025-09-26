@@ -507,12 +507,21 @@ async function hydrateActiveStates() {
 
         // Optional: console debug
         window.debugTemplates = function () {
+<<<<<<< HEAD
             console.table({
                 atriskstatus: ACTIVE_TEMPLATES.atriskstatus || null,
                 lowattendance: ACTIVE_TEMPLATES.lowattendance || null,
                 coursefailure: ACTIVE_TEMPLATES.coursefailure || null,
                 lowtermaverage: ACTIVE_TEMPLATES.lowtermaverage || null,
             });
+=======
+            // console.table({
+            //    atriskstatus: ACTIVE_TEMPLATES.atriskstatus || null,
+            //    lowattendance: ACTIVE_TEMPLATES.lowattendance || null,
+            //    coursefailure: ACTIVE_TEMPLATES.coursefailure || null,
+            //    lowtermaverage: ACTIVE_TEMPLATES.lowtermaverage || null,
+            // });
+>>>>>>> Ankit-Khatiwada
         };
     } catch (e) {
         console.warn('Active template check failed:', e);
@@ -537,7 +546,11 @@ function _debugCtxFrom(btn, extras) {
 function _debugReportTags(zip, ctx, templateName) {
     const tags = extractTemplateTags(zip);
     const report = diffTags(tags, ctx);
+<<<<<<< HEAD
     console.table({ templateName, templateTags: report.templateTags, dataKeys: report.dataKeys, missing: report.missing, unused: report.unused });
+=======
+    //console.table({ templateName, templateTags: report.templateTags, dataKeys: report.dataKeys, missing: report.missing, unused: report.unused });
+>>>>>>> Ankit-Khatiwada
     if (report.missing.length) {
         showTagReport(report, templateName);
         return false;

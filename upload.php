@@ -31,11 +31,11 @@ if ($_FILES['file']['size'] > 20 * 1024 * 1024) {
     exit;
 }
 
-// get extension
+
 $ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
 
 // --------------------
-// 2. Handle Word files (.doc / .docx) → Only save, no Python
+// 2. Handle Word files (.doc / .docx)
 // --------------------
 if (in_array($ext, ['doc', 'docx'])) {
     if (!isset($_POST['type'])) {
@@ -45,13 +45,53 @@ if (in_array($ext, ['doc', 'docx'])) {
     }
 
     $section = preg_replace('/[^a-z]/', '', strtolower($_POST['type']));
-    $valid   = ['template','coursefailure','lowattendance','atriskstatus','lowtermaverage', 'alerttemplate'];
+    $valid   = ['template','coursefailure','lowattendance','atriskstatus','lowtermaverage','transcripttemplate'];
 
     if (!in_array($section, $valid, true)) {
         http_response_code(400);
         echo json_encode(["success" => false, "error" => "Invalid section key"]);
         exit;
     }
+
+    // ===== SPECIAL CASE: transcript template goes to /aura (parent of this folder) =====
+    if ($section === 'transcripttemplate') {
+        // filesystem paths
+        $auraDir = dirname(__DIR__); 
+        if (!is_dir($auraDir)) {
+            http_response_code(500);
+            echo json_encode(["success" => false, "error" => "Target directory /aura not found on server"]);
+            exit;
+        }
+
+        $safeName   = 'Template.' . $ext;     
+        $targetFile = $auraDir . '/' . $safeName;
+
+        // overwrite if exists
+        if (file_exists($targetFile)) { @unlink($targetFile); }
+
+        if (!move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
+            http_response_code(500);
+            echo json_encode(["success" => false, "error" => "Failed to move uploaded file."]);
+            exit;
+        }
+
+        $protocol   = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+        $host       = $_SERVER['HTTP_HOST'];
+        $scriptDir  = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'); 
+        $auraPath   = rtrim(dirname($scriptDir), '/\\');             
+
+        echo json_encode([
+            "success"    => true,
+            "kind"       => "template",
+            "type"       => $section,
+            "name"       => $safeName,
+            "url"        => $protocol . $host . $auraPath . '/' . rawurlencode($safeName),
+            "size"       => intval($_FILES['file']['size'] ?? 0),
+            "uploadedAt" => time(),
+        ]);
+        exit;
+    }
+
 
     $baseDir = __DIR__ . "/uploads/template/$section";
     if (!is_dir($baseDir) && !mkdir($baseDir, 0777, true)) {
@@ -73,7 +113,6 @@ if (in_array($ext, ['doc', 'docx'])) {
         exit;
     }
 
-    // public URL
     $protocol   = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
     $host       = $_SERVER['HTTP_HOST'];
     $scriptPath = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
