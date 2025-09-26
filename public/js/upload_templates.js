@@ -149,7 +149,7 @@
 
       // Force a canonical name for the transcript template; others keep original
       const forceName =
-        section === "transcripttemplate" ? `Templates${ext}` : origName;
+        section === "transcripttemplate" ? `Template${ext}` : origName;
 
       // Build form data
       const fd = new FormData();
