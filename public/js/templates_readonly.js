@@ -60,9 +60,8 @@ function renderList(section, filesObj = {}, activeId = null) {
   entries.sort(([, a], [, b]) => (b.uploadedAt || 0) - (a.uploadedAt || 0));
   const newestId = entries[0][0];
 
-  // ===== SPECIAL CASE: transcript template ("transcripttemplate") shows ONLY the active file, no buttons =====
+  // ===== SPECIAL CASE: transcript template ("transcripttemplate") shows ONLY the active file
   if (SINGLE_VIEW_SECTIONS.has(section)) {
-    // If active is missing, fall back to newest (still no buttons)
     const pickId = activeId || newestId;
     const f = filesObj[pickId];
     if (!f) { renderEmpty(section); return; }
@@ -74,7 +73,7 @@ function renderList(section, filesObj = {}, activeId = null) {
     list.innerHTML = `
       <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
         <div class="me-3">
-          <div class="fw-medium">${safeName} <span class="badge bg-primary-soft ms-2">Active</span></div>
+          <div class="fw-medium">${safeName} <span class="badge bg-success-soft ms-2">Active</span></div>
           <div class="text-muted small">${size} · ${when}</div>
         </div>
         <!-- intentionally no download button and no radio here -->
