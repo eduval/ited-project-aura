@@ -3,7 +3,6 @@ import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-da
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. SETUP & ELEMENT REFERENCES (Unchanged) ---
     const totalRiskCount = document.getElementById('total-risk-count');
     const analysisTbody = document.getElementById('analysis-tbody');
     const searchInput = document.getElementById('course-search');
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let masterCourseData = [];
 
-    // --- 2. THE MAIN DATA FETCH FUNCTION (Unchanged) ---
     async function loadLatestReport() {
         try {
             const latestRef = ref(db, 'risk_reports/latest');
@@ -47,18 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 
-                const processedCourses = [];
-                for (const courseId in allCourses) {
-                    const course = allCourses[courseId];
-                    const atRiskStudents = (studentsByCourse[course.id] || []).filter(s => s.problems);
-                    processedCourses.push({
-                        course: course,
-                        students_with_problems: atRiskStudents,
-                        instructors: [...new Set(atRiskStudents.map(s => s.instructor_names).flat())].map(name => ({name})) // .flat() handles arrays of arrays
-                    });
-                }
-
-                masterCourseData = processedCourses;
+                masterCourseData = Object.values(allCourses).map(course => ({
+                    course: course,
+                    students_with_problems: studentsByCourse[course.id] || []
+                }));
                 
                 if (reportTimestamp && data.generated_at) reportTimestamp.textContent = `Displaying latest report generated on: ${new Date(data.generated_at).toLocaleString()}`;
                 if (minGradeDisplay) minGradeDisplay.textContent = `${settingsData.minGrade || 0}%`;
@@ -74,78 +64,87 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // --- 3. RENDERING FUNCTIONS (Unchanged) ---
     function render(coursesToRender) {
         analysisTbody.innerHTML = "";
-        let totalRisk = 0;
+        let totalRiskInView = 0;
         noResultsMessage.classList.toggle('d-none', coursesToRender.length === 0);
+        
         coursesToRender.forEach(courseData => {
             const course = courseData.course;
-            const atRiskStudents = courseData.students_with_problems || [];
-            const instructors = courseData.instructors || [];
-            totalRisk += atRiskStudents.length;
+            const atRiskStudents = courseData.students_with_problems;
+            totalRiskInView += atRiskStudents.length;
+
             const courseRow = document.createElement('tr');
             courseRow.innerHTML = `<td>${course.name || 'N/A'}</td><td>${course.total_students || 0}</td><td>${atRiskStudents.length}</td><td class="text-end"><button class="btn btn-sm btn-light expand-btn" ${atRiskStudents.length === 0 ? 'disabled' : ''}><i class="fi fi-arrow-down expand-icon"></i></button></td>`;
+            
             const detailsRow = document.createElement('tr');
             detailsRow.classList.add('d-none');
-            detailsRow.innerHTML = `<td colspan="4" class="p-2" style="background-color: #FDEDEC;">${renderStudentDetails(atRiskStudents, course.name, instructors)}</td>`;
+            detailsRow.innerHTML = `<td colspan="4" class="p-2" style="background-color: #FDEDEC;">${renderStudentDetails(atRiskStudents)}</td>`;
+            
             analysisTbody.appendChild(courseRow);
             analysisTbody.appendChild(detailsRow);
         });
-        totalRiskCount.textContent = totalRisk;
+        totalRiskCount.textContent = totalRiskInView;
     }
 
-    function renderStudentDetails(students, courseName, instructors) {
+    function renderStudentDetails(students) {
         if (!students || students.length === 0) return '';
-        const instructorNames = instructors.map(inst => inst.name).join(', ');
+        
         let tableRowsHTML = students.map(student => {
-            let problemDescription = '';
-            const problem = student.problems; 
-            if (problem) {
-                switch (problem.type) {
-                    case 'low_grade': problemDescription = `Low Grade: <span class="badge bg-danger">${problem.value}%</span>`; break;
-                    case 'low_attendance': problemDescription = `Low Attendance: <span class="badge bg-warning text-dark">${problem.value}%</span>`; break;
-                    default: problemDescription = `At-Risk: <span class="badge bg-secondary">${problem.value || ''}</span>`;
-                }
-            } else { problemDescription = 'N/A'; }
+            let problemDescriptionHTML = 'N/A';
+            const problems = student.problems;
+            
+            if (problems && Array.isArray(problems) && problems.length > 0) {
+                problemDescriptionHTML = problems.map(problem => {
+                    if (problem && problem.type) {
+                        const problemText = problem.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        let badgeClass = 'bg-secondary';
+                        if (problem.type === 'low_grade') badgeClass = 'bg-danger';
+                        if (problem.type === 'low_attendance') badgeClass = 'bg-warning text-dark';
+                        return `<span class="badge ${badgeClass}">${problemText}: ${problem.value || 0}%</span>`;
+                    }
+                    return '';
+                }).join(' ');
+            }
             const downloadActions = `<div class="actions"><button class="docbtn risk" title="Generate At-Risk Notice"><span class="icon">W</span><span class="label">At-Risk</span></button><button class="docbtn attn" title="Generate Attendance Notice"><span class="icon">W</span><span class="label">Attendance</span></button><button class="docbtn fail" title="Generate Failure Notice"><span class="icon">W</span><span class="label">Failure</span></button><button class="docbtn avg" title="Generate Term Average Notice"><span class="icon">W</span><span class="label">Term Avg</span></button></div>`;
-            return `<tr><td>${student.student_id || 'N/A'}</td><td>${student.student_name || 'N/A'}</td><td>${student.program || 'N/A'}</td><td>${student.course_name || 'N/A'}</td><td>${student.instructor_names || 'N/A'}</td><td>${student.term || 'N/A'}</td><td><div class="d-flex justify-content-between align-items-center"><span>${problemDescription}</span>${downloadActions}</div></td></tr>`;
+            return `<tr><td>${student.student_id || 'N/A'}</td><td>${student.student_name || 'N/A'}</td><td>${student.program || 'N/A'}</td><td>${student.course_name || 'N/A'}</td><td>${student.instructor_names || 'N/A'}</td><td>${student.term || 'N/A'}</td><td><div class="d-flex justify-content-between align-items-center"><div class="d-flex flex-wrap gap-1">${problemDescriptionHTML}</div>${downloadActions}</div></td></tr>`;
         }).join('');
+        
         return `<table class="table table-sm small mb-0" style="background-color: #FDEDEC;"><thead class="text-muted"><tr><th>STUDENT ID</th><th>NAME</th><th>PROGRAM</th><th>COURSE</th><th>INSTRUCTORS</th><th>TERM</th><th>PROBLEM & ACTIONS</th></tr></thead><tbody>${tableRowsHTML}</tbody></table>`;
     }
     
-    // --- 4. EVENT HANDLING ---
-    
-    // ** THIS IS THE NEW, CORRECTED, AND ROBUST SEARCH LOGIC **
     searchInput.addEventListener('input', () => {
         const searchTerm = searchInput.value.toLowerCase();
-
         if (!searchTerm) {
             render(masterCourseData);
             return;
         }
-
-        const filteredData = masterCourseData.filter(courseData => {
-            let searchableString = (courseData.course.name || '').toLowerCase();
-            
-            (courseData.students_with_problems || []).forEach(student => {
-                searchableString += ` ${(student.student_name || '').toLowerCase()}`;
-                searchableString += ` ${(student.student_id || '').toString().toLowerCase()}`;
-                searchableString += ` ${(student.program || '').toLowerCase()}`;
-
-                // This is the type-safe way to handle instructors
-                const instructors = student.instructor_names;
-                if (typeof instructors === 'string') {
-                    searchableString += ` ${instructors.toLowerCase()}`;
-                } else if (Array.isArray(instructors)) {
-                    searchableString += ` ${instructors.join(' ').toLowerCase()}`;
-                }
-            });
-
-            return searchableString.includes(searchTerm);
-        });
         
-        render(filteredData);
+        const filteredCourses = [];
+        const coursesToSearch = JSON.parse(JSON.stringify(masterCourseData));
+
+        coursesToSearch.forEach(courseData => {
+            const course = courseData.course;
+            const students = courseData.students_with_problems;
+            
+            const studentMatches = (student) => {
+                const searchableStudentString = [ student.student_name, student.student_id, student.program, student.course_name, student.instructor_names, student.term ].join(' ').toLowerCase();
+                return searchableStudentString.includes(searchTerm);
+            };
+
+            const courseNameMatches = (course.name || '').toLowerCase().includes(searchTerm);
+
+            if (courseNameMatches) {
+                filteredCourses.push(courseData);
+            } else {
+                const matchingStudents = students.filter(studentMatches);
+                if (matchingStudents.length > 0) {
+                    courseData.students_with_problems = matchingStudents;
+                    filteredCourses.push(courseData);
+                }
+            }
+        });
+        render(filteredCourses);
     });
 
     analysisTbody.addEventListener('click', (event) => {
@@ -159,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 5. INITIALIZATION ---
     auth.onAuthStateChanged((user) => {
         if (user) {
             loadLatestReport();
