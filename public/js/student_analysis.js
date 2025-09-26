@@ -3,7 +3,7 @@ import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-da
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. SETUP & ELEMENT REFERENCES ---
+    // --- 1. SETUP & ELEMENT REFERENCES (Unchanged) ---
     const totalRiskCount = document.getElementById('total-risk-count');
     const analysisTbody = document.getElementById('analysis-tbody');
     const searchInput = document.getElementById('course-search');
@@ -14,15 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let masterCourseData = [];
 
-    // --- 2. THE MAIN DATA FETCH FUNCTION ---
+    // --- 2. THE MAIN DATA FETCH FUNCTION (Unchanged) ---
     async function loadLatestReport() {
         try {
             const latestRef = ref(db, 'risk_reports/latest');
             const latestSnapshot = await get(latestRef);
             if (!latestSnapshot.exists()) throw new Error("The 'latest' report pointer was not found.");
             
-            const latestData = latestSnapshot.val();
-            const reportFolderName = latestData.timestamp;
+            const reportFolderName = latestSnapshot.val().timestamp;
             if (!reportFolderName) throw new Error("The 'latest' pointer is missing a timestamp.");
             
             const reportRef = ref(db, `risk_reports/${reportFolderName}`);
@@ -31,6 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = reportSnapshot.val();
             
+            const settingsRef = ref(db, 'settings/criteria');
+            const settingsSnapshot = await get(settingsRef);
+            const settingsData = settingsSnapshot.exists() ? settingsSnapshot.val() : {};
+
             if (data && data.courses && data.students) {
                 const allCourses = data.courses;
                 const allStudents = data.students;
@@ -47,19 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const processedCourses = [];
                 for (const courseId in allCourses) {
                     const course = allCourses[courseId];
-                    const atRiskStudents = studentsByCourse[course.id] || [];
+                    const atRiskStudents = (studentsByCourse[course.id] || []).filter(s => s.problems);
                     processedCourses.push({
                         course: course,
                         students_with_problems: atRiskStudents,
-                        instructors: [...new Set(atRiskStudents.map(s => s.instructor_names))].map(name => ({name}))
+                        instructors: [...new Set(atRiskStudents.map(s => s.instructor_names).flat())].map(name => ({name})) // .flat() handles arrays of arrays
                     });
                 }
 
                 masterCourseData = processedCourses;
                 
                 if (reportTimestamp && data.generated_at) reportTimestamp.textContent = `Displaying latest report generated on: ${new Date(data.generated_at).toLocaleString()}`;
-                if (minGradeDisplay) minGradeDisplay.textContent = `${data.min_grade || 0}%`;
-                if (minAttendanceDisplay) minAttendanceDisplay.textContent = `${data.min_attendance || 0}%`;
+                if (minGradeDisplay) minGradeDisplay.textContent = `${settingsData.minGrade || 0}%`;
+                if (minAttendanceDisplay) minAttendanceDisplay.textContent = `${settingsData.minAttendance || 0}%`;
                 
                 render(masterCourseData);
             } else {
@@ -71,25 +74,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // --- 3. RENDERING AND EVENT HANDLING ---
+    // --- 3. RENDERING FUNCTIONS (Unchanged) ---
     function render(coursesToRender) {
         analysisTbody.innerHTML = "";
         let totalRisk = 0;
         noResultsMessage.classList.toggle('d-none', coursesToRender.length === 0);
-
         coursesToRender.forEach(courseData => {
             const course = courseData.course;
             const atRiskStudents = courseData.students_with_problems || [];
             const instructors = courseData.instructors || [];
             totalRisk += atRiskStudents.length;
-            
             const courseRow = document.createElement('tr');
             courseRow.innerHTML = `<td>${course.name || 'N/A'}</td><td>${course.total_students || 0}</td><td>${atRiskStudents.length}</td><td class="text-end"><button class="btn btn-sm btn-light expand-btn" ${atRiskStudents.length === 0 ? 'disabled' : ''}><i class="fi fi-arrow-down expand-icon"></i></button></td>`;
-
             const detailsRow = document.createElement('tr');
             detailsRow.classList.add('d-none');
             detailsRow.innerHTML = `<td colspan="4" class="p-2" style="background-color: #FDEDEC;">${renderStudentDetails(atRiskStudents, course.name, instructors)}</td>`;
-            
             analysisTbody.appendChild(courseRow);
             analysisTbody.appendChild(detailsRow);
         });
@@ -115,13 +114,37 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<table class="table table-sm small mb-0" style="background-color: #FDEDEC;"><thead class="text-muted"><tr><th>STUDENT ID</th><th>NAME</th><th>PROGRAM</th><th>COURSE</th><th>INSTRUCTORS</th><th>TERM</th><th>PROBLEM & ACTIONS</th></tr></thead><tbody>${tableRowsHTML}</tbody></table>`;
     }
     
+    // --- 4. EVENT HANDLING ---
+    
+    // ** THIS IS THE NEW, CORRECTED, AND ROBUST SEARCH LOGIC **
     searchInput.addEventListener('input', () => {
         const searchTerm = searchInput.value.toLowerCase();
+
+        if (!searchTerm) {
+            render(masterCourseData);
+            return;
+        }
+
         const filteredData = masterCourseData.filter(courseData => {
-            const courseNameMatch = (courseData.course.name || '').toLowerCase().includes(searchTerm);
-            const studentMatch = (courseData.students_with_problems || []).some(student => (student.student_name || '').toLowerCase().includes(searchTerm) || (student.program || '').toLowerCase().includes(searchTerm));
-            return courseNameMatch || studentMatch;
+            let searchableString = (courseData.course.name || '').toLowerCase();
+            
+            (courseData.students_with_problems || []).forEach(student => {
+                searchableString += ` ${(student.student_name || '').toLowerCase()}`;
+                searchableString += ` ${(student.student_id || '').toString().toLowerCase()}`;
+                searchableString += ` ${(student.program || '').toLowerCase()}`;
+
+                // This is the type-safe way to handle instructors
+                const instructors = student.instructor_names;
+                if (typeof instructors === 'string') {
+                    searchableString += ` ${instructors.toLowerCase()}`;
+                } else if (Array.isArray(instructors)) {
+                    searchableString += ` ${instructors.join(' ').toLowerCase()}`;
+                }
+            });
+
+            return searchableString.includes(searchTerm);
         });
+        
         render(filteredData);
     });
 
@@ -136,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 4. INITIALIZATION ---
+    // --- 5. INITIALIZATION ---
     auth.onAuthStateChanged((user) => {
         if (user) {
             loadLatestReport();
