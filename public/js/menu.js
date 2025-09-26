@@ -11,7 +11,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const currentPath = window.location.pathname.split('/').pop();
-const dynamicMenu  = document.getElementById('dynamicMenu');
+const dynamicMenu = document.getElementById('dynamicMenu');
 
 // ----------------------------
 // Initial loading placeholder
@@ -28,7 +28,7 @@ dynamicMenu.innerHTML = `
 // Helpers
 // ----------------------------
 function safeIconSvg(item) {
-  const svg = item?.iconSvg || item?.iconsvg; 
+  const svg = item?.iconSvg || item?.iconsvg;
   return svg
     ? `<span class="nav-link-icon" style="margin-right:12px;display:inline-flex;align-items:center;">${svg}</span>`
     : '';
@@ -39,7 +39,7 @@ function userCanSee(item, role) {
   if (!r) return true;
   const norm = v => String(v).toLowerCase();
   if (typeof r === 'string') return norm(r) === role;
-  if (Array.isArray(r))      return r.map(norm).includes(role);
+  if (Array.isArray(r)) return r.map(norm).includes(role);
   if (typeof r === 'object') return Object.values(r).map(norm).includes(role);
   return false;
 }
@@ -117,14 +117,14 @@ onValue(alertsRef, snapshot => {
 function renderMenuItem(key, item, role) {
   if (!item?.enable || !userCanSee(item, role)) return '';
 
-  const iconHtml    = safeIconSvg(item);
+  const iconHtml = safeIconSvg(item);
   const hasChildren = item?.children && Object.values(item.children)
     .some(c => c && c.enable && userCanSee(c, role));
-  const isActive    = isActiveForPath(item);
+  const isActive = isActiveForPath(item);
 
   const badgeHtml = item.title === "Alerts"
     ? `<span class="notification-count-alerts"
-         style="position:absolute;top:-10px;right:-20px;background:red;color:white;border-radius:50%;padding:5px 5px;font-size:12px;${unreadAlertCount>0?'':'display:none;'}">
+         style="position:absolute;top:-10px;right:-20px;background:red;color:white;border-radius:50%;padding:5px 5px;font-size:12px;${unreadAlertCount > 0 ? '' : 'display:none;'}">
          ${unreadAlertCount}
        </span>`
     : '';
@@ -167,7 +167,7 @@ function renderMenuItem(key, item, role) {
 // ----------------------------
 (async function initMenu() {
   const role = await getCurrentUserRole();
-  console.log('[menu] role =', role, 'user =', auth.currentUser?.uid, auth.currentUser?.email);
+  //console.log('[menu] role =', role, 'user =', auth.currentUser?.uid, auth.currentUser?.email);
 
   const menuRef = ref(db, 'menu');
 
@@ -181,7 +181,7 @@ function renderMenuItem(key, item, role) {
 
     const menu = snap.val();
 
-    console.table(
+    /*console.table(
       Object.entries(menu).map(([k, it]) => ({
         key: k,
         title: it?.title,
@@ -189,14 +189,14 @@ function renderMenuItem(key, item, role) {
         roles: it?.roles ?? '(none)',
         visible: !!(it?.enable && userCanSee(it, role))
       }))
-    );
+    );*/
 
     const sortedMenuEntries = Object.entries(menu)
       .filter(([, it]) => it && it.enable && userCanSee(it, role))
       .sort(([, a], [, b]) => (a.id || 0) - (b.id || 0));
 
     const apiCanvasKeys = ["999999999", "anotherCanvasApiKey"];
-    const settingsKeys  = ["settingsCriteria", "anotherSettingsKey"];
+    const settingsKeys = ["settingsCriteria", "anotherSettingsKey"];
     let settingsDividerAdded = false;
 
     const API_DIVIDER_HTML = `
@@ -245,7 +245,7 @@ function renderMenuItem(key, item, role) {
               submenu.style.overflow = '';
             }
 
-            const arrowEnd  = this.querySelector('.fi fi-arrow-end') || this.querySelector('.fi-arrow-end');
+            const arrowEnd = this.querySelector('.fi fi-arrow-end') || this.querySelector('.fi-arrow-end');
             const arrowDown = this.querySelector('.fi fi-arrow-down') || this.querySelector('.fi-arrow-down');
             if (arrowEnd && arrowDown) {
               arrowEnd.classList.toggle('d-none');
