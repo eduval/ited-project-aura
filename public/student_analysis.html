@@ -23,6 +23,27 @@
         .docbtn .icon { width: 28px; height: 28px; margin: 0 auto 4px; display: grid; place-items: center; border-radius: 8px; border: 2px solid currentColor; font-weight: 700; line-height: 1; }
         .docbtn .label { font-size: 11px; line-height: 1.2; color: #374151; white-space: nowrap; }
         .risk { color: #7c3aed; } .attn { color: #f59e0b; } .fail { color: #ef4444; } .avg { color: #3b82f6; }
+        /* --- Allow hover on disabled buttons --- */
+.docbtn[disabled],
+.docbtn:disabled {
+    pointer-events: auto !important; /* enable hover */
+    cursor: not-allowed !important;
+    opacity: .45;
+    background: #f8fafc;
+}
+
+/* --- Hover effect for disabled buttons --- */
+.docbtn[disabled]:hover,
+.docbtn:disabled:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+    opacity: .45;
+    cursor: not-allowed;
+    background: #f8fafc;
+}
+.student-details-table:hover {
+  background-color: white !important;
+}
     </style>
 </head>
 

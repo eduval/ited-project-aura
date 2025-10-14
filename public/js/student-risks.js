@@ -610,4 +610,5 @@ window.genNoticeFromButton = async function (btn, alertType) {
     } finally {
         btn.disabled = false;
     }
+    
 };
